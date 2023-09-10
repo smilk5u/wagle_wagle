@@ -9,9 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { userCheckReducer } from "../../redux/reducers/userReducer";
 import { logout } from "../../redux/actions/userActions";
 
-export default function NavBar({ isShowing = true }) {
+export default function NavBar({ isShowing = true }) { // isShowing 기본적으로 열려있는것을 의미
   const dispatch = useDispatch();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false); // 메뉴클릭
   const [isLogin, setIsLogin] = useState(false);
 
   // 임시코드(로그인된 유저정보를 로컬스토리지에서 불러옴)
@@ -32,14 +32,13 @@ export default function NavBar({ isShowing = true }) {
     setIsLogin(false);
   };
 
-  useEffect(() => {
-    console.log(userInfo);
+  useEffect(() => {    
     setIsLogin(userInfo.loggedIn);
   }, []);
 
   useEffect(() => {
-    if (!isShowing) {
-      setMenuOpen(false);
+    if (!isShowing) { // 네비게이션이 닫혀있을 때 
+      setMenuOpen(false); //
     }
   }, [isShowing]);
 

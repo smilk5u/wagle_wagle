@@ -2,7 +2,13 @@ import React from "react";
 import { styled } from "styled-components";
 
 const RightSide = ({ openMakeup }) => {
-  return <Container className={openMakeup ? "show" : null}></Container>;
+  return (
+    <Container className={openMakeup ? "show" : null}>
+      <div>
+        수고해
+      </div>
+    </Container>
+  )
 };
 
 export default RightSide;
@@ -19,9 +25,6 @@ const Container = styled.aside`
   opacity: 0;
   box-sizing: border-box;
   padding: 60px 60px;
-  transition: all ease-in-out 1s;
-  &.show {
-    right: 0;
-    opacity: 1;
-  }
+  transition: all, ease-in-out 1s;
+  &.show { right: 0; opacity: 1; }
 `;

@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import Title from "../../component/Title/Title";
 
 const MakeHopae = () => {
-
   const [{ userId, password, checkPassword }, setJoinInfo] = useState({
     userId: "",
     password: "",
@@ -39,7 +38,6 @@ const MakeHopae = () => {
   const onJoinSubmit = useCallback(() => {
     if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm) {
       setIsModalOpen(true);
-      console.log(userId, password, checkPassword);
     }
   }, [userId, password, checkPassword, isValid]);
 

@@ -1,34 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { styled } from "styled-components";
-import NavBar from "../../component/NavBar/NavBar";
-import mainBg from "../../assets/bg_main.png";
-import mainHouse from "../../assets/main_house.png";
-import RightSide from "../../component/RightSide/RightSide";
+import React, { useEffect, useState } from "react"; 
+import { styled } from "styled-components"; // 스타일
+import NavBar from "../../component/NavBar/NavBar"; // 네비게이션
+import mainBg from "../../assets/bg_main.png"; // 이미지
+import mainHouse from "../../assets/main_house.png"; // 이미지
+import RightSide from "../../component/RightSide/RightSide"; // 
 import { jwtTestApi } from "../../apis/user";
 import Input from './../../component/Input/Input';
 
 const Main = () => {
-  const [openNav, setOpenNav] = useState(true);
-  const [openMakeup, setOpenMakeup] = useState(false);
+  const [openNav, setOpenNav] = useState(true);  // 오른쪽네비 열기닫기
+  const [openMakeup, setOpenMakeup] = useState(false); // 만들기 열기, 닫기
 
   useEffect(() => {
     // jwt토큰을 넣어서 get요청하는 api호출
-    jwtTestApi().then((result) => {
-      alert(result.data);
-    });
+    // jwtTestApi().then((result) => {
+    //   alert(result.data);
+    // });
   }, []);
-
+  
+  /* 만들기 시작시  */
   const openMakeupHouse = () => {
-    setOpenNav(false);
+    setOpenNav(false); // 네비게이션 닫힘
     setTimeout(() => {
-      setOpenMakeup(true);
+      setOpenMakeup(true); // 하우스 left
     }, 300);
   };
   return (
     <>
-      <NavBar isShowing={openNav} />
+      {/* 위 네비게이션이 내려와있는지 아닌지 체크함 */}
+      <NavBar isShowing={openNav} /> 
       <ExDiv>
         <StyledMain>
+          {/* 오픈시 이미지 class left 추가 */}
           <HouseBox className={openMakeup ? "left" : null}></HouseBox>
         </StyledMain>
         <RightSide openMakeup={openMakeup}></RightSide>

@@ -5,12 +5,8 @@ import { Link, useLocation } from "react-router-dom";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 
-function Form({
-  getUserInfo,
-  onSubmit,
-  joinUserInfo,
-  validUserInfo,
-}) {
+/* 회원가입 form */
+function Form({ getUserInfo, onSubmit, joinUserInfo, validUserInfo, }) {
   const location = useLocation().pathname;
   const [form, setForm] = useState({
     userId: "",
@@ -22,13 +18,9 @@ function Form({
     location === "/login" ? getUserInfo(form) : joinUserInfo(form);
   }, [form, location, getUserInfo, joinUserInfo]);
 
-  const updateForm = useCallback(
-    (name, value) => {
-      setForm({ ...form, [name]: value });
-    },
-    [form]
-  );
-
+  const updateForm = useCallback((name, value) => {
+    setForm({ ...form, [name]: value });
+  }, [form]);
   // const onClick = (e) => {
   //   e.preventDefault();
   //   onSubmit();
@@ -86,12 +78,8 @@ function Form({
 }
 
 
-function FormMakeHopae({
-  getUserInfo,
-  onSubmit,
-  joinUserInfo,
-  validUserInfo,
-}) {
+/* 호패만들기 */
+function FormMakeHopae({ getUserInfo, onSubmit, joinUserInfo, validUserInfo, }) {
   const location = useLocation().pathname;
   const [form, setForm] = useState({
     userId: "",
@@ -129,8 +117,8 @@ function FormMakeHopae({
         updateForm={updateForm}
         validUserInfo={validUserInfo}
       />
-  
-      <Button buttonText="기와집 만들러 가기" location={location} onClick={linkToJoin}/>
+
+      <Button buttonText="기와집 만들러 가기" location={location} onClick={linkToJoin} />
 
     </FormComponent>
   );
