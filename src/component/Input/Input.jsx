@@ -15,17 +15,20 @@ export default function Input({
   type,
   password,
   validUserInfo,
-  ...rest
+  // ...rest
+  placeholder
 }) {
   const location = useLocation().pathname;
-  const [input, setInput] = useInput("");
-  const [isFocus, setIsFocus] = useState(false);
-  const [passwordShowing, setPasswordShowing] = useState(false);
+  const [input, setInput] = useInput(""); // 인풋 텍스트
+  const [isFocus, setIsFocus] = useState(false); // 포커스 됬는지 안됬는지?
+  const [passwordShowing, setPasswordShowing] = useState(false); // 텍스트 보임/안보임
+  /* 포커스되었을때 */
   const onFocusChange = () => {
     setIsFocus(true);
   };
-  const onBlurChange = () => {
-    input === "" && setIsFocus(false);
+  /* 포커스 해제  */
+  const onBlurChange = () => {    
+    input === "" && setIsFocus(false); // 내용없을때
   };
 
   useEffect(() => {
@@ -42,12 +45,12 @@ export default function Input({
               return <UserIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />;
             case "Password":
               return <PasswordIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />;
-            default:
+            default: 
               break;
           }
         })()}
         <input
-          {...rest}
+          placeholder={placeholder}
           type={
             type !== "password" ? type : passwordShowing ? "text" : "password"
           }

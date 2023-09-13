@@ -36,6 +36,7 @@ const Join = () => {
 
   // boolean 확인 체크하는 이벤트 
   const validUserInfo = useCallback((name, value) => {
+    console.log(name, value)
     setIsValid({ ...isValid, [name]: value });
   }, [isValid]);
 

@@ -15,12 +15,15 @@ function Form({ getUserInfo, onSubmit, joinUserInfo, validUserInfo, }) {
   });
 
   useEffect(() => {
+    // 로그인 페이지일때 데이터를 로그인으로 아니면 회원가입으로...
+    // 폼과, 로케이션, 겟유저인포, 조인유저인포가 업데이트 되었을때 동작 됨!
     location === "/login" ? getUserInfo(form) : joinUserInfo(form);
   }, [form, location, getUserInfo, joinUserInfo]);
 
   const updateForm = useCallback((name, value) => {
     setForm({ ...form, [name]: value });
   }, [form]);
+
   // const onClick = (e) => {
   //   e.preventDefault();
   //   onSubmit();
@@ -78,7 +81,7 @@ function Form({ getUserInfo, onSubmit, joinUserInfo, validUserInfo, }) {
 }
 
 
-/* 호패만들기 */
+/* 호패만들기 form */
 function FormMakeHopae({ getUserInfo, onSubmit, joinUserInfo, validUserInfo, }) {
   const location = useLocation().pathname;
   const [form, setForm] = useState({

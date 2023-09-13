@@ -18,9 +18,10 @@ export default function ValidTest({ name, value, password, validUserInfo }) {
       }
     }, 500);
 
-    return () => {
-      clearTimeout(emptyDelay);
-    };
+    // return () => {
+    //   console.log('dfkddfjk')
+    //   clearTimeout(emptyDelay);
+    // };
   }, [value]);
 
   // 유효성 검사를 통한 문구 출력

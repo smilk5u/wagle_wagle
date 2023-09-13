@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import {FormMakeHopae} from "../../component/Form/Form";
+import { FormMakeHopae } from "../../component/Form/Form";
 import NavBar from "../../component/NavBar/NavBar";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
@@ -28,12 +28,10 @@ const MakeHopae = () => {
     });
   }, []);
 
-  const validUserInfo = useCallback(
-    (name, value) => {
-      setIsValid({ ...isValid, [name]: value });
-    },
-    [isValid]
-  );
+  /* 아이디가 맞는지 틀린지 판단하는 함수 */
+  const validUserInfo = useCallback((name, value) => {    
+    setIsValid({ ...isValid, [name]: value });
+  }, [isValid]);
 
   const onJoinSubmit = useCallback(() => {
     if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm) {
