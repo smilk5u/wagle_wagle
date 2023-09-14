@@ -1,6 +1,33 @@
+/* 훈민정음체 */
 @font-face {
   font-family: "EBS Hunminjeongeum SB";
   font-style: normal;
-  font-weight: normal;
+  font-weight: 400;
   src: url("./EBSHunminjeongeumSB.woff") format("woff");
+}
+/* 훈민정음 새론체 */
+@font-face {
+  font-family: "EBS HMJE Saeron";
+  font-style: normal; 
+  font-weight: 400;
+  src: url("EBSHMJESaeronR.woff") format("woff");
+}
+/* Noto Sans KR */
+@font-face {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700 ;
+  src: url("./NotoSansKR-Bold.woff") format("woff");
+}
+@font-face {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  src: url("./NotoSansKR-Medium.woff") format("woff");
+}
+@font-face {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./NotoSansKR-Regular.woff") format("woff");
 }
