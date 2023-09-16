@@ -1,33 +1,64 @@
 /* 훈민정음체 */
 @font-face {
-  font-family: "EBS Hunminjeongeum SB";
+  font-family: "EBS Hunminjeongeum";
+  font-style: normal;
+  font-weight: 600;
+  src: url("./woff/EBSHunminjeongeum-SB.woff") format("woff");
+}
+@font-face {
+  font-family: "EBS Hunminjeongeum";
   font-style: normal;
   font-weight: 400;
-  src: url("./EBSHunminjeongeumSB.woff") format("woff");
+  src: url("./woff/EBSHunminjeongeum-R.woff") format("woff");
+}
+@font-face {
+  font-family: "EBS Hunminjeongeum";
+  font-style: normal; 
+  font-weight: 300;
+  src: url("./woff/EBSHunminjeongeum-L.woff") format("woff");
 }
 /* 훈민정음 새론체 */
 @font-face {
   font-family: "EBS HMJE Saeron";
   font-style: normal; 
+  font-weight: 600;  
+  src: url("./woff/EBSHMJESaeron-SB.woff") format("woff");
+}
+@font-face {
+  font-family: "EBS HMJE Saeron";
+  font-style: normal; 
   font-weight: 400;
-  src: url("EBSHMJESaeronR.woff") format("woff");
+  src: url("./woff/EBSHMJESaeron-R.woff") format("woff");
+}
+@font-face {
+  font-family: "EBS HMJE Saeron";
+  font-style: normal; 
+  font-weight: 300;
+  src: url("./woff/EBSHMJESaeron-L.woff") format("woff");
 }
 /* Noto Sans KR */
 @font-face {
   font-family: "Noto Sans KR";
   font-style: normal;
-  font-weight: 700 ;
-  src: url("./NotoSansKR-Bold.woff") format("woff");
+  font-weight: 700;
+  src: url("./woff/NotoSansKR-Bold.woff") format("woff");
 }
 @font-face {
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 500;
-  src: url("./NotoSansKR-Medium.woff") format("woff");
+  src: url("./woff/NotoSansKR-Medium.woff") format("woff");
 }
 @font-face {
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 400;
-  src: url("./NotoSansKR-Regular.woff") format("woff");
+  src: url("./woff/NotoSansKR-Regular.woff") format("woff");
+}
+/* Inter */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./woff/Inter-Regular.woff") format("woff");
 }

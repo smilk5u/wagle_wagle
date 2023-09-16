@@ -6,44 +6,38 @@ import { Link } from "react-router-dom";
 import Title from "../../component/Title/Title";
 import { joinApi } from "../../apis/user";
 
-/* 회원가입 페이지 */
 const Join = () => {
-  // 저장된 데이터 값
   const [{ userId, password, checkPassword }, setJoinInfo] = useState({
-    userId: "", // 유저 아이디
-    password: "", // 패스워드
-    checkPassword: "", // 체크
+    userId: "",
+    password: "",
+    checkPassword: "",
   });
 
-  // boolean 확인 체크
   const [isValid, setIsValid] = useState({
-    isEmail: false, // 아이디
-    isPassword: false, // 패스워드
-    isPasswordConfirm: false, // 다시 패스워드
+    isEmail: false,
+    isPassword: false,
+    isPasswordConfirm: false,
   });
 
-  // 모달 창 열기, 닫기
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // 해당 유저 정보 저장 useCallback 을 사용하여, 한번만 실행되게끔 
   const joinUserInfo = useCallback((form) => {
     setJoinInfo({
-      userId: form.userId, 
+      userId: form.userId,
       password: form.password,
       checkPassword: form.checkPassword,
     });
   }, []);
 
-  // boolean 확인 체크하는 이벤트 
-  const validUserInfo = useCallback((name, value) => {
-    console.log(name, value)
-    setIsValid({ ...isValid, [name]: value });
-  }, [isValid]);
+  const validUserInfo = useCallback(
+    (name, value) => {
+      setIsValid({ ...isValid, [name]: value });
+    },
+    [isValid]
+  );
 
-  // 회원가입 체크
   const onJoinSubmit = useCallback(() => {
     if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm) {
-      /* 시도해볼 동작 */
       try {
         joinApi({
           email: userId,
@@ -58,7 +52,6 @@ const Join = () => {
             console.log("error500");
           }
         });
-        // 오류 발생시 동작
       } catch (error) {
         console.log(error);
       }

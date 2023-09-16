@@ -1,15 +1,24 @@
-import React, { useEffect, useState } from "react"; 
-import { styled } from "styled-components"; // 스타일
-import NavBar from "../../component/NavBar/NavBar"; // 네비게이션
-import mainBg from "../../assets/bg_main.png"; // 이미지
-import mainHouse from "../../assets/main_house.png"; // 이미지
-import RightSide from "../../component/RightSide/RightSide"; // 
-import { jwtTestApi } from "../../apis/user";
-import Input from './../../component/Input/Input';
+import React, { useEffect, useState } from "react";
+import { styled } from "styled-components";
+import NavBar from "../../component/NavBar/NavBar";
+import mainBg from "../../assets/bg_main.png";
+import mainHouse from "../../assets/main_house.png";
+import CatImg from "../../assets/Cats.svg";
+import RightSide from "../../component/RightSide/RightSide";
+import GiwaModal from "../../component/Modal/GiwaModal/GiwaModal";
+import Completed from "../../component/Popup/Completed";
+import MainAside from "../../component/MainAside/MainAside";
 
 const Main = () => {
-  const [openNav, setOpenNav] = useState(true);  // 오른쪽네비 열기닫기
-  const [openMakeup, setOpenMakeup] = useState(false); // 만들기 열기, 닫기
+  const [openModal, setOpenModal] = useState(false);
+  const [openNav, setOpenNav] = useState(true);
+  const [openMakeup, setOpenMakeup] = useState(false);
+  // 테스트용 - 수정예정
+  const [background, setBackground] = useState("day");
+  const changeBackground = (e) => {
+    setBackground(e.target.value);
+    console.log(e.target.value);
+  };
 
   useEffect(() => {
     // jwt토큰을 넣어서 get요청하는 api호출
@@ -17,33 +26,55 @@ const Main = () => {
     //   alert(result.data);
     // });
   }, []);
-  
-  /* 만들기 시작시  */
+
   const openMakeupHouse = () => {
-    setOpenNav(false); // 네비게이션 닫힘
+    setOpenNav(false);
     setTimeout(() => {
-      setOpenMakeup(true); // 하우스 left
+      setOpenMakeup(true);
+    }, 300);
+  };
+
+  const closeMakeupHouse = () => {
+    setOpenMakeup(false);
+    setTimeout(() => {
+      setOpenNav(true);
     }, 300);
   };
   return (
     <>
-      {/* 위 네비게이션이 내려와있는지 아닌지 체크함 */}
-      <NavBar isShowing={openNav} /> 
-      <ExDiv>
+      {openModal ? <GiwaModal onXBtnClick={() => setOpenModal(false)} /> : null}
+      <NavBar isShowing={openNav} />
+      <ExDiv background={background === "day" ? mainBg : null}>
         <StyledMain>
-          {/* 오픈시 이미지 class left 추가 */}
-          <HouseBox className={openMakeup ? "left" : null}></HouseBox>
+          <HouseBox className={openMakeup ? "left" : null}>
+            <CatImgDiv />
+          </HouseBox>
         </StyledMain>
-        <RightSide openMakeup={openMakeup}></RightSide>
-        {openMakeup ? null : (
-          <button onClick={openMakeupHouse}>
-            클릭
-            <span>안녕ㅋ</span>
+        <RightSide
+          openMakeup={openMakeup}
+          xBtnClickHandler={closeMakeupHouse}
+          setBackground={changeBackground}
+        ></RightSide>
+        {openMakeup ? null : <button onClick={openMakeupHouse}>클릭</button>}
+        {openModal ? null : (
+          <button
+            onClick={() => {
+              setOpenModal(true);
+            }}
+            style={{ marginBottom: "50px" }}
+          >
+            기와선택
           </button>
         )}
       </ExDiv>
+      {/* {openMakeup ? null : <MainAside className="/>} */}
+      <MainAside openMakeup={openMakeup} />
+      {/* <MainAside/> */}
+      {/* 기와 등록 완료 팝업창 start */}
+      {/* <Completed/> */}
+      {/* 기와 등록 완료 팝업창 end */}
     </>
-  ); 
+  );
 };
 
 export default Main;
@@ -51,12 +82,16 @@ export default Main;
 const ExDiv = styled.div`
   width: 100vw;
   height: 100vh;
-  background-image: url(${mainBg});
+  background-image: url(${(props) => props.background});
+  ${(props) => (!props.background ? "background-color: #8585fd;" : null)}
   background-size: cover;
   position: relative;
   overflow: hidden;
-  > button { position: absolute; bottom: 100px; left: 100px; }
-  span { background-color: red; position: relative; }
+  > button {
+    position: absolute;
+    bottom: 100px;
+    left: 100px;
+  }
 `;
 
 const StyledMain = styled.main`
@@ -64,7 +99,7 @@ const StyledMain = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;  
+  position: relative;
 `;
 
 const HouseBox = styled.div`
@@ -73,10 +108,19 @@ const HouseBox = styled.div`
   background: url(${mainHouse}) no-repeat;
   background-size: 800px 700px;
   position: absolute;
-  left: 620px;
+  left: calc(50% - 300px);
   top: 200px;
   transition: all ease-in-out 1s;
   &.left {
     left: 285px;
   }
+`;
+
+const CatImgDiv = styled.div`
+  position: absolute;
+  top: 95px;
+  left: 400px;
+  width: 100px;
+  height: 100px;
+  background: url(${CatImg}) no-repeat;
 `;

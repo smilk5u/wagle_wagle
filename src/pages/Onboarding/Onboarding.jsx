@@ -1,12 +1,11 @@
 import { useRef, useEffect } from 'react';
-import { styled, keyframes } from "styled-components";
-import onboardingBg from './../../assets/onBoarding/onboarding_img.jpg'
-import house from './../../assets/onBoarding/house.png'
-import layer1 from './../../assets/onBoarding/layer_1.png'
-import layer2 from './../../assets/onBoarding/layer_2.png'
-import layer3 from './../../assets/onBoarding/layer_3.png'
+import { styled } from "styled-components";
 import gsap from "gsap";
-
+import onboardingBg from './../../assets/onBoarding/onboarding_img.jpg';
+import house from './../../assets/onBoarding/house.png';
+import layer1 from './../../assets/onBoarding/layer_1.png';
+import layer2 from './../../assets/onBoarding/layer_2.png';
+import layer3 from './../../assets/onBoarding/layer_3.png';
 
 const Onboarding = () => {
   const houseRef = useRef(), layerRef1 = useRef(), layerRef2 = useRef(), layerRef3 = useRef();
@@ -69,7 +68,8 @@ const Title = styled.div`
   strong {
     font-family: var(--font-hunmin);
     font-size: 110px;
-    font-weight: 400;
+    font-weight: 600;
+    color: #222222;
   }
   p {
     margin: 50px 0 0;
@@ -77,6 +77,8 @@ const Title = styled.div`
     font-size: 24px;
     line-height: 40px;
     letter-spacing: -1px;
+    font-weight: 400;
+    color:#424242;
   }
 `
 
@@ -90,8 +92,8 @@ const ButtonWrap = styled.div`
   button {
     height: 64px;
     font-family: var(--font-hunmin);
-    font-weight: 400; 
-    padding: 21px 107px;
+    font-weight: 600; 
+    padding: 21px 107px; 
     margin: 100px 0 0;
     box-sizing: border-box; 
     color: white;

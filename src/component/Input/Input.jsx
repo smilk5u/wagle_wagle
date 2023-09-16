@@ -15,20 +15,18 @@ export default function Input({
   type,
   password,
   validUserInfo,
-  // ...rest
-  placeholder
+  handleIsValidHopae,
+  ...rest
 }) {
   const location = useLocation().pathname;
-  const [input, setInput] = useInput(""); // 인풋 텍스트
-  const [isFocus, setIsFocus] = useState(false); // 포커스 됬는지 안됬는지?
-  const [passwordShowing, setPasswordShowing] = useState(false); // 텍스트 보임/안보임
-  /* 포커스되었을때 */
+  const [input, setInput] = useInput("");
+  const [isFocus, setIsFocus] = useState(false);
+  const [passwordShowing, setPasswordShowing] = useState(false);
   const onFocusChange = () => {
     setIsFocus(true);
   };
-  /* 포커스 해제  */
-  const onBlurChange = () => {    
-    input === "" && setIsFocus(false); // 내용없을때
+  const onBlurChange = () => {
+    input === "" && setIsFocus(false);
   };
 
   useEffect(() => {
@@ -45,12 +43,12 @@ export default function Input({
               return <UserIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />;
             case "Password":
               return <PasswordIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />;
-            default: 
+            default:
               break;
           }
         })()}
         <input
-          placeholder={placeholder}
+          {...rest}
           type={
             type !== "password" ? type : passwordShowing ? "text" : "password"
           }
@@ -78,6 +76,7 @@ export default function Input({
           location={location}
           password={password}
           validUserInfo={validUserInfo}
+          handleIsValidHopae={handleIsValidHopae}
         />
       )}
     </Container>

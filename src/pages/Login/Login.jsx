@@ -56,7 +56,6 @@ const Login = () => {
 
   return (
     <>
-      {/* 네비게이션 바  */}
       <NavBar />
       <Main>
         <MainDiv>
