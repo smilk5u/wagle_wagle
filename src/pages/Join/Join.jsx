@@ -151,6 +151,9 @@ const MainDiv = styled.div`
   align-items: center;
   /* padding-top: 100px; */
   box-sizing: border-box;
+  button {
+    margin: 40px 0 20px;
+  }
 `;
 
 const Sub = styled.h3`

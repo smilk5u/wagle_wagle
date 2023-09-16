@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import SelectTitle from "./../../SelectTitle/SelectTitle";
-import FontsArrow from "./../../../assets/fonts_arrow.svg"
+import { ReactComponent as FontsArrow } from "./../../../assets/fonts_arrow.svg"
 import { ReactComponent as KigHat } from "./../../../assets/main/kigHat.svg"
 
 // 기본 데이터
+const font = ['노토 산스', 'value2', 'value3']
 const fontColorDefault = ['#EA7E00', '#8B76C1', '#2BBDA3', '#82C317', '#1F6448', '#000000'];
 const rangeData = ['왼쪽 정렬', '중앙 정렬', '오른쪽 정렬'];
 
 // 사용자 선택 데이터 
 let selectData = {
-  font: 'Noto Sans KR',
+  font: '노토 산스',
   range: '왼쪽 정렬',
   color: '#6A8AF7'
 }
@@ -48,24 +49,21 @@ const WriteGuestText = () => {
     <Container>
       <GuestBook>
         <TextContain>
-          <TextArea placeholder="진심을 다해 방명록을 남기면&#13;&#10;주인장이 즐거워 할걸세!" />          
+          <TextArea placeholder="진심을 다해 방명록을 남기면&#13;&#10;주인장이 즐거워 할걸세!" />
           <p>{select.font}, {select.color}, {select.range}</p>
         </TextContain>
         <div>
           <Fonts>
             <SelectTitle title={"글꼴선택"} fontSize="18px" weight={500} />
             <SelectBox onClick={() => setShowOptions((prev) => !prev)} show={showOptions}>
-              <Label>{select.font}</Label>
+              <Label>
+                {select.font}
+                <FontsArrow />
+              </Label>
               <SelectOptions show={showOptions}>
-                <Option onClick={handleOnChangeSelectValue}>Noto Sans KR</Option>
-                <Option onClick={handleOnChangeSelectValue}>value1</Option>
-                <Option onClick={handleOnChangeSelectValue}>value2</Option>
-                <Option onClick={handleOnChangeSelectValue}>value3</Option>
-                <Option onClick={handleOnChangeSelectValue}>value4</Option>
-                <Option onClick={handleOnChangeSelectValue}>value5</Option>
-                <Option onClick={handleOnChangeSelectValue}>value6</Option>
-                <Option onClick={handleOnChangeSelectValue}>value7</Option>
-                <Option onClick={handleOnChangeSelectValue}>value8</Option>
+                {
+                  font.map(item => <Option onClick={handleOnChangeSelectValue}>{item}</Option>)
+                }
               </SelectOptions>
             </SelectBox>
           </Fonts>
@@ -102,6 +100,7 @@ const Container = styled.div`
   width: 100%;
   height: auto;
   padding: 36px 0 38px;
+
 `;
 const GuestBook = styled.div`
   display: flex;
@@ -109,6 +108,7 @@ const GuestBook = styled.div`
   gap: 20px;   
 `;
 const TextContain = styled.div`
+  width: 616px;
   min-width: 616px;
   height: 324px;  
   border-radius: 10px;
@@ -170,17 +170,17 @@ const Range = styled.div`
   h2 { margin: 15px 0; }
   ul {
     display: flex;
-    gap: 9px;
-    flex-wrap: wrap;
+    justify-content: space-between;
   }
   button { 
-    padding: 10px 12px 11px;
+    padding: 10px 11px 11px;
     border: 1px solid #1748C1;
     color: #1748C1;
     border-radius: 6px;
     background: #FFF;
     font-size: 16px;
     font-weight: 500;
+    box-sizing: border-box;
   }
 `;
 const Color = styled.div`
@@ -205,16 +205,30 @@ const SelectBox = styled.div`
   position: relative;
   width: 100%;
   padding: 15px 19px;
-  border-radius: 6px;
   box-sizing: border-box;
   cursor: pointer;
-  border:1px solid #E6E6E6;
+  border: 1px solid #E6E6E6;
+  border-radius: ${(props) => (props.show ? "6px 6px 0 0" : "6px")};
   border-color: ${(props) => (props.show ? "#1748C1" : "#E6E6E6")};
   background-color: ${(props) => (props.show ? "#fff" : "#FAFAFA")};
   label { 
     color: ${(props) => (props.show ? "#1748C1" : "#BDBDBD")};
+    svg {
+      transform: ${(props) => (props.show ? "rotate(180deg)" : "rotate(0)")};
+      path {
+        stroke: ${(props) => (props.show ? "#1748C1" : "#858585")};
+      }
+    }
   }
-  &::before {
+  ul {
+    display: ${(props) => (props.show ? "block" : "none")};
+  }
+`;
+const Label = styled.label`
+  font-size: 16px;  
+  text-align: center;    
+  font-weight: 500;
+  > svg {
     width: 14px;
     height: 9px;
     content: "";
@@ -225,30 +239,26 @@ const SelectBox = styled.div`
     right: 19px;
     background: url(${FontsArrow}) 50% 50% no-repeat;
     transition: transform, .2s;
-    transform: ${(props) => (props.show ? "rotate(180deg)" : "rotate(0)")};;
+    path {
+      transition: stroke, .2s;
+    }
   }
-`;
-const Label = styled.label`
-  font-size: 16px;  
-  text-align: center;    
-  font-weight: 500;
 `;
 const SelectOptions = styled.ul`
   position: absolute;
   list-style: none;
-  top: 50px;
-  left: 0;
-  width: 100%;
-  overflow: hidden;  
-  height: 200px;
-  display: ${(props) => (props.show ? "block" : "none")};
+  top: 46px;
+  left: -1px;
+  width: 300px;
+  overflow: hidden;    
   padding: 0;     
   box-sizing: border-box;
   z-index: 2;  
   overflow-y: auto;
-  border-radius: 6px;
+  border-radius: 0 0 6px 6px;
   background-color: #fff;
   border:1px solid #1748C1;
+  border-top:0;
   &::-webkit-scrollbar {
     width: 8px; 
   }
@@ -256,6 +266,18 @@ const SelectOptions = styled.ul`
     height: 30%; 
     border-radius: 10px;
     border:1px solid #e6e6e6;
+  }
+  &::before {
+    width: 14px;
+    height: 9px;
+    content: "";
+    position: absolute;
+    top: 20px;
+    margin:auto;
+    right: 19px;
+    background: url(${FontsArrow}) 50% 50% no-repeat;
+    transition: transform, .2s;
+    transform: ${(props) => (props.show ? "rotate(180deg)" : "rotate(0)")};;
   }
 `;
 const Option = styled.li`
@@ -270,11 +292,11 @@ const Option = styled.li`
     height: 1px;
     content: "";
     display: block;
-    bottom:0; 
+    top: 0; 
     position: absolute;
     margin: auto;
-    left:0; 
-    right:0;
+    left: 0; 
+    right: 0;
     background-color: #E8E8E8;
   }
   &:hover {
