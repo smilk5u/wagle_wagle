@@ -4,12 +4,12 @@ import NavBar from "../../component/NavBar/NavBar";
 import RightSide from "../../component/RightSide/RightSide";
 import GiwaModal from "../../component/Modal/GiwaModal/GiwaModal";
 import Completed from "../../component/Popup/Completed";
-import MainAside from "../../component/MainAside/MainAside";
+import BottomSide from "../../component/BottomSide/BottomSide";
 import mainBg from "../../assets/bg_main.png";
 import mainHouse from "../../assets/main_house.png";
 import haetaeImg from "../../assets/main/haetae_img.png";
 import taegeukgi from "../../assets/main/taegeukgi.png";
-import CaptruePopup from "../../component/MainAside/IconPopup/CaptruePopup";
+import CaptruePopup from "../../component/BottomSide/IconPopup/CaptruePopup";
 
 const Main = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -19,7 +19,6 @@ const Main = () => {
   const [background, setBackground] = useState("day");
   const changeBackground = (e) => {
     setBackground(e.target.value);
-    console.log(e.target.value);
   };
 
   useEffect(() => {
@@ -71,9 +70,13 @@ const Main = () => {
             방문자 : 기와선택
           </button>
         )}
-        <MainAside openMakeup={openMakeup} openMakeupHouse={openMakeupHouse} />
+        <BottomSide
+          openMakeup={openMakeup}
+          openMakeupHouse={openMakeupHouse}
+          bg={background}
+        />
       </ExDiv>
-      
+
       {/* 캡쳐 팝업 start */}
       {/* <CaptruePopup/> */}
       {/* 캡쳐 팝업 end */}
@@ -104,6 +107,7 @@ const ExDiv = styled.div`
 
 const StyledMain = styled.main`
   width: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -116,8 +120,11 @@ const HouseBox = styled.div`
   background: url(${mainHouse}) no-repeat;
   background-size: 800px 700px;
   position: absolute;
-  left: calc(50% - 300px);
-  top: 200px;
+  left: 90px; 
+  top: 100px;
+  right: 0;
+  bottom: 0; 
+  margin: auto;
   transition: all ease-in-out 1s;
   > img {
     position: absolute; 
@@ -125,7 +132,7 @@ const HouseBox = styled.div`
     top: 123px;
   }
   &.left {
-    left: 285px;
+    left: -400px;
   }
 `;
 

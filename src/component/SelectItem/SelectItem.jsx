@@ -1,10 +1,10 @@
 import React from "react";
 import { styled } from "styled-components";
 
-const SelectItem = ({ label, id, name, value, onChange }) => {
+const SelectItem = ({ label, id, name, value, onChange, img }) => {
   return (
     <Container htmlFor={id}>
-      <Item />
+      <Item img={img} />
       <input
         type="radio"
         name={name}
@@ -24,6 +24,7 @@ const Container = styled.label`
   flex-direction: column;
   align-items: center;
   gap: 12px;
+  cursor: pointer;
   > input {
     display: none;
   }
@@ -33,10 +34,12 @@ const Container = styled.label`
   }
 `;
 
-const Item = styled.div`
-  width: 176px;
-  height: 130px;
+const Item = styled.button`
+  width: 160px;
+  height: 110px;
   border-radius: 10px;
   border: 1px solid #e4e4e4;
-  background-color: #d9d9d9; //임시로 지정
+  pointer-events: none;
+  background: ${(props => `url( ${props.img}) 50%, 50% no-repeat;`)};
+  background-size: cover;
 `;
