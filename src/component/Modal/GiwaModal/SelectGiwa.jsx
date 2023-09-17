@@ -108,7 +108,7 @@ export default SelectGiwa;
 const Container = styled.div`
   width: 100%;
   height: auto;
-  padding: 36px 13px;
+  padding: 36px 13px 37px;
   display: flex;
   gap: 20px;
   justify-content: space-between;  

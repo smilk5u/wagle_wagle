@@ -9,6 +9,7 @@ import mainBg from "../../assets/bg_main.png";
 import mainHouse from "../../assets/main_house.png";
 import haetaeImg from "../../assets/main/haetae_img.png";
 import taegeukgi from "../../assets/main/taegeukgi.png";
+import CaptruePopup from "../../component/MainAside/IconPopup/CaptruePopup";
 
 const Main = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -73,6 +74,10 @@ const Main = () => {
         <MainAside openMakeup={openMakeup} openMakeupHouse={openMakeupHouse} />
       </ExDiv>
       
+      {/* 캡쳐 팝업 start */}
+      {/* <CaptruePopup/> */}
+      {/* 캡쳐 팝업 end */}
+
       {/* 기와 등록 완료 팝업창 start */}
       {/* <Completed/> */}
       {/* 기와 등록 완료 팝업창 end */}
@@ -128,8 +133,8 @@ const CatImgDiv = styled.div`
   width: 120px;
   height: 120px;
   position: absolute;
-  top: 79px;
-  left: 376px;
+  top: 83px;
+  left: 381px;
   img {
     width:100%;
     height: 100%;

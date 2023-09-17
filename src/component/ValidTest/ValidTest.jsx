@@ -8,6 +8,7 @@ export default function ValidTest({ name, value, password, validUserInfo, handle
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
   const [isHopae, setIsHopae] = useState(false);
   const [isHopaeWarn, setIsHopaeWarn] = useState("");
+  const [isFindPwd, setIsFindPwd] = useState(false);
 
   // input값이 비어있는지 아닌지를 판단
   useEffect(() => {
@@ -47,6 +48,14 @@ export default function ValidTest({ name, value, password, validUserInfo, handle
         value === password
           ? setIsPasswordConfirm(true)
           : setIsPasswordConfirm(false);
+        return;
+      }
+
+      // FindPwd
+      // email 유효성 검사
+      if (name === "findPwd") {
+        const emailRegex = /[a-zA-Z0-9._+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9.]+/;
+        emailRegex.test(value) ? setIsFindPwd(true) : setIsFindPwd(false);
         return;
       }
 
@@ -126,6 +135,11 @@ export default function ValidTest({ name, value, password, validUserInfo, handle
     handleIsValidHopae(!isHopae);
   }
 
+  // 비밀번호 찾기 페이지 '메일 보내기' 버튼 활성화/비활성화
+  if (name === "findPwd"){
+    handleIsValidHopae(!isFindPwd);
+  }
+
   return (
     <Container>
       {/* 삼항연산자를 사용했는데 다른 방법이 있는지 찾와봐야할듯 */}
@@ -177,6 +191,21 @@ export default function ValidTest({ name, value, password, validUserInfo, handle
           <CheckInfo>
             <span>* </span>
             호명은 한글만 사용 가능해요.
+          </CheckInfo>
+        )
+      ) : null}
+
+      {/* findPwd 유효성 검사 */}
+      {name === "findPwd" ? (
+        !isEmpty ? (
+          isFindPwd ? (
+            <IsTrue></IsTrue>
+          ) : (
+            <IsFalse>이메일 형식에 맞지 않는 메일 주소입니다.</IsFalse>
+          )
+        ) : (
+          <CheckInfo>
+            
           </CheckInfo>
         )
       ) : null}

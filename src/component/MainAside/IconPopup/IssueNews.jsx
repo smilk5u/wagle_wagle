@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import styled from "styled-components";
+import giwaNews from "../../../assets/main/giwa_news.png";
+
 const newsData = [
   {
-    img: "#",
+    img: "../../../assets/main/giwa_news.png",
     title: "1 10월 한글날",
     description: "1 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일",
   },
   {
     img: "",
-    title: "2 10월 한글날",
-    description: "2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일",
+    title: "기와가 도착했오",
+    description: "심청님이 ‘사랑’기와를 남기고 가셨소 ",
   },
   {
     img: "",
-    title: "3 10월 한글날",
-    description: "3 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일",
+    title: "기와가 도착했오",
+    description: "심청님123456이 ‘사랑’기와를 남기고 가...",
   },
   {
     img: "", 
@@ -36,10 +38,10 @@ const IssueNews = () => {
       <strong>소식통</strong>
       <ul>
         {
-          news.map(news => (
+          news.map(news => (            
             <NewsTxt>
               <div>
-                <img src={news.img} alt={news.title} />
+                <img src={giwaNews} alt={news.title} />
               </div>
               <dl>
                 <dt>{news.title}</dt>
@@ -56,30 +58,31 @@ const IssueNews = () => {
 export default IssueNews;
 
 const IssueWrap = styled.div`
-  width: 300px;
-  height: 312px;
+  width: 350px;
   position: absolute; 
   bottom: 85px;
   border: 1px solid #ECE0B9;
-  padding: 27px 20px;  
+  padding: 27px 15px 27px 20px;  
   border-radius: 20px;
-  overflow: hidden;
+  overflow: hidden; 
   left: -30px; 
-  &:after {
-    width: 100%; 
-    height: 100%;
-    position: absolute; 
-    top: 0; left: 0;
-    content: "";
-    display: block;
-    z-index: -1;
-    background-color: rgba(255, 255, 255, .6);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-  }
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, .6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   ul {
-    height: 300px;
+    height: 270px;
     overflow-y: auto;
+    padding: 0 5px 0 0;
+    &::-webkit-scrollbar {
+      width: 6px; 
+      background-color: #faf8f8d3;
+    }
+    &::-webkit-scrollbar-thumb {
+      height: 30%; 
+      border-radius: 10px;
+      background-color: #cecece56;
+    }
   }
   li {
     background-color: #fff;
@@ -88,6 +91,7 @@ const IssueWrap = styled.div`
     padding: 18px;
     box-sizing: border-box;
     border-radius: 10px;
+    &:last-of-type { margin: 0; }
   }
   > strong {
     display: block;
@@ -104,8 +108,8 @@ const NewsTxt = styled.li`
   align-items: center;
   > div {
     min-width: 36px;
+    width: 36px;
     height: 36px;
-    background-color: #222;
     border-radius: 100%;
     margin: 0 10px 0 0;
     > img {

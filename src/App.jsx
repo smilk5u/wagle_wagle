@@ -6,6 +6,7 @@ import Main from "./pages/Main/Main";
 import MakeHopae from "./pages/MakeHopae/MakeHopae";
 import KakaoLogin from "./pages/KakaoLogin/KakaoLogin";
 import Sample from "./pages/Sample/Sample";
+import FindPwd from "./pages/FindPwd/FindPwd";
 
 const routes = [
   {
@@ -35,6 +36,10 @@ const routes = [
   {
     path: "/sample",
     element: <Sample />,
+  },
+  {
+    path: "/findPwd",
+    element: <FindPwd />,
   },
 ];
 

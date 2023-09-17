@@ -40,7 +40,7 @@ export default NameContain;
 
 const NameWrap = styled.div`
   display: flex;
-  margin: 36px 0;
+  margin: 36px 0 45px;
   gap: 35px;
   align-items: center;
   justify-content: space-between;

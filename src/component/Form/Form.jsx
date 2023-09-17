@@ -66,7 +66,7 @@ function Form({
       {location === "/login" && (
         <LoginCheckDiv>
           <CheckBox labelName="이메일, 비밀번호 저장" />
-          <LinkItem to="/find_password">비밀번호 찾기</LinkItem>
+          <LinkItem to="/findPwd">비밀번호 찾기</LinkItem>
         </LoginCheckDiv>
       )}
       {location !== "/login" && (
@@ -147,7 +147,62 @@ function FormMakeHopae({
   );
 }
 
-export { Form as default, FormMakeHopae };
+function FormFindPwd({
+  validUserInfo,
+  onClickBtn,
+}) {
+
+  const location = useLocation().pathname;
+
+  const [form, setForm] = useState({
+    userId: "",
+    password: "",
+    checkPassword: "",
+  });
+
+  const updateForm = useCallback(
+    (name, value) => {
+      setForm({ ...form, [name]: value });
+    },
+    [form]
+  );
+
+  // '메일 보내기' 버튼 비활성화 위한 변수
+  const [isValidFindPwd, setIsValidFindPwd] = useState(true);
+
+  const handleIsValidFindPwd = (newData) => {
+    setIsValidFindPwd(newData);
+  };
+
+  // '메일 보내기' 확인 modal 창 띄우기
+  const onClick = ()=>{
+    onClickBtn(true);
+  }
+
+  return (
+    <FormComponent2>
+      <Input
+        icon="User"
+        type="text"
+        placeholder="이메일을 적어주세요."
+        name="findPwd"
+        updateForm={updateForm}
+        validUserInfo={validUserInfo}
+        handleIsValidHopae={handleIsValidFindPwd}
+      />
+  
+      <Button 
+        buttonText="메일 보내기" 
+        location={location} 
+        onClick={onClick}
+        disabled={isValidFindPwd}
+      />
+
+    </FormComponent2>
+  );
+}
+
+export { Form as default, FormMakeHopae, FormFindPwd };
 
 
 const FormComponent = styled.form`
