@@ -7,7 +7,7 @@ import Button from "../../Button/Button";
 import WriteGuestText from "./WriteGuestText";
 import NameContain from "./NameMade";
 import { ReactComponent as CloseBtn } from "../../../assets/common/closeBtn.svg";
-import { ReactComponent as LeftArrow } from "../../../assets/ic_left_arrow.svg";
+import { ReactComponent as LeftArrow } from "../../../assets/common/ic_left_arrow.svg";
 
 const GiwaModal = ({ onXBtnClick }) => {
   const selectedGiwa = useSelector((state) => state.giwaReducer);

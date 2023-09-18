@@ -1,16 +1,13 @@
 import styled from "styled-components";
 import CheckBox from "../CheckBox/CheckBox";
 import { useCallback, useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
+import { makeHopae } from "../../redux/actions/userActions";
+import { useDispatch } from "react-redux";
 
-function Form({
-  getUserInfo,
-  onSubmit,
-  joinUserInfo,
-  validUserInfo,
-}) {
+function Form({ getUserInfo, onSubmit, joinUserInfo, validUserInfo }) {
   const location = useLocation().pathname;
   const [form, setForm] = useState({
     userId: "",
@@ -52,7 +49,7 @@ function Form({
         name="userId"
         updateForm={updateForm}
         validUserInfo={validUserInfo}
-        handleIsValidHopae={handleIsValidHopae}   // dummy
+        handleIsValidHopae={handleIsValidHopae} // dummy
       />
       <Input
         icon="Password"
@@ -61,7 +58,7 @@ function Form({
         name="password"
         updateForm={updateForm}
         validUserInfo={validUserInfo}
-        handleIsValidHopae={handleIsValidHopae}   // dummy
+        handleIsValidHopae={handleIsValidHopae} // dummy
       />
       {location === "/login" && (
         <LoginCheckDiv>
@@ -78,7 +75,7 @@ function Form({
           password={form.password}
           updateForm={updateForm}
           validUserInfo={validUserInfo}
-          handleIsValidHopae={handleIsValidHopae}   // dummy
+          handleIsValidHopae={handleIsValidHopae} // dummy
         />
       )}
       <Button
@@ -93,18 +90,12 @@ function Form({
   );
 }
 
-
-function FormMakeHopae({
-  validUserInfo,
-}) {
-
+function FormMakeHopae({ validUserInfo }) {
+  const dispatch = useDispatch();
   const location = useLocation().pathname;
+  const navigate = useNavigate();
 
-  const [form, setForm] = useState({
-    userId: "",
-    password: "",
-    checkPassword: "",
-  });
+  const [form, setForm] = useState({});
 
   const updateForm = useCallback(
     (name, value) => {
@@ -113,8 +104,17 @@ function FormMakeHopae({
     [form]
   );
 
-  const linkToJoin = () => {
-    window.location.pathname = "/join";
+  const handleMakeHopae = () => {
+    // TODO-GOGI : 호패만들기 api 나오면 추가 예정
+    // makeHopae({
+    //   nickname: form.hopae,
+    // }).then((result) => {
+    //   console.log(result);
+    // });
+
+    // 위의 과정이 성공했다치고 아래과정 수행
+    dispatch(makeHopae(form.hopae));
+    navigate("/makeGiwaHouse");
   };
 
   // 호패만들기 '기와집 만들러 가기' 버튼 비활성화 위한 변수
@@ -135,23 +135,17 @@ function FormMakeHopae({
         validUserInfo={validUserInfo}
         handleIsValidHopae={handleIsValidHopae}
       />
-  
-      <Button 
-        buttonText="기와집 만들러 가기" 
-        location={location} 
-        onClick={linkToJoin}
+      <Button
+        buttonText="기와집 만들러 가기"
+        location={location}
+        onClick={handleMakeHopae}
         disabled={isValidHopae}
       />
-
     </FormComponent2>
   );
 }
 
-function FormFindPwd({
-  validUserInfo,
-  onClickBtn,
-}) {
-
+function FormFindPwd({ validUserInfo, onClickBtn }) {
   const location = useLocation().pathname;
 
   const [form, setForm] = useState({
@@ -175,9 +169,9 @@ function FormFindPwd({
   };
 
   // '메일 보내기' 확인 modal 창 띄우기
-  const onClick = ()=>{
+  const onClick = () => {
     onClickBtn(true);
-  }
+  };
 
   return (
     <FormComponent2>
@@ -190,20 +184,18 @@ function FormFindPwd({
         validUserInfo={validUserInfo}
         handleIsValidHopae={handleIsValidFindPwd}
       />
-  
-      <Button 
-        buttonText="메일 보내기" 
-        location={location} 
+
+      <Button
+        buttonText="메일 보내기"
+        location={location}
         onClick={onClick}
         disabled={isValidFindPwd}
       />
-
     </FormComponent2>
   );
 }
 
 export { Form as default, FormMakeHopae, FormFindPwd };
-
 
 const FormComponent = styled.form`
   display: flex;

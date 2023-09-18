@@ -1,12 +1,12 @@
 import { keyframes, styled } from "styled-components";
-import { ReactComponent as GnbFooter } from "../../assets/gnb-footer.svg";
-import { ReactComponent as MenuBtn } from "../../assets/ic_baseline_menu.svg";
-import { ReactComponent as ArrowBtn } from "../../assets/Feather Icon.svg";
-import { ReactComponent as MenuXBtn } from "../../assets/x-menu.svg";
+import { ReactComponent as GnbFooter } from "../../assets/gnb/gnb-footer.svg";
+import { ReactComponent as MenuBtn } from "../../assets/gnb/ic_baseline_menu.svg";
+// import { ReactComponent as ArrowBtn } from "../../assets/Feather Icon.svg";
+import { ReactComponent as ArrowBtn } from "../../assets/common/visit_icon.svg";
+import { ReactComponent as MenuXBtn } from "../../assets/common/x-menu.svg";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { userCheckReducer } from "../../redux/reducers/userReducer";
 import { logout } from "../../redux/actions/userActions";
 
 export default function NavBar({ isShowing = true }) {
@@ -18,7 +18,7 @@ export default function NavBar({ isShowing = true }) {
   // const userInfo = JSON.parse(localStorage.getItem("loggedInUser"));
   // const userName = !(userInfo === null) ? userInfo.name : "";
   // 위 코드를 리덕스로 바꾼 부분이 아래부분입니다.
-  const userInfo = useSelector((state) => state.userCheckReducer.User);
+  const userInfo = useSelector((state) => state.userReducer);
   const userName = userInfo.name;
 
   const menuBtnClick = () => {
@@ -58,7 +58,7 @@ export default function NavBar({ isShowing = true }) {
             <StyledMenuBtn onClick={menuBtnClick} />
           )}
         </NavMenuTop>
-        <NavMenuMiddle menuOpen={menuOpen} $isLogin={isLogin}>
+        <NavMenuMiddle $menuOpen={menuOpen} $isLogin={isLogin}>
           <MyInfo>
             <MyInfoItemFirst>
               {isLogin ? (
@@ -70,7 +70,7 @@ export default function NavBar({ isShowing = true }) {
               ) : (
                 <Link to="/login">
                   로그인하세요
-                  <ArrowBtn />
+                  <ArrowBtn width={11} height={12} />
                 </Link>
               )}
             </MyInfoItemFirst>
@@ -154,7 +154,7 @@ const StyledMenuBtn = styled(MenuBtn)`
 const NavMenuMiddle = styled.div`
   width: 100%;
   height: ${(props) =>
-    props.menuOpen ? (props.isLogin ? "320px" : "230px") : "0px"};
+    props.$menuOpen ? (props.$isLogin ? "320px" : "230px") : "0px"};
   background-color: #071b34;
   transition: all 0.5s ease-in-out;
   overflow: hidden;
@@ -198,7 +198,14 @@ const MyInfoItemFirst = styled(MyInfoItem)`
     line-height: 26px;
     color: #fff;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 18px;    
+    svg {
+      margin: 0 0 0 6px;
+      transition: transform, .2s ease-in-out;
+      path {
+        stroke: #fff;        
+      }
+    }
   }
 `;
 
@@ -210,7 +217,7 @@ const StyledLink = styled(Link)`
 `;
 
 const LinkMypage = styled(StyledLink)`
-  color: ${(props) => (props.isLogin ? "#fff" : "#455263")};
+  color: ${(props) => (props.$isLogin ? "#fff" : "#455263")};
 `;
 
 const LogoutBtn = styled.button`

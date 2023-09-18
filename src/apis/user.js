@@ -17,3 +17,9 @@ export const jwtTestApi = async () => {
   const response = await client.get("/api/v1/test");
   return response;
 };
+
+// TODO-GOGI : 호패api 나오면 추가
+// export const makeHopaeApi = async () => {
+//   const response = await client.post("/");
+//   return response;
+// };

@@ -1,30 +1,85 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import SelectTitle from "../SelectTitle/SelectTitle";
 import SelectItem from "../SelectItem/SelectItem";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { ReactComponent as XIcon } from "../../assets/common/closeBtn.svg";
-import { ReactComponent as ResetIcon } from "../../assets/system-uicons_reset.svg";
-import giwaIndigo from "../../assets/main/giwa_indigo.png";
-import giwaBlack from "../../assets/main/giwa_black.png";
-import giwaPink from "../../assets/main/giwa_pink.png";
-import daytime from "../../assets/main/daytime.png";
-import night from "../../assets/main/night.png";
-import haetaeFrame from "../../assets/main/haetae_frame.png";
+import { ReactComponent as ResetIcon } from "../../assets/common/reset_icon.svg";
+import giwaIndigo from "../../assets/rightSide/giwa_indigo.png";
+import giwaBlack from "../../assets/rightSide/giwa_black.png";
+import giwaPink from "../../assets/rightSide/giwa_pink.png";
+import daytime from "../../assets/rightSide/daytime.png";
+import night from "../../assets/rightSide/night.png";
+import haetaeFrame from "../../assets/rightSide/haetae_frame.png";
+import { makeGiwaHouseApi } from "../../apis/giwa";
+import { generateRandomString } from "../../utils/generateRandomString";
 
-const RightSide = ({ openMakeup, xBtnClickHandler, setBackground }) => {
+const RightSide = ({
+  openMakeup,
+  xBtnClickHandler,
+  setBackground,
+  updateFunction,
+}) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const username = useSelector((state) => state.userReducer.name);
+  const isMakeGiwaHouse = location.pathname === "/makeGiwaHouse";
+  const [giwaStyle, setGiwaStyle] = useState({
+    giwaColor: 1,
+    background: 1,
+    friend: 1,
+  });
+
+  useEffect(() => {
+    updateFunction(giwaStyle);
+  }, [giwaStyle]);
+
+  const handleChangeGiwaStyle = (e) => {
+    const name = e.target.name;
+    const value = Number(e.target.value);
+    setGiwaStyle({
+      ...giwaStyle,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = () => {
+    if (isMakeGiwaHouse) {
+      makeGiwaHouseApi({
+        version: "v1",
+        title: "아무타이틀",
+        broadStyle: {
+          colorCode: giwaStyle.giwaColor,
+          backGroundCode: giwaStyle.background,
+          friendCode: giwaStyle.friend,
+        },
+        url: generateRandomString(20),
+      }).then((result) => {
+        if (result.status === 200) {
+          navigate("/main");
+        }
+      });
+    }
+  };
+
+  console.log(giwaStyle);
+
   return (
     <Container className={openMakeup ? "show" : null}>
-      <XBox>
-        <XIcon
-          width={"40px"}
-          height={"40px"}
-          fill="#212121"
-          onClick={xBtnClickHandler}
-        />
-      </XBox>
+      {isMakeGiwaHouse ? null : (
+        <XBox>
+          <XIcon
+            width={"32px"}
+            height={"32px"}
+            fill="#212121"
+            onClick={xBtnClickHandler}
+          />
+        </XBox>
+      )}
       <HeaderBox>
         <TextField>
-          <span>홍길동</span>님,
+          <span>{username}</span>님,
           <br />
           기와집을 꾸며보시오.
         </TextField>
@@ -32,26 +87,47 @@ const RightSide = ({ openMakeup, xBtnClickHandler, setBackground }) => {
       <div>
         <SelectTitle title={"기와 색상 선택"} />
         <ItemLists>
-          <SelectItem label="청색 기와" img={giwaIndigo} />
-          <SelectItem label="적색 기와" img={giwaPink} />
-          <SelectItem label="흑색 기와" img={giwaBlack} />
+          <SelectItem
+            label="청색 기와"
+            img={giwaIndigo}
+            name={"giwaColor"}
+            value={1}
+            id={"giwaIndigo"}
+            onChange={handleChangeGiwaStyle}
+          />
+          <SelectItem
+            label="먹색 기와"
+            img={giwaBlack}
+            name={"giwaColor"}
+            value={2}
+            id={"giwaBlack"}
+            onChange={handleChangeGiwaStyle}
+          />
+          <SelectItem
+            label="적색 기와"
+            img={giwaPink}
+            name={"giwaColor"}
+            value={3}
+            id={"giwaPink"}
+            onChange={handleChangeGiwaStyle}
+          />
         </ItemLists>
         <SelectTitle title={"배경 선택"} />
         <ItemLists>
           <SelectItem
             label={"낮"}
             id="day"
-            name="backGround"
-            value="day"
-            onChange={setBackground}
+            name="background"
+            value={1}
+            onChange={handleChangeGiwaStyle}
             img={daytime}
           />
           <SelectItem
             label={"밤"}
             id="night"
-            name="backGround"
-            value="night"
-            onChange={setBackground}
+            name="background"
+            value={2}
+            onChange={handleChangeGiwaStyle}
             img={night}
           />
         </ItemLists>
@@ -61,7 +137,7 @@ const RightSide = ({ openMakeup, xBtnClickHandler, setBackground }) => {
         </ItemLists>
       </div>
       <div>
-        <Btn>모두 선택해 주시오.</Btn>
+        <Btn onClick={handleSubmit}>모두 선택해 주시오.</Btn>
         <ResetBox>
           <ResetIcon width={24} height={24} />
         </ResetBox>
@@ -84,11 +160,12 @@ const Container = styled.aside`
   position: absolute;
   right: -730px;
   top: 0;
-  bottom: 0; 
+  bottom: 0;
   margin: auto;
   opacity: 0;
   box-sizing: border-box;
   padding: 60px 80px;
+  z-index: 1;
   transition: all ease-in-out 1s;
   &.show {
     right: 0;
@@ -98,7 +175,7 @@ const Container = styled.aside`
 
 const XBox = styled.button`
   position: absolute;
-  top: 50px; 
+  top: 50px;
   right: 48px;
 `;
 
@@ -130,7 +207,7 @@ const ResetBox = styled.button`
   box-sizing: border-box;
   border-radius: 50%;
   box-shadow: 0px 4px 16px rgba(13, 32, 57, 0.06);
-  position: absolute; 
+  position: absolute;
   bottom: 65px;
   right: 88px;
   &:hover {
@@ -139,7 +216,7 @@ const ResetBox = styled.button`
     }
   }
   svg {
-    transition: all, .4s ease-in-out;
+    transition: all, 0.4s ease-in-out;
   }
 `;
 

@@ -40,6 +40,6 @@ const Item = styled.button`
   border-radius: 10px;
   border: 1px solid #e4e4e4;
   pointer-events: none;
-  background: ${(props => `url( ${props.img}) 50%, 50% no-repeat;`)};
+  background: ${(props) => `url( ${props.img}) 50%, 50% no-repeat;`};
   background-size: cover;
 `;

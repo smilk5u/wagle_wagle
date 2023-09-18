@@ -12,7 +12,6 @@ export const client = axios.create({
 // 있으면 토큰 값을 요청에 담아서 보냅니다.
 client.interceptors.request.use(async (config) => {
   const accessToken = getItem("AUTH");
-  console.log(accessToken);
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }

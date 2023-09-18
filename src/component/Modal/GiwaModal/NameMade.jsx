@@ -1,15 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import SelectTitle from '../../SelectTitle/SelectTitle';
-import { ReactComponent as Booklet } from "./../../../assets/booklet.svg";
-import { ReactComponent as KigHat } from "./../../../assets/main/kigHat.svg"
+import { ReactComponent as Booklet } from "./../../../assets/modal/booklet.svg";
+import { ReactComponent as Hat } from "./../../../assets/main/kigHat.svg"
 
 const NameContain = () => {
-
-  const goodWord = "멋진 이름을 가지고 있구려!";
-  const errorWord = "한글로는 어떻게 불러야 하는가?";
-  const koreanWord = "이 이름은 어떤가? 전에 있던 이름은 오해의 소지가 있어 보여 내가 바꿔보았다네";
-
   return (
     <NameWrap>
       <Text>
@@ -27,10 +22,26 @@ const NameContain = () => {
         <SelectTitle title={"어떤 호명으로 등록이 되고 싶은가? 최대 8글자만 사용 가능하다네."} fontSize="16px" weight={500} />
         <input />
         <TextNotification>
-          <KigHat width={20} height={17} />
-          {
-            <span>멋진 이름을 가지고 있구려!</span>
-          }
+          <Hat width={21} height={19} />
+          <div>
+            {/* {
+              <span>
+                멋진 이름을 가지고 있구려!
+              </span>
+            }
+            {
+              <span>
+                한글로는 어떻게 불러야 하는가?
+              </span>
+            } */}
+            {
+              <span>
+                이 이름은 어떤가? <br />
+                전에 있던 이름은 오해의 소지가 있어 <br />
+                보여 내가 바꿔보았다네
+              </span>
+            }
+          </div>
         </TextNotification>
       </NameInput>
     </NameWrap>
@@ -107,15 +118,17 @@ const NameInput = styled.div`
 `;
 
 const TextNotification = styled.div`
-  margin: 15px 0 0;
+  margin: 20px 0 0;
   display: flex;
-  align-items: center;  
+  align-items: start;  
+  > div {
+    margin: 0 0 0 3px;
+  }
   span {
-    margin:0 0 0 5px;
     color: #909090;
     font-family: var(--font-hunmin);
     font-size: 15px;
-    font-style: normal;
+    line-height: 23px;
     font-weight: 300;
   }
 `;

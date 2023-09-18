@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import SelectTitle from "./../../SelectTitle/SelectTitle";
-import { ReactComponent as FontsArrow } from "./../../../assets/fonts_arrow.svg"
-import { ReactComponent as KigHat } from "./../../../assets/main/kigHat.svg"
+import { ReactComponent as FontsArrow } from "./../../../assets/common/fonts_arrow.svg"
+import { ReactComponent as Hat } from "./../../../assets/main/kigHat.svg"
 
 // 기본 데이터
 const font = ['노토 산스', 'value2', 'value3']
@@ -86,7 +86,7 @@ const WriteGuestText = () => {
         </div>
       </GuestBook>
       <TextNotification>
-        <KigHat />
+        <Hat width={25} height={23} />
         {
           <span>한글을 굉장히 잘쓰시는 구려.</span>
         }
@@ -121,7 +121,7 @@ const TextContain = styled.div`
 const TextNotification = styled.div`
   margin: 15px 0 0;
   display: flex;
-  align-items: center;  
+  align-items: end;  
   span {
     margin:0 0 0 10px;
     color: #909090;

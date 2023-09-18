@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
-import kakaoIconPath from "../../assets/symbol-kakao.svg";
-import googleIconPath from "../../assets/symbol-google.svg";
-import naverIconPath from "../../assets/symbol-naver.svg";
+import kakaoIconPath from "../../assets/login/symbol-kakao.svg";
+import googleIconPath from "../../assets/login/symbol-google.svg";
+import naverIconPath from "../../assets/login/symbol-naver.svg";
 import { KAKAO_AUTH_URL } from "./socialLoginUrl";
 
 export default function SocialLogin() {
@@ -54,8 +54,8 @@ const IconImg = styled.span`
     props.social === "kakao"
       ? "#FAE100"
       : props.social === "google"
-      ? "#FFFFFF"
-      : "#00C300"};
+        ? "#FFFFFF"
+        : "#00C300"};
   background-size: cover;
   background-repeat: no-repeat;
   background-position: start;
@@ -67,9 +67,9 @@ const IconImg = styled.span`
     width: 100%;
     height: 100%;
     background-image: ${(props) =>
-      props.social === "kakao"
-        ? `url(${kakaoIconPath})`
-        : props.social === "google"
+    props.social === "kakao"
+      ? `url(${kakaoIconPath})`
+      : props.social === "google"
         ? `url(${googleIconPath})`
         : `url(${naverIconPath})`};
     background-repeat: no-repeat;

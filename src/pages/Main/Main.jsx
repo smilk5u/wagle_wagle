@@ -2,14 +2,17 @@ import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
 import RightSide from "../../component/RightSide/RightSide";
+import GiwaMean from "../../component/RightSide/GiwaMean";
 import GiwaModal from "../../component/Modal/GiwaModal/GiwaModal";
 import Completed from "../../component/Popup/Completed";
 import BottomSide from "../../component/BottomSide/BottomSide";
-import mainBg from "../../assets/bg_main.png";
-import mainHouse from "../../assets/main_house.png";
+import GiwaButton from "../../component/GiwaButton/GiwaButton";
+import mainHouse from "../../assets/main/main_house.png";
 import haetaeImg from "../../assets/main/haetae_img.png";
 import taegeukgi from "../../assets/main/taegeukgi.png";
-import CaptruePopup from "../../component/BottomSide/IconPopup/CaptruePopup";
+import pineTreeFront from "../../assets/main/pine_tree_1.png";
+import pineTreeBack from "../../assets/main/pine_tree_2.png";
+import CapturePopup from "../../component/BottomSide/IconPopup/CapturePopup";
 
 const Main = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -22,10 +25,8 @@ const Main = () => {
   };
 
   useEffect(() => {
-    // jwt토큰을 넣어서 get요청하는 api호출
-    // jwtTestApi().then((result) => {
-    //   alert(result.data);
-    // });
+    // main페이지에서는 기와집을 불러오는 get요청을 해야함
+    // 해당 api 확인되면 추가 예정
   }, []);
 
   const openMakeupHouse = () => {
@@ -45,40 +46,60 @@ const Main = () => {
     <>
       {openModal ? <GiwaModal onXBtnClick={() => setOpenModal(false)} /> : null}
       <NavBar isShowing={openNav} />
-      <ExDiv background={background === "day" ? mainBg : null}>
+      <ExDiv background={background}>
         <StyledMain>
           <HouseBox className={openMakeup ? "left" : null}>
             <CatImgDiv>
               <img src={haetaeImg} alt="해태" />
             </CatImgDiv>
             <img src={taegeukgi} alt="태극기" />
+            {/* 기와 버튼 start */}
+            <GiwaButton/>
+            {/* 기와 버튼 end */}
           </HouseBox>
         </StyledMain>
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
           setBackground={changeBackground}
+          updateFunction={() => { }}
         ></RightSide>
-        {openMakeup ? null : <button onClick={openMakeupHouse}>사용자 : 기와집 만들기</button>}
-        {openModal ? null : (
-          <button
-            onClick={() => {
-              setOpenModal(true);
-            }}
-            style={{ marginBottom: "50px" }}
-          >
-            방문자 : 기와선택
-          </button>
-        )}
+
+        {/* 방명록/기와의미 start */}
+        {/* <GiwaMean
+          openMakeup={openMakeup}
+          xBtnClickHandler={closeMakeupHouse}
+          setBackground={changeBackground}
+        ></GiwaMean> */}
+        {/* 방명록/기와의미 end */}
+
+        <Test>
+          {openMakeup ? null : (
+            <button onClick={openMakeupHouse}>사용자 : 기와집 만들기</button>
+          )}
+          {openModal ? null : (
+            <button
+              onClick={() => {
+                setOpenModal(true);
+              }}
+              style={{ marginBottom: "50px" }}
+            >
+              방문자 : 기와선택
+            </button>
+          )}
+        </Test>
         <BottomSide
           openMakeup={openMakeup}
           openMakeupHouse={openMakeupHouse}
           bg={background}
         />
+        <Tree>
+          <img src={pineTreeFront} alt="앞 소나무" />
+          <img src={pineTreeBack} alt="뒤 소나무" />
+        </Tree>
       </ExDiv>
-
       {/* 캡쳐 팝업 start */}
-      {/* <CaptruePopup/> */}
+      {/* <CapturePopup/> */}
       {/* 캡쳐 팝업 end */}
 
       {/* 기와 등록 완료 팝업창 start */}
@@ -93,16 +114,15 @@ export default Main;
 const ExDiv = styled.div`
   width: 100vw;
   height: 100vh;
-  background-image: url(${(props) => props.background});
-  ${(props) => (!props.background ? "background-color: #8585fd;" : null)}
-  background-size: cover;
+  background: linear-gradient(
+    140deg,
+    ${({ background }) =>
+    background === "day"
+      ? "#FFFEF9 0%, #FFF8DC 100%"
+      : " #8C92CA 0%, #31365B 100%"}
+  );
   position: relative;
   overflow: hidden;
-  > button {
-    position: absolute;
-    bottom: 100px;
-    left: 100px;
-  }
 `;
 
 const StyledMain = styled.main`
@@ -118,16 +138,17 @@ const HouseBox = styled.div`
   width: 800px;
   height: 700px;
   background: url(${mainHouse}) no-repeat;
-  background-size: 800px 700px;
+  background-size: cover;
   position: absolute;
-  left: 90px; 
+  left: 90px;
   top: 100px;
   right: 0;
-  bottom: 0; 
+  bottom: 0;
   margin: auto;
   transition: all ease-in-out 1s;
+  z-index: 2;
   > img {
-    position: absolute; 
+    position: absolute;
     left: -105px;
     top: 123px;
   }
@@ -143,7 +164,39 @@ const CatImgDiv = styled.div`
   top: 83px;
   left: 381px;
   img {
-    width:100%;
+    width: 100%;
     height: 100%;
+  }
+`;
+
+const Tree = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  > img {
+    position: absolute;
+    &:nth-of-type(1) {
+      left: 0;
+      bottom: 0;
+      z-index: 2;
+    }
+    &:nth-of-type(2) {
+      right: 0;
+      top: 10%;
+    }
+  }
+`;
+
+const Test = styled.div`
+  position: relative;
+  z-index: 10;
+  > button {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: 20px;
+    font-weight: 600;
   }
 `;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import giwaNews from "../../../assets/main/giwa_news.png";
+import giwaNews from "../../../assets/bottomSide/giwa_news.png";
 
 const newsData = [
   {
@@ -19,7 +19,7 @@ const newsData = [
     description: "심청님123456이 ‘사랑’기와를 남기고 가...",
   },
   {
-    img: "", 
+    img: "",
     title: "4 10월 한글날",
     description: "4 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일2 한글의 우수성을 기리기 위한 국경일",
   },
@@ -30,15 +30,15 @@ const newsData = [
   },
 ]
 
-const IssueNews = () => {
+const IssueNews = ({ bg }) => {
   const [news, setNews] = useState(newsData);
 
   return (
-    <IssueWrap>
+    <IssueWrap bg={bg}>
       <strong>소식통</strong>
       <ul>
         {
-          news.map(news => (            
+          news.map(news => (
             <NewsTxt>
               <div>
                 <img src={giwaNews} alt={news.title} />
@@ -61,13 +61,14 @@ const IssueWrap = styled.div`
   width: 350px;
   position: absolute; 
   bottom: 85px;
-  border: 1px solid #ECE0B9;
+  border: ${({ bg }) => bg === 'day' ? '1px solid #ECE0B9' : '1px solid #171A32'};
   padding: 27px 15px 27px 20px;  
   border-radius: 20px;
   overflow: hidden; 
   left: -30px; 
   box-sizing: border-box;
   background-color: rgba(255, 255, 255, .6);
+  box-shadow: ${({ bg }) => bg === 'day' ? '5px 5px 15px #ECE0B9' : '5px 5px 15px rgba(23, 26, 50, 0.377)'};
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   ul {

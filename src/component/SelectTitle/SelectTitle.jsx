@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
-import { ReactComponent as TitleIcon } from "../../assets/ic_select_title.svg";
+import { ReactComponent as TitleIcon } from "../../assets/common/ic_select_title.svg";
 
 const SelectTitle = ({ title, fontSize = "20px", weight = 600 }) => {
   return (

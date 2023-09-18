@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 import useInput from "../../hooks/useInput";
-import { ReactComponent as UserIcon } from "../../assets/octicon-person-24.svg";
-import { ReactComponent as PasswordIcon } from "../../assets/icons-8-lock-2.svg";
-import { ReactComponent as ClosedEyeIcon } from "../../assets/humbleicons-eye-close.svg";
-import { ReactComponent as OpendEyeIcon } from "../../assets/fluent-eye-12-filled.svg";
+import { ReactComponent as UserIcon } from "../../assets/login/octicon-person-24.svg";
+import { ReactComponent as PasswordIcon } from "../../assets/login/icons-8-lock-2.svg";
+import { ReactComponent as ClosedEyeIcon } from "../../assets/login/humbleicons-eye-close.svg";
+import { ReactComponent as OpendEyeIcon } from "../../assets/login/fluent-eye-12-filled.svg";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ValidTest from "../ValidTest/ValidTest";

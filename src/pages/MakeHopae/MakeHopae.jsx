@@ -1,11 +1,10 @@
 import { useCallback, useState } from "react";
-import {FormMakeHopae} from "../../component/Form/Form";
+import { FormMakeHopae } from "../../component/Form/Form";
 import NavBar from "../../component/NavBar/NavBar";
 import { styled } from "styled-components";
 import Title from "../../component/Title/Title";
 
 const MakeHopae = () => {
-
   const [isValid, setIsValid] = useState({
     isEmail: false,
     isPassword: false,
@@ -28,9 +27,7 @@ const MakeHopae = () => {
           <Title title="호패만들기" />
           <Sub>자네, 이곳은 처음이요?</Sub>
           <Sub>이곳은 호패가 없으면 들어갈 수가 없다네.</Sub>
-          <FormMakeHopae
-            validUserInfo={validUserInfo}
-          />
+          <FormMakeHopae validUserInfo={validUserInfo} />
         </MainDiv>
       </Main>
     </>
@@ -39,12 +36,12 @@ const MakeHopae = () => {
 
 export default MakeHopae;
 
-
 const Main = styled.main`
   width: 100%;
-  height: auto;
+  height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 const MainDiv = styled.div`
@@ -52,7 +49,7 @@ const MainDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 100px;
+  padding-top: 50px;
   box-sizing: border-box;
   button {
     margin: 40px 0 0;

@@ -27,7 +27,7 @@ const Login = () => {
   }, []);
 
   // submit 버튼 클릭시 실행될 함수( 나중에 백엔드 완성되면 추가 로직 구성할 예정 )
-  const onSubmit = useCallback(() => {
+  const onSubmit = () => {
     loginApi({
       email: loginId,
       password: loginPassword,
@@ -36,23 +36,23 @@ const Login = () => {
         // 테스트용 api에서는 jwt토큰 값만 내려오고 있음.
         // 유저정보(name)이 필요해서 찐api나오면 요청해야함
         setItem("AUTH", result.data);
-        navigate("/main");
+        dispatch(
+          login({
+            id: "아이디",
+            name: "",
+            data: {},
+          })
+        );
+        navigate("/makeHopae");
+
         // TODO-GOGI : api나오면 redux상태관리 로직도 추가
+        // TODO-GOGI : 유저 로그인 후 호패정보도 내려오면 있는지 확인 후 없다면
+        // navigate("/makeHopae")
+        // 호패정보가 있다면
+        // navigate("/main")
       }
     });
-
-    // 임시 로그인 코드(테스트용)
-    // if (loginId === user.id && loginPassword === user.password) {
-    //   dispatch(
-    //     login({
-    //       id: user.id,
-    //       name: user.name,
-    //       loggedIn: true,
-    //     })
-    //   );
-    //   window.location.pathname = "/main";
-    // }
-  }, [loginId, loginPassword]);
+  };
 
   return (
     <>

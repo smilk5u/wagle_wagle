@@ -7,6 +7,7 @@ import MakeHopae from "./pages/MakeHopae/MakeHopae";
 import KakaoLogin from "./pages/KakaoLogin/KakaoLogin";
 import Sample from "./pages/Sample/Sample";
 import FindPwd from "./pages/FindPwd/FindPwd";
+import MakeGiwaHouse from "./pages/MakeGiwaHouse/MakeGiwaHouse";
 
 const routes = [
   {
@@ -28,6 +29,10 @@ const routes = [
   {
     path: "/makeHopae",
     element: <MakeHopae />,
+  },
+  {
+    path: "/makeGiwaHouse",
+    element: <MakeGiwaHouse />,
   },
   {
     path: "/kakao_login",

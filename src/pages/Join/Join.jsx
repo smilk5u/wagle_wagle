@@ -36,27 +36,23 @@ const Join = () => {
     [isValid]
   );
 
-  const onJoinSubmit = useCallback(() => {
+  const onJoinSubmit = () => {
     if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm) {
-      try {
-        joinApi({
-          email: userId,
-          password: password,
-          username: "닉네임2",
-        }).then((result) => {
-          if (result.status === 200) {
-            setIsModalOpen(true);
-          }
-          // TODO-GOGI: 에러처리부분 백엔드와 얘기해서 추가 로직 구현해야함
-          if (result.status === 500) {
-            console.log("error500");
-          }
-        });
-      } catch (error) {
-        console.log(error);
-      }
+      joinApi({
+        email: userId,
+        password: password,
+        username: "닉네임2",
+      }).then((result) => {
+        if (result.status === 200) {
+          setIsModalOpen(true);
+        }
+        // TODO-GOGI: 에러처리부분 백엔드와 얘기해서 추가 로직 구현해야함
+        if (result.status === 500) {
+          console.log("error500");
+        }
+      });
     }
-  }, []);
+  };
 
   return (
     <>
