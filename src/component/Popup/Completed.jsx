@@ -2,8 +2,7 @@ import React from 'react';
 import Modal from "../Modal/Modal";
 import styled from 'styled-components';
 import { ReactComponent as CloseBtn } from "../../assets/common/closeBtn.svg";
-// import Haetae from "../../assets/main/popup_haetae_img.png";
-import Haetae from "../../assets/main/popup_haetae_img.png";
+import Haetae from "../../assets/popup/popup_haetae_img.png";
 import Pattern from "../../assets/popup/pattern.png"; 
  
 const Completed = () => {

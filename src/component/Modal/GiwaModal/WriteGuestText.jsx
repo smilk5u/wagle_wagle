@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import SelectTitle from "./../../SelectTitle/SelectTitle";
-import { ReactComponent as FontsArrow } from "./../../../assets/common/fonts_arrow.svg"
-import { ReactComponent as Hat } from "./../../../assets/main/kigHat.svg"
+import { ReactComponent as FontsArrow } from "./../../../assets/common/fonts_arrow.svg";
+import { ReactComponent as Hat } from "./../../../assets/main/kigHat.svg";
 
 // 기본 데이터
 const font = ['노토 산스', 'value2', 'value3']
@@ -99,7 +99,7 @@ export default WriteGuestText;
 const Container = styled.div`
   width: 100%;
   height: auto;
-  padding: 36px 0 38px;
+  padding: 36px 0 40px;
 
 `;
 const GuestBook = styled.div`

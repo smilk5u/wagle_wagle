@@ -8,6 +8,7 @@ import KakaoLogin from "./pages/KakaoLogin/KakaoLogin";
 import Sample from "./pages/Sample/Sample";
 import FindPwd from "./pages/FindPwd/FindPwd";
 import MakeGiwaHouse from "./pages/MakeGiwaHouse/MakeGiwaHouse";
+import StorageGiwa from "./pages/StorageGiwa/StorageGiwa"; 
 
 const routes = [
   {
@@ -45,6 +46,10 @@ const routes = [
   {
     path: "/findPwd",
     element: <FindPwd />,
+  },
+  {
+    path: "/StorageGiwa",
+    element: <StorageGiwa />,
   },
 ];
 

@@ -165,7 +165,7 @@ const Container = styled.aside`
   opacity: 0;
   box-sizing: border-box;
   padding: 60px 80px;
-  z-index: 1;
+  z-index: 2;
   transition: all ease-in-out 1s;
   &.show {
     right: 0;

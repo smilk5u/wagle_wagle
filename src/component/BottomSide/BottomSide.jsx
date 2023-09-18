@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import styled from 'styled-components';
 import IssueNews from "./IconPopup/IssueNews";
 import Sharing from "./IconPopup/Sharing";
-import KigImg from "../../assets/main/kig_img.png";
+import KigImg from "../../assets/bottomSide/kig_img.png";
 import { ReactComponent as VisitIcon } from "../../assets/common/visit_icon.svg";
 import { ReactComponent as Board } from "../../assets/bottomSide/board_img.svg";
 import { ReactComponent as SideBoard } from "../../assets/bottomSide/side_board_img.svg";
