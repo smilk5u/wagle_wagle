@@ -7,11 +7,11 @@ import GiwaModal from "../../component/Modal/GiwaModal/GiwaModal";
 import Completed from "../../component/Popup/Completed";
 import BottomSide from "../../component/BottomSide/BottomSide";
 import GiwaButton from "../../component/GiwaButton/GiwaButton";
-import mainHouse from "../../assets/main/main_house.png";
+import mainHouse from "../../assets/main/giwa_house_indigo.png";
 import haetaeImg from "../../assets/main/haetae_img.png";
 import taegeukgi from "../../assets/main/taegeukgi.png";
-import pineTreeFront from "../../assets/main/pine_tree_1.png";
-import pineTreeBack from "../../assets/main/pine_tree_2.png";
+import pineTreeLeft from "../../assets/main/pine_tree_left.png";
+import pineTreeRight from "../../assets/main/pine_tree_right.png";
 import CapturePopup from "../../component/BottomSide/IconPopup/CapturePopup";
 
 const Main = () => {
@@ -31,30 +31,33 @@ const Main = () => {
 
   const openMakeupHouse = () => {
     setOpenNav(false);
-    setTimeout(() => {
-      setOpenMakeup(true);
-    }, 300);
+    setOpenMakeup(true);
+    /* setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다 */
+    // setTimeout(() => {
+    //   setOpenMakeup(true);
+    // }, 300);
   };
 
   const closeMakeupHouse = () => {
     setOpenMakeup(false);
-    setTimeout(() => {
-      setOpenNav(true);
-    }, 300);
+    setOpenNav(true);
+    // setTimeout(() => {
+    //   setOpenNav(true);
+    // }, 300);
   };
   return (
     <>
       {openModal ? <GiwaModal onXBtnClick={() => setOpenModal(false)} /> : null}
       <NavBar isShowing={openNav} />
-      <ExDiv background={background}>
+      <ExDiv $background={background}>
         <StyledMain>
           <HouseBox className={openMakeup ? "left" : null}>
-            <CatImgDiv>
+            <HaetaeWrap>
               <img src={haetaeImg} alt="해태" />
-            </CatImgDiv>
+            </HaetaeWrap>
             <img src={taegeukgi} alt="태극기" />
             {/* 기와 버튼 start */}
-            <GiwaButton/>
+            <GiwaButton />
             {/* 기와 버튼 end */}
           </HouseBox>
         </StyledMain>
@@ -91,11 +94,11 @@ const Main = () => {
         <BottomSide
           openMakeup={openMakeup}
           openMakeupHouse={openMakeupHouse}
-          bg={background}
+          backgroundState={background}
         />
         <Tree>
-          <img src={pineTreeFront} alt="앞 소나무" />
-          <img src={pineTreeBack} alt="뒤 소나무" />
+          <img src={pineTreeLeft} alt="왼쪽 소나무" />
+          <img src={pineTreeRight} alt="오른쪽 소나무" />
         </Tree>
       </ExDiv>
       {/* 캡쳐 팝업 start */}
@@ -116,8 +119,8 @@ const ExDiv = styled.div`
   height: 100vh;
   background: linear-gradient(
     140deg,
-    ${({ background }) =>
-    background === "day"
+    ${({ $background }) =>
+    $background === "day"
       ? "#FFFEF9 0%, #FFF8DC 100%"
       : " #8C92CA 0%, #31365B 100%"}
   );
@@ -135,13 +138,13 @@ const StyledMain = styled.main`
 `;
 
 const HouseBox = styled.div`
-  width: 800px;
-  height: 700px;
+  width: 770px;
+  height: 679px;
   background: url(${mainHouse}) no-repeat;
   background-size: cover;
   position: absolute;
-  left: 90px;
-  top: 100px;
+  left: 7%;
+  top: 12%;
   right: 0;
   bottom: 0;
   margin: auto;
@@ -149,20 +152,20 @@ const HouseBox = styled.div`
   z-index: 2;
   > img {
     position: absolute;
-    left: -105px;
-    top: 123px;
+    left: -14%;
+    top: 18%;
   }
   &.left {
-    left: -400px;
+    left: -500px;
   }
 `;
 
-const CatImgDiv = styled.div`
+const HaetaeWrap = styled.div`
   width: 120px;
-  height: 120px;
   position: absolute;
-  top: 83px;
-  left: 381px;
+  top: 11%; 
+  left: 47%;
+  z-index: 2;
   img {
     width: 100%;
     height: 100%;
@@ -175,16 +178,19 @@ const Tree = styled.div`
   position: absolute;
   left: 0;
   top: 0;
-  > img {
+  pointer-events: none;
+  > img {    
     position: absolute;
     &:nth-of-type(1) {
+      max-width: 460px;
       left: 0;
       bottom: 0;
       z-index: 2;
     }
     &:nth-of-type(2) {
+      max-width: 410px;
       right: 0;
-      top: 10%;
+      top: 13%;
     }
   }
 `;

@@ -1,12 +1,14 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import NavBar from "../../component/NavBar/NavBar";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import NavBar from "../../component/NavBar/NavBar";
 import giwaFrame from "../../assets/stroage/giwa_frame_img.png";
 import { ReactComponent as VisitIcon } from "../../assets/common/visit_icon.svg";
 import { ReactComponent as Badge } from "../../assets/stroage/latest_badge.svg";
-import { ReactComponent as FontsArrow } from "../../assets/common/fonts_arrow.svg";
+import { ReactComponent as ToggleArrow } from "../../assets/common/toggle_arrow.svg";
+import { ReactComponent as GiwaMean1 } from "../../assets/stroage/giwa_mean1.svg";
 
+// 기와 보관함 데이터
 const giwaData = [
   { id: 1, name: "홍길동1", date: "23년 10월 9일", img: "" },
   { id: 2, name: "홍길동2", date: "23년 10월 9일", img: "" },
@@ -27,20 +29,24 @@ const giwaData = [
   { id: 17, name: "홍길동7", date: "23년 10월 9일", img: "" },
 ]
 
-// 사용자 선택 데이터 
-let selectData = ['기와 목록 최신순', '기와 목록 과거순'];
+/* 비교데이터 */
+let data = ['기와 목록 최신순', '기와 목록 과거순'];
 
 const StorageGiwa = () => {
-  const [giwaStorate, setGiwaStorate] = useState(giwaData);
-  const [showOptions, setShowOptions] = useState(false); // 셀렉트
-  const [select, setSelect] = useState(selectData[0]);
+  const [giwaStorage, setGiwaStorage] = useState(giwaData); // 기와 보관함 데이터
+  const [showOptions, setShowOptions] = useState(false); // 셀렉트 boolean
+  const [selectData, setSelectData] = useState({
+    select: '기와 목록 최신순',
+    option: '기와 목록 과거순'
+  });
 
-  /* 폰트 변경 */
+  /* 셀렉트 선택 */
   const handleOnChangeSelectValue = (e) => {
+    if (!showOptions) return
     const { innerText } = e.target;
-    setSelect({
-      ...select,
-      font: innerText
+    setSelectData({
+      select: data.filter(item => item === innerText),
+      option: data.filter(item => item !== innerText)
     })
   };
 
@@ -54,35 +60,34 @@ const StorageGiwa = () => {
             기와를 이만큼 <br />
             받았다오.
           </Title>
-          <p>총 <em>{giwaStorate.length}</em>개를 받았소.</p>
+          <p>총 <em>{giwaStorage.length}</em>개를 받았소.</p>
         </AsideTtile>
         <StorageContain>
           <Nav>
-            <div>
+            <NavCont>
               <Link to="/MyPage">마이페이지</Link>
               <VisitIcon />
               <b>보관함</b>
-            </div>
-            <SelectBox onClick={() => setShowOptions((prev) => !prev)} show={showOptions}>
-              <Label>
-                {select.font}
-              </Label>
-              <SelectOptions show={showOptions}>
-                {
-                  selectData.map(item => <Option onClick={handleOnChangeSelectValue}>{item}</Option>)
-                }
-              </SelectOptions>
-            </SelectBox>
+            </NavCont>
+            <Select onClick={() => setShowOptions((boolean) => !boolean)} $show={showOptions}>
+              <ul>
+                <li onClick={handleOnChangeSelectValue}><button>{selectData.select}<ToggleArrow /></button></li>
+                <li onClick={handleOnChangeSelectValue}><button>{selectData.option}</button></li>
+              </ul>
+            </Select>
           </Nav>
           <GiwaWrap>
             {
-              giwaStorate.map(item => (
+              giwaStorage.map(item => (
                 <GiwaLi key={item.id}>
                   <button type="button">
                     <img src={giwaFrame} alt="" />
-                    <span>{item.date}</span>
-                    <em><Badge /></em>
+                    {
+                      item.id < 13 && <em><Badge /></em>
+                    }
+                    <GiwaMean1/>
                   </button>
+                  <span>{item.date}</span>
                 </GiwaLi>
               ))
             }
@@ -138,127 +143,96 @@ const Nav = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 0 0 30px;
-  > div {
-    display: flex;
-    align-items: center;
-    > a,b {
-      color: #616161;
-      font-size: 18px;
-      font-weight: 400;
-      letter-spacing: 0.2px;
-    }
-    b {
-      font-weight: 500;
-    }
-    > svg {
-      margin: 0 17px;
-      path {
-        stroke: #616161;
-      }
+`;
+const NavCont = styled.div`
+  display: flex;
+  align-items: center; 
+  > a,b {
+    color: #616161;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+  }
+  b {
+    font-weight: 500;
+  }
+  > svg {
+    margin: 0 17px;
+    path {
+      stroke: #616161;
     }
   }
 `;
 
-/* 셀렉트 박스 */
-const SelectBox = styled.div`
-  width: 198px;
+const Select = styled.div`
+  width: 198px; height: 50px;
   position: relative;
-  padding: 15px 19px;
-  box-sizing: border-box;
-  cursor: pointer;
-  border: 1px solid #E6E6E6;
-  border-radius: ${(props) => (props.show ? "6px 6px 0 0" : "6px")};
-  border-color: ${(props) => (props.show ? "#1748C1" : "#E6E6E6")};
-  background-color: ${(props) => (props.show ? "#fff" : "#FAFAFA")};
-  label { 
-    color: ${(props) => (props.show ? "#1748C1" : "#BDBDBD")};
-    svg {
-      transform: ${(props) => (props.show ? "rotate(180deg)" : "rotate(0)")};
-      path {
-        stroke: ${(props) => (props.show ? "#1748C1" : "#858585")};
+  margin: 0 -3% 0 0;
+  &:before {
+      width: 73%;
+      height: 1px;
+      display: block;
+      position: absolute;
+      content: "";
+      bottom: -2px; left: 0;
+      margin: auto;
+      right: 0;
+      background-color: #E8E8E8;
+    }
+  ul {
+    overflow: hidden;
+    height:${({ $show }) => $show ? 'auto' : '50px'}; 
+    position: absolute;
+    width: 100%;
+    top: 0; left: 0;
+    background-color: #fff;
+    z-index: 1;    
+    border-radius: 14px;
+    box-shadow: ${({ $show }) => $show ? '3px 3px 10px #e4e1e15a' : 'none'}; 
+    box-sizing: border-box;
+    border: ${({ $show }) => $show ? '1px solid #EAEAEA' : '1px solid transparent'}; 
+  }
+  li {    
+    height: 50px;
+    padding: 0 0 0 30px;    
+    position: relative;
+    display: flex;
+    align-items: center;
+    &:nth-of-type(1) {
+      &:before {
+        display: none;
       }
     }
-  }
-  ul {
-    display: ${(props) => (props.show ? "block" : "none")};
-  }
-`;
-const Label = styled.label`
-  font-size: 16px;  
-  text-align: center;    
-  font-weight: 500;
-  > svg {
-    width: 14px;
-    height: 9px;
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom:0;
-    margin:auto;
-    right: 19px;
-    background: url(${FontsArrow}) 50% 50% no-repeat;
-    transition: transform, .2s;
-    path {
-      transition: stroke, .2s;
+    &:before {
+      width: 73%;
+      height: 1px;
+      display: block;
+      position: absolute;
+      content: "";
+      top: 0; left: 0;
+      margin: auto;
+      right: 0;
+      background-color: #E8E8E8;
     }
-  }
-`;
-const SelectOptions = styled.ul`
-  position: absolute;
-  list-style: none;
-  top: 46px;
-  left: -1px;
-  overflow: hidden;    
-  padding: 0;     
-  box-sizing: border-box;
-  z-index: 2;  
-  overflow-y: auto;
-  border-radius: 0 0 6px 6px;
-  background-color: #fff;
-  border:1px solid #1748C1;
-  border-top:0;
-  &::-webkit-scrollbar {
-    width: 8px; 
-  }
-  &::-webkit-scrollbar-thumb {
-    height: 30%; 
-    border-radius: 10px;
-    border:1px solid #e6e6e6;
-  }
-  &::before {
-    width: 14px;
-    height: 9px;
-    content: "";
-    position: absolute;
-    top: 20px;
-    margin:auto;
-    right: 19px;
-    background: url(${FontsArrow}) 50% 50% no-repeat;
-    transition: transform, .2s;
-    transform: ${(props) => (props.show ? "rotate(180deg)" : "rotate(0)")};;
-  }
-`;
-const Option = styled.li`
-  padding: 15px 19px;
-  color:#BDBDBD;
-  font-weight: 500;
-  font-size: 16px;
-  transition: color, .2s ease-in;
-  position: relative;
-  &:after {
-    width: 90%; 
-    height: 1px;
-    content: "";
-    display: block;
-    top: 0; 
-    position: absolute;
-    margin: auto;
-    left: 0; 
-    right: 0;
-    background-color: #E8E8E8;
-  }
-  &:hover {
-    color: #1748C1;
+    > button {
+      width: 100%;
+      height: 100%;
+      display: block;
+      color: ${({ $show }) => $show ? '#B3B3B3' : 'B3B3B3'}; 
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 28px; 
+      letter-spacing: 0.2px;
+      svg {
+        position: absolute; right: 17%; 
+        margin: auto; bottom: 0; top: 0;
+        /* transition: transform, all .25s ease-in-out; */
+        transform: ${({ $show }) => $show ? 'rotate(0)' : 'rotate(-180deg)'}; 
+      }
+      &:hover {
+        color: #535353;
+      }
+    }
   }
 `;
 
@@ -270,17 +244,44 @@ const GiwaWrap = styled.ul`
 const GiwaLi = styled.li`
   width: 29.5918%; 
   margin: 0 0 5.6122%;
-  position: relative;
+  position: relative; 
+  > span {
+    margin: 5% 0 0;
+    float: right;
+    color: #757575;
+    text-align: right;
+    font-family: var(--font-hunmin-saeron);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+  }  
   button {
-    > span {
-      margin: 5% 0 0;
-      float: right;
-      color: #757575;
-      text-align: right;
-      font-family: var(--font-hunmin-saeron);
-      font-size: 14px;
-      font-weight: 400;
-      letter-spacing: 0.2px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;    
+    &:after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0; left: 0;
+      background-color: transparent;
+      transition: background-color, .3s ease-in-out;
+      pointer-events: none;
+    }
+    &:hover {
+      &:after {        
+        background-color: rgba(231, 88, 82, .7);
+      }
+    } 
+    > svg {
+      position: absolute;
+      left: 12%;
+      top: 26%; 
+      bottom: 0;
+      right: 0;
+      margin: auto;
     }
     > em {
       width: 30px;
@@ -288,7 +289,7 @@ const GiwaLi = styled.li`
       background-color: #E75852;
       position: absolute; left: 12px; top: 12px;
       border-radius: 30px;
-      svg {
+      > svg {
         position: absolute;
         margin: auto;
         left: 0;

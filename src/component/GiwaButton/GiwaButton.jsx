@@ -9,10 +9,10 @@ const GiwaButton = () => {
   return (
     <GiwaContainer>
       <GiwaSvg viewBox="0 0 770 679" x="0px" y="0px">
-        {giwa.map(item => <path onClick={() => console.log(item.name)} d={item.data} />)}
+        {giwa.map(giwa => <path key={giwa.id} onClick={() => console.log(giwa.name)} d={giwa.data} />)}
       </GiwaSvg>
       <GiwaName>
-        {giwa.map(item => <li><GiwaMean1 /></li>)}
+        {giwa.map(giwa => <li key={giwa.id}><GiwaMean1 /></li>)}
       </GiwaName>
     </GiwaContainer>
   );
@@ -56,13 +56,13 @@ const GiwaName = styled.ul`
     /* background-color: green; */
     &:nth-of-type(1) { left: 17%; top: 8%; }
     &:nth-of-type(2) { left: 26.5%; top: 14%; }
-    &:nth-of-type(3) { left: 36.2%; top: 20.1%; }
-    &:nth-of-type(4) { left: 45.8%; top: 26.2%; }
+    &:nth-of-type(3) { left: 36.1%; top: 19.8%; }
+    &:nth-of-type(4) { left: 45.7%; top: 25.9%; }
     &:nth-of-type(5) { left: 11%; top: 17.5%; }
     &:nth-of-type(6) { left: 20%; top: 24%; }
     &:nth-of-type(7) { left: 30%; top: 30.5%; }
     &:nth-of-type(8) { left: 39.5%; top: 37%; }
-    &:nth-of-type(9) { left: 4%; top: 25%; }
+    &:nth-of-type(9) { left: 3.2%; top: 24.8%; }
     &:nth-of-type(10) { left: 13.5%; top: 32.5%; }
     &:nth-of-type(11) { left: 24.5%; top: 40.5%; }
     &:nth-of-type(12) { left: 36%; top: 48%; }

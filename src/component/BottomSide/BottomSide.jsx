@@ -14,10 +14,9 @@ import { ReactComponent as SharingIcon } from "../../assets/bottomSide/sharing_i
 import { ReactComponent as GiwaSetting } from "../../assets/bottomSide/giwa_setting_icon.svg";
 import gsap from "gsap";
 
-const MainAside = ({ openMakeup, openMakeupHouse, bg }) => {
+const MainAside = ({ openMakeup, openMakeupHouse, backgroundState }) => {
   const [iconIsOpen, setIconIsOpen] = useState(false);
   const ContainRef = useRef();
-  const houseRef = useRef();
 
   useEffect(() => {
     openMakeup
@@ -26,9 +25,8 @@ const MainAside = ({ openMakeup, openMakeupHouse, bg }) => {
   }, [openMakeup])
 
   return (
-    // <Contain className={openMakeup ? "hidden" : null}>
     <Contain ref={ContainRef}>
-      <History bg={bg}>
+      <History $bgState={backgroundState}>
         <img src={KigImg} alt="세종대왕 이미지" />
         <div>
           <strong>내가 아는 한글의 역사는 어디까지?</strong>
@@ -40,7 +38,7 @@ const MainAside = ({ openMakeup, openMakeupHouse, bg }) => {
         </VisitLink>
       </History>
       <IconBar>
-        <Name isOpen={iconIsOpen}>
+        <Name $isOpen={iconIsOpen} $bgState={backgroundState}>
           <SideBoard className="side1" />
           <div>
             <strong>
@@ -51,13 +49,13 @@ const MainAside = ({ openMakeup, openMakeupHouse, bg }) => {
           </div>
           <SideBoard className="side2" />
         </Name>
-        <Various isOpen={iconIsOpen} bg={bg}>
+        <Various $isOpen={iconIsOpen} $bgState={backgroundState}>
           <li>
             <button onClick={() => alert('소식')}>
               <Issue />
             </button>
             {/* 소식통 start */}
-            <IssueNews bg={bg} />
+            <IssueNews backgroundState={backgroundState} />
             {/* 소식통 end */}
           </li>
           <li><button onClick={() => alert('캡쳐화면')}><Capture /></button></li>
@@ -66,19 +64,19 @@ const MainAside = ({ openMakeup, openMakeupHouse, bg }) => {
               <SharingIcon />
             </button>
             {/* 공유하기 start */}
-            <Sharing bg={bg} />
+            <Sharing backgroundState={backgroundState} />
             {/* 공유하기 end */}
           </li>
           <li><button onClick={() => openMakeupHouse(true)}><GiwaSetting /></button></li>
         </Various>
         {
-          <ToggleBtn onClick={() => setIconIsOpen(!iconIsOpen)} bg={bg} isOpen={iconIsOpen}>
+          <ToggleBtn onClick={() => setIconIsOpen(!iconIsOpen)} $bgState={backgroundState} $isOpen={iconIsOpen}>
             <ToggleInline className="inline" />
             <ToggleOutline />
           </ToggleBtn>
         }
       </IconBar>
-    </Contain >
+    </Contain>
   );
 };
 
@@ -108,14 +106,14 @@ const History = styled.div`
   padding: 20px 30px;
   border-radius: 20px;
   box-sizing: border-box; 
-  border: ${({ bg }) => bg === 'day' ? '1px solid #ECE0B9' : '1px solid #171A32'};
-  box-shadow: ${({ bg }) => bg === 'day' ? '5px 5px 10px #ECE0B9' : '5px 5px 15px rgba(23, 26, 50, 0.478)'};
+  border: ${({ $bgState }) => $bgState === 'day' ? '1px solid #ECE0B9' : '1px solid #171A32'};
+  box-shadow: ${({ $bgState }) => $bgState === 'day' ? '5px 5px 10px #ECE0B9' : '5px 5px 15px rgba(23, 26, 50, 0.478)'};
   > div {
     margin: 0 0 0 20px;
   }
   strong {
     color: #222;
-    font-size: 18px;
+    font-size: 18px; 
     font-weight: 700;
     line-height: 24px; 
   }
@@ -129,20 +127,20 @@ const History = styled.div`
   > a {
     &:hover {
       span {
-        color: ${({ bg }) => bg === 'day' ? '#72543f' : '#080a16'};
+        color: ${({ $bgState }) => $bgState === 'day' ? '#72543f' : '#080a16'};
       }
       svg {
         path {
-          stroke: ${({ bg }) => bg === 'day' ? '#72543f' : '#080a16'};
+          stroke: ${({ $bgState }) => $bgState === 'day' ? '#72543f' : '#080a16'};
         }
       }
     }
     span {
-      color: ${({ bg }) => bg === 'day' ? '#8B715F' : '#171A32'};
+      color: ${({ $bgState }) => $bgState === 'day' ? '#8B715F' : '#171A32'};
     }
     svg {
       path {
-        stroke: ${({ bg }) => bg === 'day' ? '#8B715F' : '#171A32'};
+        stroke: ${({ $bgState }) => $bgState === 'day' ? '#8B715F' : '#171A32'};
       }
     }
   }
@@ -198,12 +196,11 @@ const IconBar = styled.div`
   justify-content: space-between;
 `;
 const Name = styled.div`
-  width: 368px;
-  width: ${(props) => props.isOpen ? '1px' : '368px'};
+  width: ${(props) => props.$isOpen ? '1px' : '368px'};
   position: relative;
   transition: width, .4s ease-in;
-  visibility: ${(props) => props.isOpen ? 'hidden' : 'visible'};
-  opacity: ${(props) => props.isOpen ? '0' : '1'};
+  visibility: ${(props) => props.$isOpen ? 'hidden' : 'visible'};
+  opacity: ${(props) => props.$isOpen ? '0' : '1'};
   > svg {
     position: absolute;
     top: 0; 
@@ -251,8 +248,8 @@ const Various = styled.ul`
   top: 0; bottom: 0; 
   margin: auto;
   display: flex;
-  visibility: ${(props) => props.isOpen ? 'visible' : 'hidden'};
-  opacity: ${(props) => props.isOpen ? '1' : '0'};
+  visibility: ${(props) => props.$isOpen ? 'visible' : 'hidden'};
+  opacity: ${(props) => props.$isOpen ? '1' : '0'};
   transition: width, .4s ease-in;  
   > li {
     position: relative;
@@ -260,11 +257,11 @@ const Various = styled.ul`
       width: 60px; 
       height: 60px;
       position: relative;
-      border: ${(props) => props.bg === 'day' ? '1px solid #C09B73;' : '1px solid #fff'};
+      border: ${(props) => props.$bgState === 'day' ? '1px solid #C09B73;' : '1px solid #fff'};
       border-radius: 60px;
       transition: background-color, .2s;
       &:hover {
-        background-color: ${(props) => props.bg === 'day' ? '#AE8960' : '#171A32'};
+        background-color: ${(props) => props.$bgState === 'day' ? '#AE8960' : '#171A32'};
         svg {
           path {
             stroke: #fff;
@@ -277,7 +274,7 @@ const Various = styled.ul`
         top: 0; left: 0; right: 0; bottom: 0;
         path {
           transition: stroke, .2s;
-          stroke: ${(props) => props.bg === 'day' ? '#AE8960' : '#fff'};
+          stroke: ${(props) => props.$bgState === 'day' ? '#AE8960' : '#fff'};
         }
       }
     }
@@ -292,8 +289,8 @@ const ToggleBtn = styled.button`
   &:hover {
     svg {
       path {
-        stroke: ${(props) => props.bg === 'day' ? '#FFEAC2' : '#fff'};
-        fill: ${(props) => props.bg === 'day' ? '#BC9267' : '#171A32'};
+        stroke: ${(props) => props.$bgState === 'day' ? '#FFEAC2' : '#fff'};
+        fill: ${(props) => props.$bgState === 'day' ? '#BC9267' : '#171A32'};
       }
     }
   }
@@ -306,13 +303,13 @@ const ToggleBtn = styled.button`
     margin:auto;
     path {
       transition: all, .2s;
-      stroke: ${(props) => props.bg === 'day' ? '#BC9267' : '#fff'};
+      stroke: ${(props) => props.$bgState === 'day' ? '#BC9267' : '#fff'};
     }
     &.inline {
-      left: ${(props) => props.isOpen ? '-1px' : '2px'};
+      left: ${(props) => props.$isOpen ? '2px' : '-1px'};
       /* top: -3px; */
       z-index: 1;
-      transform: ${(props) => props.isOpen && ' rotate(180deg)'};
+      transform: ${(props) => props.$isOpen ? 'rotate(0)' : 'rotate(180deg)'};
       /* transition: all, .2s; */
     }
   }

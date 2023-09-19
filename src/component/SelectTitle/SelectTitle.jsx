@@ -4,7 +4,7 @@ import { ReactComponent as TitleIcon } from "../../assets/common/ic_select_title
 
 const SelectTitle = ({ title, fontSize = "20px", weight = 600 }) => {
   return (
-    <Container $fontSize={fontSize} weight={weight}> 
+    <Container $fontSize={fontSize} $weight={weight}> 
       <TitleIcon width={34} height={36} />
       <span>{title}</span>
     </Container>
@@ -26,7 +26,7 @@ const Container = styled.h2`
     margin:0 0 5px 5px; 
     color: #222;
     font-size: 18px;
-    font-weight: ${(props) => props.weight};
+    font-weight: ${(props) => props.$weight};
     line-height: 28px; 
     letter-spacing: 0.2px;
   }

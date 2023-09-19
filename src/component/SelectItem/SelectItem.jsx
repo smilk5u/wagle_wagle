@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 const SelectItem = ({ label, id, name, value, onChange, img }) => {
   return (
     <Container htmlFor={id}>
-      <Item img={img} />
+      <Item $img={img} />
       <input
         type="radio"
         name={name}
@@ -40,6 +40,6 @@ const Item = styled.button`
   border-radius: 10px;
   border: 1px solid #e4e4e4;
   pointer-events: none;
-  background: ${(props) => `url( ${props.img}) 50%, 50% no-repeat;`};
+  background: ${(props) => `url( ${props.$img}) 50%, 50% no-repeat;`};
   background-size: cover;
 `;
