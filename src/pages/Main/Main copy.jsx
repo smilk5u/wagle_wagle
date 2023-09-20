@@ -13,25 +13,22 @@ import taegeukgi from "../../assets/main/taegeukgi.png";
 import pineTreeLeft from "../../assets/main/pine_tree_left.png";
 import pineTreeRight from "../../assets/main/pine_tree_right.png";
 import CapturePopup from "../../component/BottomSide/IconPopup/CapturePopup";
-import { useBgColor } from "../../contexts/BackgroundColor"; // Bg Color Context
+import BgProvider from "../../contexts/BackgroundColor";
+import { useBgColor } from "../../contexts/BackgroundColor";
 
 const Main = () => {
-  const { bgColor, changeBgColor } = useBgColor(); // BG Color context
   const [openModal, setOpenModal] = useState(false);
   const [openNav, setOpenNav] = useState(true);
   const [openMakeup, setOpenMakeup] = useState(false);
-  const [capturePopBol, setCapturePopBol] = useState(false); // 캡쳐 팝업
-
-  /* 
-    📢 #juju 
-    background useState는 하위 컴포넌트에 전역적으로 사용하기 위해...?
-    Context 로 사용하였습니다 context 경로 --> src/contexts/BackgroundColor    
-  */
-  // 테스트용 - 수정예정 
-  // const [background, setBackground] = useState(true);
+  // 테스트용 - 수정예정
+  // const [background, setBackground] = useState("day");
   // const changeBackground = (e) => {
   //   setBackground(e.target.value);
   // };
+
+  const { changeBgColor } = useBgColor();
+
+
 
   useEffect(() => {
     // main페이지에서는 기와집을 불러오는 get요청을 해야함
@@ -55,10 +52,10 @@ const Main = () => {
     // }, 300);
   };
   return (
-    <>
+    <BgProvider>
       {openModal ? <GiwaModal onXBtnClick={() => setOpenModal(false)} /> : null}
       <NavBar isShowing={openNav} />
-      <ExDiv $bgColor={bgColor}>
+      <ExDiv $background={background}>
         <StyledMain>
           <HouseBox className={openMakeup ? "left" : null}>
             <HaetaeWrap>
@@ -73,6 +70,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
+          setBackground={changeBackground}
           updateFunction={() => { }}
         ></RightSide>
 
@@ -102,29 +100,21 @@ const Main = () => {
         <BottomSide
           openMakeup={openMakeup}
           openMakeupHouse={openMakeupHouse}
-          setCapturePopBol={setCapturePopBol}
+          backgroundState={background}
         />
         <Tree>
           <img src={pineTreeLeft} alt="왼쪽 소나무" />
           <img src={pineTreeRight} alt="오른쪽 소나무" />
         </Tree>
-        <Test2 onClick={changeBgColor}>밤/낮(toggle)</Test2>
       </ExDiv>
       {/* 캡쳐 팝업 start */}
-      {/* {capturePopBol && <CapturePopup />} */}
-
-      {
-        capturePopBol ? <CapturePopup setCapturePopBol={setCapturePopBol} /> : null
-      }
-
-      {/* // <CapturePopup setCapturePopBol={setCapturePopBol} /> */}
-      {/* <CapturePopup /> */}
+      {/* <CapturePopup/> */}
       {/* 캡쳐 팝업 end */}
 
       {/* 기와 등록 완료 팝업창 start */}
       {/* <Completed/> */}
       {/* 기와 등록 완료 팝업창 end */}
-    </>
+    </BgProvider>
   );
 };
 
@@ -135,9 +125,10 @@ const ExDiv = styled.div`
   height: 100vh;
   background: linear-gradient(
     140deg,
-    ${({ $bgColor }) => $bgColor
-    ? "#FFFEF9 0%, #FFF8DC 100%"
-    : " #8C92CA 0%, #31365B 100%"}
+    ${({ $background }) =>
+    $background === "day"
+      ? "#FFFEF9 0%, #FFF8DC 100%"
+      : " #8C92CA 0%, #31365B 100%"}
   );
   position: relative;
   overflow: hidden;
@@ -220,12 +211,4 @@ const Test = styled.div`
     font-size: 20px;
     font-weight: 600;
   }
-`;
-
-const Test2 = styled.button`
-  position: absolute;
-  left:0; top:0;
-  font-size: 20px;
-  font-weight: 700; 
-  z-index: 9999;
 `;

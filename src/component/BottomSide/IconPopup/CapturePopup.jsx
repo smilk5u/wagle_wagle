@@ -8,11 +8,14 @@ import { ReactComponent as InstarLogo } from "../../../assets/bottomSide/instar_
 import { ReactComponent as InstarStory } from "../../../assets/bottomSide/instar_story.svg";
 import { ReactComponent as Kakao } from "../../../assets/bottomSide/kakao.svg";
 
-const CaptruePopup = () => {
-  return ( 
+const CaptruePopup = ({ setCapturePopBol }) => {
+  return (
     <Modal>
-      <Contain> 
-        <XBtnBox>
+      <Contain>
+        <XBtnBox onClick={() => {
+          setCapturePopBol(false)
+          console.log('닫기')
+        }}>
           <CloseBtn width={36} height={37} fill="black" />
         </XBtnBox>
         <BoradWrap>

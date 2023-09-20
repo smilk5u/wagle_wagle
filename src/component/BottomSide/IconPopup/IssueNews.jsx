@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import giwaNews from "../../../assets/bottomSide/giwa_news.png";
+import { useBgColor } from "../../../contexts/BackgroundColor";
 
 const newsData = [
   {
@@ -37,9 +38,10 @@ const newsData = [
 
 const IssueNews = ({ backgroundState }) => {
   const [news, setNews] = useState(newsData);
+  const { bgColor } = useBgColor(); // BG Color context
 
   return (
-    <IssueWrap $bgState={backgroundState}>
+    <IssueWrap $bgColor={bgColor}>
       <strong>소식통</strong>
       <ul>
         {
@@ -66,14 +68,14 @@ const IssueWrap = styled.div`
   width: 350px;
   position: absolute; 
   bottom: 85px;
-  border: ${({ $bgState }) => $bgState === 'day' ? '1px solid #ECE0B9' : '1px solid #171A32'};
+  border: ${({ $bgColor }) => $bgColor ? '1px solid #ECE0B9' : '1px solid #171A32'};
   padding: 27px 15px 27px 20px;  
   border-radius: 20px;
   overflow: hidden; 
   left: -30px; 
   box-sizing: border-box;
   background-color: rgba(255, 255, 255, .6);
-  box-shadow: ${({ $bgState }) => $bgState === 'day' ? '5px 5px 15px #ECE0B9' : '5px 5px 15px rgba(23, 26, 50, 0.377)'};
+  box-shadow: ${({ $bgColor }) => $bgColor ? '5px 5px 15px #ECE0B9' : '5px 5px 15px rgba(23, 26, 50, 0.377)'};
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   ul {

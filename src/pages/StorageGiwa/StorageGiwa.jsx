@@ -85,7 +85,7 @@ const StorageGiwa = () => {
                     {
                       item.id < 13 && <em><Badge /></em>
                     }
-                    <GiwaMean1/>
+                    <GiwaMean1 />
                   </button>
                   <span>{item.date}</span>
                 </GiwaLi>
@@ -109,6 +109,7 @@ const Container = styled.div`
     clear: both;
   }
 `;
+
 const AsideTtile = styled.div`
   width: 38%;
   float: left;
@@ -125,6 +126,7 @@ const AsideTtile = styled.div`
     }
   }
 `;
+
 const Title = styled.strong`
   color: #222;
   font-family: var(--font-hunmin);
@@ -135,15 +137,18 @@ const Title = styled.strong`
     color: #E75852;
   }
 `;
+
 const StorageContain = styled.div`
   width: 60%;
   float: right;
 `;
+
 const Nav = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 0 0 30px;
 `;
+
 const NavCont = styled.div`
   display: flex;
   align-items: center; 
@@ -241,6 +246,7 @@ const GiwaWrap = styled.ul`
   flex-wrap: wrap;
   gap: 5.6122%;
 `;
+
 const GiwaLi = styled.li`
   width: 29.5918%; 
   margin: 0 0 5.6122%;
@@ -277,6 +283,7 @@ const GiwaLi = styled.li`
     } 
     > svg {
       position: absolute;
+      width: 38%;
       left: 12%;
       top: 26%; 
       bottom: 0;

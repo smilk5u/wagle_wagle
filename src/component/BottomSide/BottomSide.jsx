@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
 import styled from 'styled-components';
 import IssueNews from "./IconPopup/IssueNews";
 import Sharing from "./IconPopup/Sharing";
+import ButtonIcon from "./ButtonIcon/ButtonIcon";
 import KigImg from "../../assets/bottomSide/kig_img.png";
 import { ReactComponent as VisitIcon } from "../../assets/common/visit_icon.svg";
 import { ReactComponent as Board } from "../../assets/bottomSide/board_img.svg";
@@ -12,10 +14,17 @@ import { ReactComponent as Issue } from "../../assets/bottomSide/bell_icon.svg";
 import { ReactComponent as Capture } from "../../assets/bottomSide/capture_icon.svg";
 import { ReactComponent as SharingIcon } from "../../assets/bottomSide/sharing_icon.svg";
 import { ReactComponent as GiwaSetting } from "../../assets/bottomSide/giwa_setting_icon.svg";
-import gsap from "gsap";
+import { useBgColor } from "../../contexts/BackgroundColor";
 
-const MainAside = ({ openMakeup, openMakeupHouse, backgroundState }) => {
-  const [iconIsOpen, setIconIsOpen] = useState(false);
+const boleand = [
+  { type: 'issue', boolean: false },
+  { type: 'capture', boolean: false },
+  { type: 'sharing', boolean: false },
+]
+
+const BottomSide = ({ openMakeup, openMakeupHouse, setCapturePopBol }) => {
+  const { bgColor } = useBgColor(); // BG Color context
+  const [iconIsOpen, setIconIsOpen] = useState(true);
   const ContainRef = useRef();
 
   useEffect(() => {
@@ -24,9 +33,29 @@ const MainAside = ({ openMakeup, openMakeupHouse, backgroundState }) => {
       : gsap.to(ContainRef.current, 1, { y: 0, opacity: 1, display: 'flex', ease: 'Power1.easeInOut' })
   }, [openMakeup])
 
+  const [iconToggle, setIconToggle] = useState(boleand);
+
+  const clickToggleOpen = (e) => {
+    const currentType = e.target.closest('li').getAttribute('type');
+    const changeBoolean = iconToggle.map(item => {
+      if (item.type === currentType) {
+        return {
+          ...item,
+          boolean: !item.boolean
+        }
+      } else {
+        return {
+          ...item,
+          boolean: false
+        }
+      }
+    })
+    setIconToggle(changeBoolean);
+  }
+
   return (
-    <Contain ref={ContainRef}>
-      <History $bgState={backgroundState}>
+    <Contain ref={ContainRef} $bgColor={bgColor}>
+      <History>
         <img src={KigImg} alt="세종대왕 이미지" />
         <div>
           <strong>내가 아는 한글의 역사는 어디까지?</strong>
@@ -37,8 +66,8 @@ const MainAside = ({ openMakeup, openMakeupHouse, backgroundState }) => {
           <VisitIcon />
         </VisitLink>
       </History>
-      <IconBar>
-        <Name $isOpen={iconIsOpen} $bgState={backgroundState}>
+      <IconBar $isOpen={iconIsOpen}>
+        <Name>
           <SideBoard className="side1" />
           <div>
             <strong>
@@ -49,38 +78,46 @@ const MainAside = ({ openMakeup, openMakeupHouse, backgroundState }) => {
           </div>
           <SideBoard className="side2" />
         </Name>
-        <Various $isOpen={iconIsOpen} $bgState={backgroundState}>
-          <li>
-            <button onClick={() => alert('소식')}>
-              <Issue />
+        <Various>
+          <li type="issue">
+            <button onClick={(e) => clickToggleOpen(e)}>
+              <Issue width={23} height={25} />
             </button>
-            {/* 소식통 start */}
-            <IssueNews backgroundState={backgroundState} />
-            {/* 소식통 end */}
+            {iconToggle[0].boolean && <IssueNews />}
           </li>
-          <li><button onClick={() => alert('캡쳐화면')}><Capture /></button></li>
-          <li>
-            <button onClick={() => alert('공유')}>
-              <SharingIcon />
+          <li type="capture">
+            <button onClick={(e) => clickToggleOpen(e)}>
+              <Capture width={29} height={30} />
             </button>
-            {/* 공유하기 start */}
-            <Sharing backgroundState={backgroundState} />
-            {/* 공유하기 end */}
+            {iconToggle[1].boolean && setCapturePopBol(true)}
           </li>
-          <li><button onClick={() => openMakeupHouse(true)}><GiwaSetting /></button></li>
-        </Various>
+          <li type="sharing">
+            <button onClick={(e) => clickToggleOpen(e)}>
+              <SharingIcon width={29} height={30} />
+            </button>
+            {iconToggle[2].boolean && <Sharing />}
+          </li>
+          <li>
+            <button onClick={(e) => {
+              openMakeupHouse(true)
+              clickToggleOpen(e)
+            }}>
+              <GiwaSetting width={29} height={30} />
+            </button>
+          </li>
+        </Various >
         {
-          <ToggleBtn onClick={() => setIconIsOpen(!iconIsOpen)} $bgState={backgroundState} $isOpen={iconIsOpen}>
+          <ToggleBtn onClick={() => setIconIsOpen(!iconIsOpen)}>
             <ToggleInline className="inline" />
             <ToggleOutline />
           </ToggleBtn>
         }
-      </IconBar>
-    </Contain>
+      </IconBar >
+    </Contain >
   );
 };
 
-export default MainAside;
+export default BottomSide;
 
 const Contain = styled.div`
   width: 1250px;
@@ -94,6 +131,76 @@ const Contain = styled.div`
   justify-content: space-between;
   opacity: 1;
   z-index: 3;
+  /* bgColor 조건 가르기 */
+  > div {
+    &:nth-of-type(1) {
+      border: ${({ $bgColor }) => $bgColor ? '1px solid #ECE0B9' : '1px solid #171A32'};
+      box-shadow: ${({ $bgColor }) => $bgColor ? '5px 5px 10px #ECE0B9' : '5px 5px 15px rgba(23, 26, 50, 0.478)'};
+      > a {
+        &:hover {
+          span {
+            color: ${({ $bgColor }) => $bgColor ? '#72543f' : '#080a16'};
+          }
+          svg {
+            path {
+              stroke: ${({ $bgColor }) => $bgColor ? '#72543f' : '#080a16'};
+            }
+          }
+        }
+        span {
+          color: ${({ $bgColor }) => $bgColor ? '#8B715F' : '#171A32'};
+        }
+        svg {
+          path {
+            stroke: ${({ $bgColor }) => $bgColor ? '#8B715F' : '#171A32'};
+          }
+        }
+      }
+    }
+    &:nth-of-type(2) {
+      ul {
+        li {
+          &:nth-of-type(3) {
+            svg {
+              left: -1px;
+            }
+          }
+          > button {
+            border: ${({ $bgColor }) => $bgColor ? '1px solid #C09B73;' : '1px solid #fff'};
+            &:hover {
+              background-color: ${({ $bgColor }) => $bgColor ? '#AE8960' : '#171A32'};
+              svg {
+                path {
+                  stroke: #fff;
+                }
+              }
+            }
+            > svg {
+              left: ${({ type }) => type === 'sharing' ? '-1px' : '0'};
+              path {
+                stroke: ${({ $bgColor }) => $bgColor ? '#AE8960' : '#fff'};
+              }
+            }
+          }
+        }
+      }
+    }
+    > button {
+      &:hover {
+        svg {
+          path {
+            stroke: ${(props) => props.$bgColor ? '#FFEAC2' : '#fff'};
+            fill: ${(props) => props.$bgColor ? '#BC9267' : '#171A32'};
+          }
+        }
+      }
+      svg {
+        path {
+          stroke: ${(props) => props.$bgColor ? '#BC9267' : '#fff'};
+        }
+      }
+    }
+  }
 `;
 
 /* 히스토리 사이드 바 */
@@ -102,12 +209,10 @@ const History = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.65);
   padding: 20px 30px;
   border-radius: 20px;
-  box-sizing: border-box; 
-  border: ${({ $bgState }) => $bgState === 'day' ? '1px solid #ECE0B9' : '1px solid #171A32'};
-  box-shadow: ${({ $bgState }) => $bgState === 'day' ? '5px 5px 10px #ECE0B9' : '5px 5px 15px rgba(23, 26, 50, 0.478)'};
+  box-sizing: border-box;   
   > div {
     margin: 0 0 0 20px;
   }
@@ -123,26 +228,6 @@ const History = styled.div`
     font-size: 12px;
     font-weight: 400;
     line-height: 20px; 
-  }
-  > a {
-    &:hover {
-      span {
-        color: ${({ $bgState }) => $bgState === 'day' ? '#72543f' : '#080a16'};
-      }
-      svg {
-        path {
-          stroke: ${({ $bgState }) => $bgState === 'day' ? '#72543f' : '#080a16'};
-        }
-      }
-    }
-    span {
-      color: ${({ $bgState }) => $bgState === 'day' ? '#8B715F' : '#171A32'};
-    }
-    svg {
-      path {
-        stroke: ${({ $bgState }) => $bgState === 'day' ? '#8B715F' : '#171A32'};
-      }
-    }
   }
 `;
 
@@ -194,13 +279,28 @@ const IconBar = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  > div {
+    width: ${(props) => props.$isOpen ? '1px' : '368px'};
+    visibility: ${(props) => props.$isOpen ? 'hidden' : 'visible'};
+    opacity: ${(props) => props.$isOpen ? '0' : '1'};
+  }
+  > ul {
+    visibility: ${(props) => props.$isOpen ? 'visible' : 'hidden'};
+    opacity: ${(props) => props.$isOpen ? '1' : '0'};
+  }
+  > button {
+    svg {
+      &.inline {
+        left: ${(props) => props.$isOpen ? '2px' : '-1px'};
+        transform: ${(props) => props.$isOpen ? 'rotate(0)' : 'rotate(180deg)'};
+      }
+    }
+  }
 `;
+
 const Name = styled.div`
-  width: ${(props) => props.$isOpen ? '1px' : '368px'};
   position: relative;
-  transition: width, .4s ease-in;
-  visibility: ${(props) => props.$isOpen ? 'hidden' : 'visible'};
-  opacity: ${(props) => props.$isOpen ? '0' : '1'};
+  transition: width, .4s ease-in;  
   > svg {
     position: absolute;
     top: 0; 
@@ -240,6 +340,7 @@ const Name = styled.div`
     }
   }
 `;
+
 const Various = styled.ul`
   height: min-content;
   gap: 30px;
@@ -247,53 +348,46 @@ const Various = styled.ul`
   position: absolute;
   top: 0; bottom: 0; 
   margin: auto;
-  display: flex;
-  visibility: ${(props) => props.$isOpen ? 'visible' : 'hidden'};
-  opacity: ${(props) => props.$isOpen ? '1' : '0'};
+  display: flex;  
   transition: width, .4s ease-in;  
-  > li {
+  li {
     position: relative;
     > button {
-      width: 60px; 
-      height: 60px;
-      position: relative;
-      border: ${(props) => props.$bgState === 'day' ? '1px solid #C09B73;' : '1px solid #fff'};
-      border-radius: 60px;
-      transition: background-color, .2s;
-      &:hover {
-        background-color: ${(props) => props.$bgState === 'day' ? '#AE8960' : '#171A32'};
-        svg {
-          path {
-            stroke: #fff;
-          }
-        }
-      }
-      > svg {
-        position: absolute; 
-        margin: auto;
-        top: 0; left: 0; right: 0; bottom: 0;
+    width: 60px; 
+    height: 60px;
+    position: relative;
+    border: ${({ $bgColor }) => $bgColor ? '1px solid #C09B73;' : '1px solid #fff'};
+    border-radius: 60px;
+    transition: background-color, .2s;
+    &:hover {
+      background-color: ${({ $bgColor }) => $bgColor ? '#AE8960' : '#171A32'};
+      svg {
         path {
-          transition: stroke, .2s;
-          stroke: ${(props) => props.$bgState === 'day' ? '#AE8960' : '#fff'};
+          stroke: #fff;
         }
       }
     }
+    > svg {
+      position: absolute; 
+      margin: auto;
+      top: 0;  
+      left: ${({ type }) => type === 'sharing' ? '-1px' : '0'};
+      right: 0; 
+      bottom: 0;
+      path {
+        transition: stroke, .2s;
+        stroke: ${({ $bgColor }) => $bgColor ? '#AE8960' : '#fff'};
+      }
+    }
   }
-
+}
 `;
+
 const ToggleBtn = styled.button`
   width: 40px;
   height: 40px;
   position: absolute;
   right: 0;
-  &:hover {
-    svg {
-      path {
-        stroke: ${(props) => props.$bgState === 'day' ? '#FFEAC2' : '#fff'};
-        fill: ${(props) => props.$bgState === 'day' ? '#BC9267' : '#171A32'};
-      }
-    }
-  }
   svg {
     position: absolute; 
     left: 0; 
@@ -303,13 +397,10 @@ const ToggleBtn = styled.button`
     margin:auto;
     path {
       transition: all, .2s;
-      stroke: ${(props) => props.$bgState === 'day' ? '#BC9267' : '#fff'};
     }
     &.inline {
-      left: ${(props) => props.$isOpen ? '2px' : '-1px'};
       /* top: -3px; */
       z-index: 1;
-      transform: ${(props) => props.$isOpen ? 'rotate(0)' : 'rotate(180deg)'};
       /* transition: all, .2s; */
     }
   }

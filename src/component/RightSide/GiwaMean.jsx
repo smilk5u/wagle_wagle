@@ -91,11 +91,13 @@ const Container = styled.aside`
     opacity: 1;
   }
 `;
+
 const XBox = styled.button`
   position: absolute;
   top: 50px; 
   right: 48px;
 `;
+
 const Wrap = styled.div`
   > strong {
     display: block;
@@ -110,6 +112,7 @@ const Wrap = styled.div`
     }
   }
 `;
+
 const Title = styled.div`
   margin: 40px 0 10px;
   display: flex;
@@ -118,6 +121,7 @@ const Title = styled.div`
     background-color: red;
   }
 `;
+
 const GiwaImg = styled.div`
   min-width: 110px;
   min-height: 110px;
@@ -131,6 +135,7 @@ const GiwaImg = styled.div`
     left: 0; right: 0; bottom: 0; top: 0;
   }
 `;
+
 const GiwaText = styled.div`
   padding: 5px 0 0;
   b {
@@ -150,6 +155,7 @@ const GiwaText = styled.div`
     letter-spacing: 0.2px;
   }
 `;
+
 const GuestBook = styled.div`
   > div {
     margin: 5px 0 0;

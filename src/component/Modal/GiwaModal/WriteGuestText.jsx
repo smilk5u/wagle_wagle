@@ -17,7 +17,7 @@ let selectData = {
 }
 
 const WriteGuestText = () => {
-  const [showOptions, setShowOptions] = useState(false); // 셀렉트
+  const [show, setShow] = useState(false); // 셀렉트
   const [select, setSelect] = useState(selectData);
 
   /* 폰트 변경 */
@@ -55,14 +55,14 @@ const WriteGuestText = () => {
         <div>
           <Fonts>
             <SelectTitle title={"글꼴선택"} fontSize="18px" weight={500} />
-            <SelectBox onClick={() => setShowOptions((prev) => !prev)} show={showOptions}>
+            <SelectBox onClick={() => setShow((prev) => !prev)} $show={show}>
               <Label>
                 {select.font}
                 <FontsArrow />
               </Label>
-              <SelectOptions show={showOptions}>
+              <SelectOptions $show={show}> 
                 {
-                  font.map(item => <Option onClick={handleOnChangeSelectValue}>{item}</Option>)
+                  font.map(item => <Option key={item} onClick={handleOnChangeSelectValue}>{item}</Option>)
                 }
               </SelectOptions>
             </SelectBox>
@@ -71,7 +71,7 @@ const WriteGuestText = () => {
             <SelectTitle title={"정렬"} fontSize="18px" weight={500} />
             <ul>
               {
-                rangeData.map(range => <li><button onClick={() => rangeChange({ range })}>{range}</button></li>)
+                rangeData.map(range => <li key={range}><button onClick={() => rangeChange({ range })}>{range}</button></li>)
               }
             </ul>
           </Range>
@@ -79,7 +79,7 @@ const WriteGuestText = () => {
             <SelectTitle title={"글자색상"} fontSize="18px" weight={500} />
             <ul>
               {
-                fontColorDefault.map(color => <li><button style={{ backgroundColor: color }} onClick={() => fontColorChange({ color })}></button></li>)
+                fontColorDefault.map(color => <li key={color}><button style={{ backgroundColor: color }} onClick={() => fontColorChange({ color })}></button></li>)
               }
             </ul>
           </Color>
@@ -208,20 +208,20 @@ const SelectBox = styled.div`
   box-sizing: border-box;
   cursor: pointer;
   border: 1px solid #E6E6E6;
-  border-radius: ${(props) => (props.show ? "6px 6px 0 0" : "6px")};
-  border-color: ${(props) => (props.show ? "#1748C1" : "#E6E6E6")};
-  background-color: ${(props) => (props.show ? "#fff" : "#FAFAFA")};
+  border-radius: ${(props) => (props.$show ? "6px 6px 0 0" : "6px")};
+  border-color: ${(props) => (props.$show ? "#1748C1" : "#E6E6E6")};
+  background-color: ${(props) => (props.$show ? "#fff" : "#FAFAFA")};
   label { 
-    color: ${(props) => (props.show ? "#1748C1" : "#BDBDBD")};
+    color: ${(props) => (props.$show ? "#1748C1" : "#BDBDBD")};
     svg {
-      transform: ${(props) => (props.show ? "rotate(180deg)" : "rotate(0)")};
+      transform: ${(props) => (props.$show ? "rotate(180deg)" : "rotate(0)")};
       path {
-        stroke: ${(props) => (props.show ? "#1748C1" : "#858585")};
+        stroke: ${(props) => (props.$show ? "#1748C1" : "#858585")};
       }
     }
   }
   ul {
-    display: ${(props) => (props.show ? "block" : "none")};
+    display: ${(props) => (props.$show ? "block" : "none")};
   }
 `;
 const Label = styled.label`
@@ -237,7 +237,6 @@ const Label = styled.label`
     bottom:0;
     margin:auto;
     right: 19px;
-    background: url(${FontsArrow}) 50% 50% no-repeat;
     transition: transform, .2s;
     path {
       transition: stroke, .2s;
@@ -249,7 +248,7 @@ const SelectOptions = styled.ul`
   list-style: none;
   top: 46px;
   left: -1px;
-  width: 300px;
+  width: 300px; 
   overflow: hidden;    
   padding: 0;     
   box-sizing: border-box;
@@ -266,7 +265,7 @@ const SelectOptions = styled.ul`
     height: 30%; 
     border-radius: 10px;
     border:1px solid #e6e6e6;
-  }
+  } 
   &::before {
     width: 14px;
     height: 9px;
@@ -275,9 +274,8 @@ const SelectOptions = styled.ul`
     top: 20px;
     margin:auto;
     right: 19px;
-    background: url(${FontsArrow}) 50% 50% no-repeat;
     transition: transform, .2s;
-    transform: ${(props) => (props.show ? "rotate(180deg)" : "rotate(0)")};;
+    transform: ${(props) => (props.$show ? "rotate(180deg)" : "rotate(0)")};;
   }
 `;
 const Option = styled.li`

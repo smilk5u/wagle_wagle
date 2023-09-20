@@ -6,6 +6,7 @@ import "./fonts/font.css";
 import { Provider } from "react-redux";
 import store, { persistor } from "./redux/store/store";
 import { PersistGate } from "redux-persist/integration/react";
+import BgProvider from "./contexts/BackgroundColor";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,7 +14,9 @@ root.render(
     <PersistGate persistor={persistor}>
       <React.StrictMode>
         <GlobalStyles />
-        <App />
+        <BgProvider>
+          <App />
+        </BgProvider>
       </React.StrictMode>
     </PersistGate>
   </Provider>

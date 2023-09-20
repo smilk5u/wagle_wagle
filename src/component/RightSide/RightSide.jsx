@@ -18,7 +18,6 @@ import { generateRandomString } from "../../utils/generateRandomString";
 const RightSide = ({
   openMakeup,
   xBtnClickHandler,
-  setBackground,
   updateFunction,
 }) => {
   const location = useLocation();
@@ -62,8 +61,6 @@ const RightSide = ({
       });
     }
   };
-
-  console.log(giwaStyle);
 
   return (
     <Container className={openMakeup ? "show" : null}>
