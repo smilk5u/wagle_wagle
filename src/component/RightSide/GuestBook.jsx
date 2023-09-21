@@ -5,12 +5,12 @@ import { ReactComponent as XIcon } from "../../assets/common/closeBtn.svg";
 import { ReactComponent as Board } from "../../assets/main/board_img_3.svg";
 import { ReactComponent as GiwaMeaning } from "../../assets/main/giwa_mean_1.svg";
 
-const GuestBook = ({ openMakeup, xBtnClickHandler }) => {
+const GuestBook = ({ openGusetBook, xBtnClickHandler }) => {
   return (
-    <Container className={openMakeup ? "show" : null}>
+    <Container className={openGusetBook ? "show" : null}>
       <XBox>
         <XIcon
-          width={"40px"} 
+          width={"40px"}
           height={"40px"}
           fill="#212121"
           onClick={xBtnClickHandler}
@@ -20,7 +20,7 @@ const GuestBook = ({ openMakeup, xBtnClickHandler }) => {
         <strong><span>홍길동</span>님 에게</strong>
         <Title>
           <GiwaImg>
-            <GiwaMeaning/>
+            <GiwaMeaning />
           </GiwaImg>
           <GiwaText>
             <b>기와의 뜻</b>
@@ -68,6 +68,7 @@ const GuestBook = ({ openMakeup, xBtnClickHandler }) => {
 export default GuestBook;
 
 const Container = styled.aside`
+  background-color: red;
   width: 680px;
   height: 920px;
   display: flex;
@@ -76,7 +77,7 @@ const Container = styled.aside`
   background-color: #fff;
   box-shadow: 0px 0px 50px 0px rgba(210, 201, 168, 0.5);
   border-radius: 50px 0px 0px 50px;
-  position: absolute;
+  position: fixed;
   right: -730px;
   top: 0;
   bottom: 0; 
@@ -84,7 +85,7 @@ const Container = styled.aside`
   opacity: 0;
   box-sizing: border-box;
   padding: 60px 80px;
-  z-index: 2;
+  z-index: 105;
   transition: all ease-in-out 1s;
   &.show {
     right: 0;

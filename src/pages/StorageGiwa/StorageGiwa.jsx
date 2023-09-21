@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
+import GuestBook from "../../component/RightSide/GuestBook";
+
 import giwaFrame from "../../assets/stroage/giwa_frame_img.png";
 import { ReactComponent as VisitIcon } from "../../assets/common/visit_icon.svg";
 import { ReactComponent as Badge } from "../../assets/stroage/latest_badge.svg";
@@ -35,10 +37,19 @@ let data = ['기와 목록 최신순', '기와 목록 과거순'];
 const StorageGiwa = () => {
   const [giwaStorage, setGiwaStorage] = useState(giwaData); // 기와 보관함 데이터
   const [showOptions, setShowOptions] = useState(false); // 셀렉트 boolean
+  const [openGusetBook, setOpenGusetBook] = useState(false); // 방명록 모달창
   const [selectData, setSelectData] = useState({
     select: '기와 목록 최신순',
     option: '기와 목록 과거순'
   });
+
+
+  const openGusetBookModal = () => {
+    setOpenGusetBook(true);
+  };
+  const closeGusetBookModal = () => {
+    setOpenGusetBook(false);
+  };
 
   /* 셀렉트 선택 */
   const handleOnChangeSelectValue = (e) => {
@@ -53,7 +64,7 @@ const StorageGiwa = () => {
   return (
     <>
       <NavBar />
-      <Container>
+      <Container open={openGusetBook}>
         <AsideTtile>
           <Title>
             <span>홍길동</span>님, <br />
@@ -80,7 +91,7 @@ const StorageGiwa = () => {
             {
               giwaStorage.map(item => (
                 <GiwaLi key={item.id}>
-                  <button type="button">
+                  <button type="button" onClick={openGusetBookModal}>
                     <img src={giwaFrame} alt="" />
                     {
                       item.id < 13 && <em><Badge /></em>
@@ -94,6 +105,15 @@ const StorageGiwa = () => {
           </GiwaWrap>
         </StorageContain>
       </Container>
+
+      {/* 방명록 start */}
+      <GuestBook
+        openGusetBook={openGusetBook}
+        xBtnClickHandler={closeGusetBookModal}
+      ></GuestBook>
+      {/* 방명록 end */}
+
+      <Dimmed open={openGusetBook}></Dimmed>
     </>
   );
 };
@@ -102,7 +122,11 @@ export default StorageGiwa;
 
 const Container = styled.div`
   max-width: 980px;
-  margin: 240px auto 0;
+  margin: 0 auto;
+  padding: 240px 0 0 50px;
+  position: relative;
+  transition: all ease-in-out 1s;
+  left: ${({ open }) => open ? '-350px' : '0'};
   &:after {
     content: "";
     display: block;
@@ -199,7 +223,7 @@ const Select = styled.div`
   }
   li {    
     height: 50px;
-    padding: 0 0 0 30px;    
+    padding: 0 0 0 30px; 
     position: relative;
     display: flex;
     align-items: center;
@@ -251,7 +275,22 @@ const GiwaLi = styled.li`
   width: 29.5918%; 
   margin: 0 0 5.6122%;
   position: relative; 
+  z-index: 103; // test
+  &.active {
+    > span {
+      color: red;
+      color: #fff;
+    }
+    button {
+      &:hover {
+        &:after {        
+          background-color: transparent;
+        }
+      }
+    }
+  }
   > span {
+    color: red;
     margin: 5% 0 0;
     float: right;
     color: #757575;
@@ -308,4 +347,17 @@ const GiwaLi = styled.li`
   img {
     width: 100%;
   }  
+`;
+
+const Dimmed = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(32, 32, 32, 0.6);
+  transition: all ease-in-out 1s;
+  /* display: ${({ open }) => open ? 'block' : 'none'}; */
+  opacity: ${({ open }) => open ? '1' : '0'};
+  z-index: 100;
+  top: 0;
+  left: 0;
 `;

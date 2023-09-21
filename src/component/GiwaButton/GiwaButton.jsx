@@ -3,13 +3,16 @@ import styled from "styled-components";
 import giwaData from "../../data/giwaPath"
 import { ReactComponent as GiwaMean1 } from "../../assets/main/giwa_mean_1.svg"
 
-const GiwaButton = () => {
+const GiwaButton = ({ setOpen }) => {
   const [giwa, setGiwa] = useState(giwaData);
 
   return (
     <GiwaContainer>
       <GiwaSvg viewBox="0 0 770 679" x="0px" y="0px">
-        {giwa.map(giwa => <path key={giwa.id} onClick={() => console.log(giwa.name)} d={giwa.data} />)}
+        {giwa.map(giwa => <path key={giwa.id} onClick={() => {
+          console.log(giwa.name)
+          setOpen()
+        }} d={giwa.data} />)}
       </GiwaSvg>
       <GiwaName>
         {giwa.map(giwa => <li key={giwa.id}><GiwaMean1 /></li>)}

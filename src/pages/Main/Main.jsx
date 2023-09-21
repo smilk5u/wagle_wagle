@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
 import RightSide from "../../component/RightSide/RightSide";
-import GiwaMean from "../../component/RightSide/GuestBook";
+import GuestBook from "../../component/RightSide/GuestBook";
 import GiwaModal from "../../component/Modal/GiwaModal/GiwaModal";
 import Completed from "../../component/Popup/Completed";
 import BottomSide from "../../component/BottomSide/BottomSide";
@@ -12,25 +12,27 @@ import haetaeImg from "../../assets/main/haetae_img.png";
 import taegeukgi from "../../assets/main/taegeukgi.png";
 import pineTreeLeft from "../../assets/main/pine_tree_left.png";
 import pineTreeRight from "../../assets/main/pine_tree_right.png";
-import CapturePopup from "../../component/BottomSide/IconPopup/CapturePopup";
+import Capture from "../../component/Popup/Capture";
 import { useBgColor } from "../../contexts/BackgroundColor"; // Bg Color Context
 
 const Main = () => {
   const { bgColor, changeBgColor } = useBgColor(); // BG Color context
-  const [openModal, setOpenModal] = useState(false);
-  const [openNav, setOpenNav] = useState(true);
-  const [openMakeup, setOpenMakeup] = useState(false);
+  const [openModal, setOpenModal] = useState(false); // 기와선택
+  const [openNav, setOpenNav] = useState(true); // 네비
+  const [openMakeup, setOpenMakeup] = useState(false); // 기와집 꾸미기
+  const [openGusetBook, setOpenGusetBook] = useState(false); // 방명록 모달창
   const [capturePopBol, setCapturePopBol] = useState(false); // 캡쳐 팝업
 
-  /** ✅ juju ===============================
-    background useState는 하위 컴포넌트에 전역적으로 사용하기 위해...?
-    Context 로 사용하였습니다 context 경로 --> src/contexts/BackgroundColor    
+  /** 😀 juju
+    - background useState는 하위 컴포넌트에 전역적으로 사용하기 위해...?
+      Context 로 사용하였습니다 context 경로 --> src/contexts/BackgroundColor    
+
     // 테스트용 - 수정예정 
     // const [background, setBackground] = useState(true);
     // const changeBackground = (e) => {
     //   setBackground(e.target.value);
     // };
-  ========================================== */
+  */
 
   useEffect(() => {
     // main페이지에서는 기와집을 불러오는 get요청을 해야함
@@ -40,37 +42,53 @@ const Main = () => {
   const openMakeupHouse = () => {
     setOpenNav(false);
     setOpenMakeup(true);
-    /** ✅ juju ===============================
-      setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다
+    /** 😀 juju
+      - setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다
+      
       // setTimeout(() => {
       //   setOpenMakeup(true);
       // }, 300);
-    ========================================== */
+    */
   };
 
   const closeMakeupHouse = () => {
-    setOpenMakeup(false);
     setOpenNav(true);
-    /** ✅ juju ===============================
-      setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다
+    setOpenMakeup(false);
+    /** 😀 juju
+      - setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다
+
       // setTimeout(() => {
       //   setOpenNav(true);
       // }, 300);
-    ========================================== */
+    */
   };
+
+  /** 😀 juju
+   * 기와 클릭 시 방명록 오픈
+   * 기와집 꾸미기 비슷한데 합칠 수 있는 방법이 있을지....ㅠ
+  */
+  const openGusetBookModal = () => {
+    setOpenNav(false);
+    setOpenGusetBook(true);
+  };
+  const closeGusetBookModal = () => {
+    setOpenNav(true);
+    setOpenGusetBook(false);
+  };
+
   return (
     <>
       {openModal ? <GiwaModal onXBtnClick={() => setOpenModal(false)} /> : null}
       <NavBar isShowing={openNav} />
       <ExDiv $bgColor={bgColor}>
         <StyledMain>
-          <HouseBox className={openMakeup ? "left" : null}>
+          <HouseBox className={openMakeup || openGusetBook ? "left" : null}>
             <HaetaeWrap>
               <img src={haetaeImg} alt="해태" />
             </HaetaeWrap>
             <img src={taegeukgi} alt="태극기" />
             {/* 기와 버튼 start */}
-            <GiwaButton />
+            <GiwaButton setOpen={openGusetBookModal} />
             {/* 기와 버튼 end */}
           </HouseBox>
         </StyledMain>
@@ -81,15 +99,14 @@ const Main = () => {
         ></RightSide>
 
         {/* 방명록 start */}
-        {/* <GuestBook
-          openMakeup={openMakeup}
-          xBtnClickHandler={closeMakeupHouse}
-          setBackground={changeBackground}
-        ></GuestBook> */}
+        <GuestBook
+          openGusetBook={openGusetBook}
+          xBtnClickHandler={closeGusetBookModal}
+        ></GuestBook>
         {/* 방명록 end */}
 
         <Test>
-          {openMakeup ? null : (
+          {openMakeup || openGusetBook ? null : (
             <button onClick={openMakeupHouse}>사용자 : 기와집 만들기</button>
           )}
           {openModal ? null : (
@@ -103,8 +120,12 @@ const Main = () => {
             </button>
           )}
         </Test>
+        {
+          // console.log(openGusetBook)
+        }
         <BottomSide
           openMakeup={openMakeup}
+          openGusetBook={openGusetBook}
           openMakeupHouse={openMakeupHouse}
           setCapturePopBol={setCapturePopBol}
         />
@@ -116,7 +137,7 @@ const Main = () => {
       </ExDiv>
 
       {/* 캡쳐 팝업 start */}
-      {capturePopBol && <CapturePopup setCapturePopBol={setCapturePopBol} />}
+      {capturePopBol && <Capture setCapturePopBol={setCapturePopBol} />}
       {/* 캡쳐 팝업 end */}
 
       {/* 기와 등록 완료 팝업창 start */}

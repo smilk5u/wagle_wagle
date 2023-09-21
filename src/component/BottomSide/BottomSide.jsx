@@ -21,7 +21,7 @@ const boleand = [
   { type: 'sharing', boolean: false },
 ]
 
-const BottomSide = ({ openMakeup, openMakeupHouse, setCapturePopBol }) => {
+const BottomSide = ({ openMakeup, openGusetBook, openMakeupHouse, setCapturePopBol }) => {
   const { bgColor } = useBgColor(); // BG Color context
   const [iconIsOpen, setIconIsOpen] = useState(true);
   const ContainRef = useRef();
@@ -31,6 +31,12 @@ const BottomSide = ({ openMakeup, openMakeupHouse, setCapturePopBol }) => {
       ? gsap.to(ContainRef.current, 1, { y: '100px', opacity: 0, display: 'none', ease: 'Power1.easeInOut' })
       : gsap.to(ContainRef.current, 1, { y: 0, opacity: 1, display: 'flex', ease: 'Power1.easeInOut' })
   }, [openMakeup])
+
+  useEffect(() => {
+    openGusetBook
+      ? gsap.to(ContainRef.current, 1, { y: '100px', opacity: 0, display: 'none', ease: 'Power1.easeInOut' })
+      : gsap.to(ContainRef.current, 1, { y: 0, opacity: 1, display: 'flex', ease: 'Power1.easeInOut' })
+  }, [openGusetBook])
 
   const [iconToggle, setIconToggle] = useState(boleand);
 
