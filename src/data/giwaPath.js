@@ -1,4 +1,3 @@
-/* 메인 페이지 기와집 path 라인 data */
 export default [
   {
     id: 1,

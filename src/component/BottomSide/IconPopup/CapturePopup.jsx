@@ -12,10 +12,7 @@ const CaptruePopup = ({ setCapturePopBol }) => {
   return (
     <Modal>
       <Contain>
-        <XBtnBox onClick={() => {
-          setCapturePopBol(false)
-          console.log('닫기')
-        }}>
+        <XBtnBox onClick={() => setCapturePopBol(false)}>
           <CloseBtn width={36} height={37} fill="black" />
         </XBtnBox>
         <BoradWrap>

@@ -3,7 +3,6 @@ import gsap from "gsap";
 import styled from 'styled-components';
 import IssueNews from "./IconPopup/IssueNews";
 import Sharing from "./IconPopup/Sharing";
-import ButtonIcon from "./ButtonIcon/ButtonIcon";
 import KigImg from "../../assets/bottomSide/kig_img.png";
 import { ReactComponent as VisitIcon } from "../../assets/common/visit_icon.svg";
 import { ReactComponent as Board } from "../../assets/bottomSide/board_img.svg";
@@ -86,10 +85,12 @@ const BottomSide = ({ openMakeup, openMakeupHouse, setCapturePopBol }) => {
             {iconToggle[0].boolean && <IssueNews />}
           </li>
           <li type="capture">
-            <button onClick={(e) => clickToggleOpen(e)}>
+            <button onClick={(e) => {
+              clickToggleOpen(e)
+              setCapturePopBol(true)
+            }}>
               <Capture width={29} height={30} />
             </button>
-            {iconToggle[1].boolean && setCapturePopBol(true)}
           </li>
           <li type="sharing">
             <button onClick={(e) => clickToggleOpen(e)}>

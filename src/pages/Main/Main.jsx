@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
 import RightSide from "../../component/RightSide/RightSide";
-import GiwaMean from "../../component/RightSide/GiwaMean";
+import GiwaMean from "../../component/RightSide/GuestBook";
 import GiwaModal from "../../component/Modal/GiwaModal/GiwaModal";
 import Completed from "../../component/Popup/Completed";
 import BottomSide from "../../component/BottomSide/BottomSide";
@@ -22,16 +22,15 @@ const Main = () => {
   const [openMakeup, setOpenMakeup] = useState(false);
   const [capturePopBol, setCapturePopBol] = useState(false); // 캡쳐 팝업
 
-  /* 
-    📢 #juju 
+  /** ✅ juju ===============================
     background useState는 하위 컴포넌트에 전역적으로 사용하기 위해...?
     Context 로 사용하였습니다 context 경로 --> src/contexts/BackgroundColor    
-  */
-  // 테스트용 - 수정예정 
-  // const [background, setBackground] = useState(true);
-  // const changeBackground = (e) => {
-  //   setBackground(e.target.value);
-  // };
+    // 테스트용 - 수정예정 
+    // const [background, setBackground] = useState(true);
+    // const changeBackground = (e) => {
+    //   setBackground(e.target.value);
+    // };
+  ========================================== */
 
   useEffect(() => {
     // main페이지에서는 기와집을 불러오는 get요청을 해야함
@@ -41,18 +40,23 @@ const Main = () => {
   const openMakeupHouse = () => {
     setOpenNav(false);
     setOpenMakeup(true);
-    /* setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다 */
-    // setTimeout(() => {
-    //   setOpenMakeup(true);
-    // }, 300);
+    /** ✅ juju ===============================
+      setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다
+      // setTimeout(() => {
+      //   setOpenMakeup(true);
+      // }, 300);
+    ========================================== */
   };
 
   const closeMakeupHouse = () => {
     setOpenMakeup(false);
     setOpenNav(true);
-    // setTimeout(() => {
-    //   setOpenNav(true);
-    // }, 300);
+    /** ✅ juju ===============================
+      setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다
+      // setTimeout(() => {
+      //   setOpenNav(true);
+      // }, 300);
+    ========================================== */
   };
   return (
     <>
@@ -76,13 +80,13 @@ const Main = () => {
           updateFunction={() => { }}
         ></RightSide>
 
-        {/* 방명록/기와의미 start */}
-        {/* <GiwaMean
+        {/* 방명록 start */}
+        {/* <GuestBook
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
           setBackground={changeBackground}
-        ></GiwaMean> */}
-        {/* 방명록/기와의미 end */}
+        ></GuestBook> */}
+        {/* 방명록 end */}
 
         <Test>
           {openMakeup ? null : (
@@ -110,15 +114,9 @@ const Main = () => {
         </Tree>
         <Test2 onClick={changeBgColor}>밤/낮(toggle)</Test2>
       </ExDiv>
+
       {/* 캡쳐 팝업 start */}
-      {/* {capturePopBol && <CapturePopup />} */}
-
-      {
-        capturePopBol ? <CapturePopup setCapturePopBol={setCapturePopBol} /> : null
-      }
-
-      {/* // <CapturePopup setCapturePopBol={setCapturePopBol} /> */}
-      {/* <CapturePopup /> */}
+      {capturePopBol && <CapturePopup setCapturePopBol={setCapturePopBol} />}
       {/* 캡쳐 팝업 end */}
 
       {/* 기와 등록 완료 팝업창 start */}
