@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
 import GuestBook from "../../component/RightSide/GuestBook";
-
 import giwaFrame from "../../assets/stroage/giwa_frame_img.png";
 import { ReactComponent as VisitIcon } from "../../assets/common/visit_icon.svg";
 import { ReactComponent as Badge } from "../../assets/stroage/latest_badge.svg";
@@ -197,6 +196,7 @@ const Select = styled.div`
   width: 198px; height: 50px;
   position: relative;
   margin: 0 -3% 0 0;
+  /* z-index: 104; // test 후 삭제하기 */
   &:before {
       width: 73%;
       height: 1px;
@@ -275,10 +275,9 @@ const GiwaLi = styled.li`
   width: 29.5918%; 
   margin: 0 0 5.6122%;
   position: relative; 
-  z-index: 103; // test
+  /* z-index: 103; // 테스트 후 지우기 */
   &.active {
     > span {
-      color: red;
       color: #fff;
     }
     button {
@@ -357,7 +356,7 @@ const Dimmed = styled.div`
   transition: all ease-in-out 1s;
   /* display: ${({ open }) => open ? 'block' : 'none'}; */
   opacity: ${({ open }) => open ? '1' : '0'};
-  z-index: 100;
+  z-index: ${({ open }) => open ? '100' : '-1'};
   top: 0;
   left: 0;
 `;

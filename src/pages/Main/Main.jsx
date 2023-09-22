@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
 import { styled } from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
 import RightSide from "../../component/RightSide/RightSide";
@@ -12,6 +13,8 @@ import haetaeImg from "../../assets/main/haetae_img.png";
 import taegeukgi from "../../assets/main/taegeukgi.png";
 import pineTreeLeft from "../../assets/main/pine_tree_left.png";
 import pineTreeRight from "../../assets/main/pine_tree_right.png";
+import speechBubble from "../../assets/main/speech_bubble.svg";
+import { ReactComponent as GiwaPlus } from "../../assets/main/giwa_plus.svg";
 import Capture from "../../component/Popup/Capture";
 import { useBgColor } from "../../contexts/BackgroundColor"; // Bg Color Context
 
@@ -22,6 +25,8 @@ const Main = () => {
   const [openMakeup, setOpenMakeup] = useState(false); // 기와집 꾸미기
   const [openGusetBook, setOpenGusetBook] = useState(false); // 방명록 모달창
   const [capturePopBol, setCapturePopBol] = useState(false); // 캡쳐 팝업
+  const [completedGiwa, setCompletedGiwa] = useState(false); // 기와 등록 팝업창
+  const speechRef = useRef();
 
   /** 😀 juju
     - background useState는 하위 컴포넌트에 전역적으로 사용하기 위해...?
@@ -37,6 +42,8 @@ const Main = () => {
   useEffect(() => {
     // main페이지에서는 기와집을 불러오는 get요청을 해야함
     // 해당 api 확인되면 추가 예정
+
+    gsap.to(speechRef.current.querySelectorAll('span'), .5, { stagger: .1, display: 'inline', delay: .3, ease: 'Power1.easeInOut' })
   }, []);
 
   const openMakeupHouse = () => {
@@ -65,7 +72,7 @@ const Main = () => {
 
   /** 😀 juju
    * 기와 클릭 시 방명록 오픈
-   * 기와집 꾸미기 비슷한데 합칠 수 있는 방법이 있을지....ㅠ
+   * 기와집 꾸미기 이벤트와 비슷한데 합칠 수 있는 방법이 있을지....ㅠ
   */
   const openGusetBookModal = () => {
     setOpenNav(false);
@@ -78,13 +85,64 @@ const Main = () => {
 
   return (
     <>
-      {openModal ? <GiwaModal onXBtnClick={() => setOpenModal(false)} /> : null}
+      {openModal ? <GiwaModal onXBtnClick={() => setOpenModal(false)} setCompletedGiwa={setCompletedGiwa} /> : null}
       <NavBar isShowing={openNav} />
       <ExDiv $bgColor={bgColor}>
         <StyledMain>
           <HouseBox className={openMakeup || openGusetBook ? "left" : null}>
             <HaetaeWrap>
               <img src={haetaeImg} alt="해태" />
+              <Speech>
+                {/* {
+                  // 집주인 : 기와 12개 미만일 때
+                  <p ref={speechRef}>
+                    <span>환</span>
+                    <span>영</span>
+                    <span>하</span>
+                    <span>오</span>
+                    <span>!</span>
+                  </p>
+                } */}
+                {/* {
+                  // 집주인 : 기와 12개 이상일 때
+                  <>
+                    <p ref={speechRef}>
+                      <span>기</span>
+                      <span>와</span>
+                      <span>는</span>
+                      <span className="space">내</span>
+                      <span>가</span>
+                      <span className="space">보</span>
+                      <span>관</span>
+                      <span>하</span>
+                      <span>고</span>
+                      <span className="space">있</span>
+                      <span>소</span>
+                    </p>
+                    <button className="giwa_number">
+                      <span>10</span>
+                    </button>
+                  </>
+                } */}
+                { // 방문자
+                  <>
+                    <p ref={speechRef}>
+                      <span>기</span>
+                      <span>와</span>
+                      <span>를</span>
+                      <span className="space">남</span>
+                      <span>겨</span>
+                      <span>주</span>
+                      <span>시</span>
+                      <span>오</span>
+                      <span>!</span>
+                    </p>
+                    <button className="giwa_plus" onClick={() => setOpenModal(true)}>
+                      <GiwaPlus />
+                    </button>
+                  </>
+                }
+              </Speech>
             </HaetaeWrap>
             <img src={taegeukgi} alt="태극기" />
             {/* 기와 버튼 start */}
@@ -97,15 +155,23 @@ const Main = () => {
           xBtnClickHandler={closeMakeupHouse}
           updateFunction={() => { }}
         ></RightSide>
-
         {/* 방명록 start */}
         <GuestBook
           openGusetBook={openGusetBook}
           xBtnClickHandler={closeGusetBookModal}
         ></GuestBook>
         {/* 방명록 end */}
-
-        <Test>
+        <BottomSide
+          openMakeup={openMakeup}
+          openGusetBook={openGusetBook}
+          openMakeupHouse={openMakeupHouse}
+          setCapturePopBol={setCapturePopBol}
+        />
+        <Tree>
+          <img src={pineTreeLeft} alt="왼쪽 소나무" />
+          <img src={pineTreeRight} alt="오른쪽 소나무" />
+        </Tree>
+        {/* <Test>
           {openMakeup || openGusetBook ? null : (
             <button onClick={openMakeupHouse}>사용자 : 기와집 만들기</button>
           )}
@@ -119,20 +185,7 @@ const Main = () => {
               방문자 : 기와선택
             </button>
           )}
-        </Test>
-        {
-          // console.log(openGusetBook)
-        }
-        <BottomSide
-          openMakeup={openMakeup}
-          openGusetBook={openGusetBook}
-          openMakeupHouse={openMakeupHouse}
-          setCapturePopBol={setCapturePopBol}
-        />
-        <Tree>
-          <img src={pineTreeLeft} alt="왼쪽 소나무" />
-          <img src={pineTreeRight} alt="오른쪽 소나무" />
-        </Tree>
+        </Test> */}
         <Test2 onClick={changeBgColor}>밤/낮(toggle)</Test2>
       </ExDiv>
 
@@ -141,7 +194,7 @@ const Main = () => {
       {/* 캡쳐 팝업 end */}
 
       {/* 기와 등록 완료 팝업창 start */}
-      {/* <Completed/> */}
+      {completedGiwa && <Completed setCompletedGiwa={setCompletedGiwa} />}
       {/* 기와 등록 완료 팝업창 end */}
     </>
   );
@@ -199,12 +252,65 @@ const HaetaeWrap = styled.div`
   position: absolute;
   top: 11%; 
   left: 47%;
-  z-index: 1;
+  z-index: 2;
   img {
     width: 100%;
     height: 100%;
   }
 `;
+
+const Speech = styled.div`
+  width: 242px;
+  height: 64px;
+  position: absolute;
+  top: -41%;
+  left: -26%;
+  margin: auto;
+  background: url(${speechBubble}) 50% 50% no-repeat;
+  background-size: cover;
+  text-align: center;
+  > button {
+    &.giwa_plus {
+      position: absolute; 
+      top: -35%;
+      right: 15%;
+      margin: auto; 
+    }
+    &.giwa_number {
+      position: absolute;
+      padding: 0 14px 3px;
+      background-color: #6C5847;
+      border-radius: 50px;
+      right: 10%;
+      top: -15%;
+      span {
+        color: #fff;
+        font-family: var(--font-hunmin);
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 16px;
+        letter-spacing: 0.12px;
+      }
+    }
+  }
+  > p { 
+    margin: 9% 0 0;
+    display: inline-block; 
+    color: #222;
+    font-family: var(--font-hunmin);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.16px;
+    span {
+      display: none;
+      &.space {
+        margin: 0 0 0 5px;
+      }
+    }
+  }
+`;
+
+
 
 const Tree = styled.div`
   width: 100%;

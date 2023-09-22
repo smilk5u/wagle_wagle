@@ -20,7 +20,7 @@ const NameContain = () => {
       </Text>
       <NameInput>
         <SelectTitle title={"어떤 호명으로 등록이 되고 싶은가? 최대 8글자만 사용 가능하다네."} fontSize="16px" weight={500} />
-        <input />
+        <input type="text" />
         <TextNotification>
           <Hat width={21} height={19} />
           <div>
@@ -28,8 +28,8 @@ const NameContain = () => {
               <span>
                 멋진 이름을 가지고 있구려!
               </span>
-            }
-            {
+            } */}
+            {/* {
               <span>
                 한글로는 어떻게 불러야 하는가?
               </span>
@@ -53,7 +53,6 @@ const NameWrap = styled.div`
   display: flex;
   margin: 36px 0 45px;
   gap: 35px;
-  align-items: center;
   justify-content: space-between;
 `;
 
@@ -93,6 +92,7 @@ const Text = styled.div`
 
 const NameInput = styled.div`
   box-sizing: border-box;
+  padding: 92px 0 0;
   svg {
     min-width: 34px;
   }  

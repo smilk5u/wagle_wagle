@@ -3,9 +3,9 @@ import Modal from "../Modal/Modal";
 import styled from 'styled-components';
 import { ReactComponent as CloseBtn } from "../../assets/common/closeBtn.svg";
 import Haetae from "../../assets/popup/popup_haetae_img.png";
-import Pattern from "../../assets/popup/pattern.png"; 
- 
-const Completed = () => {
+import Pattern from "../../assets/popup/pattern.png";
+
+const Completed = ({ setCompletedGiwa }) => {
   const existMouseOver = (e) => {
     e.target.parentNode.classList.add('first');
     e.target.parentNode.classList.remove('two');
@@ -22,7 +22,7 @@ const Completed = () => {
   return (
     <Modal>
       <Contain>
-        <XBtnBox>
+        <XBtnBox onClick={() => setCompletedGiwa(false)}>
           <CloseBtn width={36} height={37} fill="black" />
         </XBtnBox>
         <Wrap>
@@ -105,6 +105,7 @@ const Button = styled.div`
   overflow: hidden;
   border-radius: 0 0 30px 30px;  
   background-color: #fff;
+  transition: background-color, .2s;
   &.first {
     background-color: #18316F;
     button {
@@ -133,7 +134,6 @@ const Button = styled.div`
     font-style: normal;
     font-weight: 600;
     line-height: 34px; 
-    transition: background-color, .2s;
     &:nth-of-type(1) { &:after { display: none; } }
     &:after {
       width: 2px; height: 50px;

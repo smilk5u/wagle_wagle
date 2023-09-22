@@ -138,6 +138,6 @@ const EyeIconBtn = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
 `;

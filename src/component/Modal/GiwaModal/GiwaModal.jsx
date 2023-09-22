@@ -8,10 +8,13 @@ import WriteGuestText from "./WriteGuestText";
 import NameContain from "./NameMade";
 import { ReactComponent as CloseBtn } from "../../../assets/common/closeBtn.svg";
 import { ReactComponent as LeftArrow } from "../../../assets/common/ic_left_arrow.svg";
+import giwaComplated from "../../../assets/modal/giwa_complated.png";
 
-const GiwaModal = ({ onXBtnClick }) => {
+const GiwaModal = ({ onXBtnClick, setCompletedGiwa }) => {
   const selectedGiwa = useSelector((state) => state.giwaReducer);
   const [pageNum, setPageNum] = useState(1);
+
+  console.log(selectedGiwa)
 
   return (
     <Modal>
@@ -49,7 +52,9 @@ const GiwaModal = ({ onXBtnClick }) => {
                 <GoBackBtn onClick={() => setPageNum(1)}>
                   <LeftArrow />
                 </GoBackBtn>
-                <GiwaBox>{selectedGiwa.giwaName}</GiwaBox>
+                <GiwaBox>
+                  <img src={giwaComplated} alt="기와 선택완료" />
+                </GiwaBox>
               </GoBackBox>
               <Button
                 disabled={!selectedGiwa.number}
@@ -72,13 +77,16 @@ const GiwaModal = ({ onXBtnClick }) => {
                 <GoBackBtn onClick={() => setPageNum(2)}>
                   <LeftArrow />
                 </GoBackBtn>
-                <GiwaBox>{selectedGiwa.giwaName}</GiwaBox>
-                <GiwaBox>{selectedGiwa.giwaName} 가</GiwaBox>
+                <GiwaBox>
+                  <img src={giwaComplated} alt="기와 선택완료" />
+                </GiwaBox>
+                <GiwaBox><span>가</span></GiwaBox>
               </GoBackBox>
               <Button
                 disabled={!selectedGiwa.number}
                 onClick={() => {
-                  alert("등록 완료");
+                  onXBtnClick()
+                  setCompletedGiwa(true)
                 }}
                 buttonText={"기와 등록하기"}
                 style={{ width: "300px", height: "54px", marginBottom: "0" }}
@@ -171,6 +179,16 @@ const GiwaBox = styled.div`
   height: 54px;
   background-color: #ededed;
   border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  span {    
+    color: #222;
+    font-family: var(--font-hunmin);
+    font-size: 32px;
+    font-weight: 400;
+  }
 `;
 
 
