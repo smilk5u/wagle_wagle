@@ -93,7 +93,7 @@ const Main = () => {
             <HaetaeWrap>
               <img src={haetaeImg} alt="해태" />
               <Speech>
-                {/* {
+                {
                   // 집주인 : 기와 12개 미만일 때
                   <p ref={speechRef}>
                     <span>환</span>
@@ -102,7 +102,7 @@ const Main = () => {
                     <span>오</span>
                     <span>!</span>
                   </p>
-                } */}
+                }
                 {/* {
                   // 집주인 : 기와 12개 이상일 때
                   <>
@@ -124,7 +124,7 @@ const Main = () => {
                     </button>
                   </>
                 } */}
-                { // 방문자
+                {/* { // 방문자
                   <>
                     <p ref={speechRef}>
                       <span>기</span>
@@ -141,7 +141,7 @@ const Main = () => {
                       <GiwaPlus />
                     </button>
                   </>
-                }
+                } */}
               </Speech>
             </HaetaeWrap>
             <img src={taegeukgi} alt="태극기" />
