@@ -1,0 +1,20 @@
+// 기와 보관함 데이터
+export default [
+  { id: 1, name: "홍길동1", date: "23년 10월 9일", img: "../../assets/giwaPattern/thanks.png" },
+  { id: 2, name: "홍길동2", date: "23년 10월 9일", img: "./assets/giwaPattern/doran.png" },
+  { id: 3, name: "홍길동3", date: "23년 10월 9일", img: "./assets/giwaPattern/thanks.png" },
+  { id: 4, name: "홍길동4", date: "23년 10월 9일", img: "./assets/giwaPattern/it_hing.png" },
+  { id: 5, name: "홍길동5", date: "23년 10월 9일", img: "./assets/giwaPattern/love.png" },
+  { id: 6, name: "홍길동6", date: "23년 10월 9일", img: "./assets/giwaPattern/jackpot.png" },
+  { id: 7, name: "홍길동7", date: "23년 10월 9일", img: "./assets/giwaPattern/thanks.png" },
+  { id: 8, name: "홍길동7", date: "23년 10월 9일", img: "./assets/giwaPattern/respect.png" },
+  { id: 9, name: "홍길동7", date: "23년 10월 9일", img: "./assets/giwaPattern/thanks.png" },
+  { id: 10, name: "홍길동7", date: "23년 10월 9일", img: "./assets/giwaPattern/charong.png" },
+  { id: 11, name: "홍길동7", date: "23년 10월 9일", img: "./assets/giwaPattern/pass.png" },
+  { id: 12, name: "홍길동7", date: "23년 10월 9일", img: "./assets/giwaPattern/jackpot.png" },
+  { id: 13, name: "홍길동7", date: "23년 10월 9일", img: "./assets/giwaPattern/thanks.png" },
+  { id: 14, name: "홍길동7", date: "23년 10월 9일", img: "./assets/giwaPattern/love.png" },
+  { id: 15, name: "홍길동7", date: "23년 10월 9일", img: "./assets/giwaPattern/thanks.png" },
+  { id: 16, name: "홍길동7", date: "23년 10월 9일", img: "./assets/giwaPattern/peep_bo.png" },
+  { id: 17, name: "홍길동7", date: "23년 10월 9일", img: "./assets/giwaPattern/schurm.png" },
+]

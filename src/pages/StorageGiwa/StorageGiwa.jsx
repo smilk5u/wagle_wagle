@@ -3,32 +3,11 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NavBar from "../../component/NavBar/NavBar";
 import GuestBook from "../../component/RightSide/GuestBook";
-import giwaFrame from "../../assets/stroage/giwa_frame_img.png";
+import giwaFrame from "../../assets/common/giwa_frame_img.jpg";
 import { ReactComponent as VisitIcon } from "../../assets/common/visit_icon.svg";
 import { ReactComponent as Badge } from "../../assets/stroage/latest_badge.svg";
 import { ReactComponent as ToggleArrow } from "../../assets/common/toggle_arrow.svg";
-import { ReactComponent as GiwaMean1 } from "../../assets/stroage/giwa_mean1.svg";
-
-// 기와 보관함 데이터
-const giwaData = [
-  { id: 1, name: "홍길동1", date: "23년 10월 9일", img: "" },
-  { id: 2, name: "홍길동2", date: "23년 10월 9일", img: "" },
-  { id: 3, name: "홍길동3", date: "23년 10월 9일", img: "" },
-  { id: 4, name: "홍길동4", date: "23년 10월 9일", img: "" },
-  { id: 5, name: "홍길동5", date: "23년 10월 9일", img: "" },
-  { id: 6, name: "홍길동6", date: "23년 10월 9일", img: "" },
-  { id: 7, name: "홍길동7", date: "23년 10월 9일", img: "" },
-  { id: 8, name: "홍길동7", date: "23년 10월 9일", img: "" },
-  { id: 9, name: "홍길동7", date: "23년 10월 9일", img: "" },
-  { id: 10, name: "홍길동7", date: "23년 10월 9일", img: "" },
-  { id: 11, name: "홍길동7", date: "23년 10월 9일", img: "" },
-  { id: 12, name: "홍길동7", date: "23년 10월 9일", img: "" },
-  { id: 13, name: "홍길동7", date: "23년 10월 9일", img: "" },
-  { id: 14, name: "홍길동7", date: "23년 10월 9일", img: "" },
-  { id: 15, name: "홍길동7", date: "23년 10월 9일", img: "" },
-  { id: 16, name: "홍길동7", date: "23년 10월 9일", img: "" },
-  { id: 17, name: "홍길동7", date: "23년 10월 9일", img: "" },
-]
+import giwaData from "../../data/giwaStorage";
 
 /* 비교데이터 */
 let data = ['기와 목록 최신순', '기와 목록 과거순'];
@@ -64,14 +43,14 @@ const StorageGiwa = () => {
     <>
       <NavBar />
       <Container open={openGusetBook}>
-        <AsideTtile>
+        <AsideTitle>
           <Title>
             <span>홍길동</span>님, <br />
             기와를 이만큼 <br />
             받았다오.
           </Title>
           <p>총 <em>{giwaStorage.length}</em>개를 받았소.</p>
-        </AsideTtile>
+        </AsideTitle>
         <StorageContain>
           <Nav>
             <NavCont>
@@ -91,11 +70,10 @@ const StorageGiwa = () => {
               giwaStorage.map(item => (
                 <GiwaLi key={item.id}>
                   <button type="button" onClick={openGusetBookModal}>
-                    <img src={giwaFrame} alt="" />
-                    {
-                      item.id < 13 && <em><Badge /></em>
-                    }
-                    <GiwaMean1 />
+                    {/* 기와 이미지 */}
+                    <img src={item.img} alt="" />
+                    {/* 뱃지 */}
+                    {item.id < 13 && <em><Badge /></em>} 
                   </button>
                   <span>{item.date}</span>
                 </GiwaLi>
@@ -133,7 +111,7 @@ const Container = styled.div`
   }
 `;
 
-const AsideTtile = styled.div`
+const AsideTitle = styled.div`
   width: 38%;
   float: left;
   p {

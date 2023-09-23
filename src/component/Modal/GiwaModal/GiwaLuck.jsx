@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 
-const GiwaLuck = ({ giwaName }) => {
+const GiwaLuck = ({ giwaItems }) => {
   return (
     <Wrap>
       <ImgContain>
-        <div></div>
-        <b>{giwaName}</b>
+        <img src={giwaItems.imgSrc} alt="" />
+        <b>{giwaItems.giwaName}</b>
       </ImgContain>
       <LuckTxt>
-        {giwaName} 에 대한 운입니다.. <br />
+        {/* {giwaName} 에 대한 운입니다.. <br /> */}
         이 기와는 연애운이 상승하는 기와입니다. <br />
         이성이 없는 사람에게는 새로운 만남이 생길 확률이  <br />
         높아집니다. 반대로 이미 짝이 있는 경우에는,  오히려 금술이 단단해져 결혼할 기회까지 오게 됩니다.
@@ -38,10 +38,10 @@ const Wrap = styled.div`
 const ImgContain = styled.div`
   display: flex;
   align-items: end;
-  > div {
-    width:170px; 
-    height:170px;
-    background-color: #D9D9D9;  
+  > img {
+    width: 172px; 
+    height: 172px; 
+    border-radius: 10px;
   }
   > b {
     position: relative;

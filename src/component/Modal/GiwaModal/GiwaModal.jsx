@@ -14,8 +14,6 @@ const GiwaModal = ({ onXBtnClick, setCompletedGiwa }) => {
   const selectedGiwa = useSelector((state) => state.giwaReducer);
   const [pageNum, setPageNum] = useState(1);
 
-  console.log(selectedGiwa)
-
   return (
     <Modal>
       <ChooseBox>

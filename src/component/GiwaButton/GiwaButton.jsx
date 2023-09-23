@@ -40,7 +40,6 @@ const GiwaSvg = styled.svg`
     fill: transparent; 
     stroke-miterlimit: 10;
     cursor: pointer;
-    /* fill: #ffffff50; */
     transition: fill, .4s ease-in-out;
     &:hover {
       fill: #cccccc2d;

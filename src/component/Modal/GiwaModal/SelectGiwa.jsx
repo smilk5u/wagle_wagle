@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as Hat } from "../../../assets/main/kigHat.svg";
-import selectedGiwaPath from "../../../assets/modal/selected_giwa.svg";
-import SelectTitle from "../../SelectTitle/SelectTitle";
-import GiwaLuck from "./GiwaLuck";
 import { useDispatch, useSelector } from "react-redux";
 import { selectGiwa } from "../../../redux/actions/giwaActions";
+import SelectTitle from "../../SelectTitle/SelectTitle";
+import GiwaLuck from "./GiwaLuck";
+import { ReactComponent as Hat } from "../../../assets/main/kigHat.svg";
+import checkIcon from "../../../assets/common/check_icon.svg";
+import selectedGiwaPath from "../../../assets/modal/selected_giwa.svg";
 
 const SelectGiwa = () => {
   const dispatch = useDispatch();
@@ -13,43 +14,63 @@ const SelectGiwa = () => {
   const giwaPatternItems = [
     {
       id: 1,
-      giwaName: "사랑",
-      imgSrc: "",
+      giwaName: "감사",
+      imgSrc: "./assets/giwaPattern/thanks.png",
     },
     {
       id: 2,
-      giwaName: "우정",
-      imgSrc: "",
+      giwaName: "까꿍",
+      imgSrc: "./assets/giwaPattern/peep_bo.png",
     },
     {
       id: 3,
-      giwaName: "용기",
-      imgSrc: "",
+      giwaName: "대박",
+      imgSrc: "./assets/giwaPattern/jackpot.png",
     },
     {
       id: 4,
-      giwaName: "기쁨",
-      imgSrc: "",
+      giwaName: "도란",
+      imgSrc: "./assets/giwaPattern/doran.png",
     },
     {
       id: 5,
-      giwaName: "슬픔",
-      imgSrc: "",
+      giwaName: "똥",
+      imgSrc: "./assets/giwaPattern/poop.png",
     },
     {
       id: 6,
-      giwaName: "우애",
-      imgSrc: "",
+      giwaName: "사랑",
+      imgSrc: "./assets/giwaPattern/love.png",
     },
     {
       id: 7,
-      giwaName: "글자",
-      imgSrc: "",
+      giwaName: "슈룹",
+      imgSrc: "./assets/giwaPattern/jackpot.png",
     },
     {
       id: 8,
-      giwaName: "머머",
-      imgSrc: "",
+      giwaName: "올차다",
+      imgSrc: "./assets/giwaPattern/all_cha_da.png",
+    },
+    {
+      id: 9,
+      giwaName: "잇힝",
+      imgSrc: "./assets/giwaPattern/it_hing.png",
+    },
+    {
+      id: 10,
+      giwaName: "존경",
+      imgSrc: "./assets/giwaPattern/jackpot.png",
+    },
+    {
+      id: 11,
+      giwaName: "차롱",
+      imgSrc: "./assets/giwaPattern/charong.png",
+    },
+    {
+      id: 12,
+      giwaName: "합격",
+      imgSrc: "./assets/giwaPattern/pass.png",
     },
   ];
 
@@ -57,15 +78,15 @@ const SelectGiwa = () => {
     dispatch(selectGiwa(id));
   };
 
-  const objectSelectedGiwa = giwaPatternItems.find(
-    (item) => item.id === selectedGiwa.number
-  );
+  const objectSelectedGiwa = giwaPatternItems.find((item) => {
+    return item.id === selectedGiwa.number
+  });
 
   return (
     <Container>
       <LeftBox>
         {selectedGiwa.number ? (
-          <GiwaLuck giwaName={objectSelectedGiwa.giwaName}/>
+          <GiwaLuck giwaItems={objectSelectedGiwa} />
         ) : (
           <>
             <Hat />
@@ -81,18 +102,15 @@ const SelectGiwa = () => {
         <SelectTitle title={"기와무늬"} fontSize="18px" />
         <PatternBox>
           <div>
-            {giwaPatternItems.map((item) => {
+            {giwaPatternItems.map(item => {
               return (
-                <GiwaItemBox
-                  key={item.giwaName}
-                  onClick={() => {
-                    handleSelectGiwa(item.id);
-                  }}
-                  $isClicked={item.id === selectedGiwa.number}
-                >
+                <GiwaItemBox key={item.giwaName} onClick={() => {
+                  handleSelectGiwa(item.id);
+                }} $isClicked={item.id === selectedGiwa.number}>
                   {item.id === selectedGiwa.number ? (
                     <ClickedBox></ClickedBox>
                   ) : null}
+                  <img src={item.imgSrc} alt="" />
                 </GiwaItemBox>
               );
             })}
@@ -141,7 +159,7 @@ const Text = styled.p`
 
 const PatternBox = styled.div`
   width: 100%;
-  height: 310px;
+  height: 320px;
   border-radius: 20px;
   border: 1px solid #e6e6e6;
   box-sizing: border-box;
@@ -182,15 +200,33 @@ const GiwaItemBox = styled.button`
   border-radius: 6px;
   background-color: #f4f4f4;
   overflow: hidden;
+  position: relative;
+  img {
+    width: 100%;
+  }
 `;
 
 const ClickedBox = styled.div`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  border-radius: 6px;
-  background: url(${selectedGiwaPath}) no-repeat;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: absolute;
+  border: 2px solid #1748C1;
+  background-color: rgba(23, 71, 193, 0.2);
+  &:after {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    margin: auto;
+    left: 0; right: 0; top: 0; bottom: 0;
+    border-radius: 40px;
+    box-shadow: 2px 2px 10px rgba(3, 22, 75, 0.363);
+    background: #1748C1 url(${checkIcon}) 50% 50% no-repeat;
+  }
 `;

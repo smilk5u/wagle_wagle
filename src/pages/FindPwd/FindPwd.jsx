@@ -40,7 +40,7 @@ const FindPwd = () => {
         : null}
 
       <NavBar />
-      <Main>
+      <Main> 
         <MainDiv>
           <Title title="비밀번호 찾기" />
           <Sub>비밀번호를 분실하셨나요?</Sub>
