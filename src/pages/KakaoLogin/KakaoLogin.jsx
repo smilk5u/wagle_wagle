@@ -3,7 +3,7 @@ import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import {
   KAKAO_CLIENT_ID,
   KAKAO_REDIRECT_URI,
-} from "../../component/socialLogin/socialLoginUrl";
+} from "../../component/SocialLogin/socialLoginUrl";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/actions/userActions";
 

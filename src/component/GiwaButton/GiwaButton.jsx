@@ -1,23 +1,32 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
-import giwaData from "../../data/giwaPath"
+import giwaData from "../../data/giwaPath";
 
-const GiwaButton = ({ setOpen }) => {
-  const [giwa, setGiwa] = useState(giwaData);
-
+const GiwaButton = ({ setOpen, changeGiwa, giwaList }) => {
+  console.log(giwaList);
+  const shape = giwaData.map((data) => {
+    return data;
+  });
+  console.log("shape", shape);
   return (
     <GiwaContainer>
       <GiwaSvg viewBox="0 0 770 679" x="0px" y="0px">
-        {giwa.map(giwa => <path key={giwa.id} onClick={() => {
-          console.log(giwa.name)
-          setOpen()
-        }} d={giwa.data} />)}
+        {giwaList.map((giwa, index) => (
+          <path
+            key={giwa.id}
+            onClick={() => {
+              changeGiwa(giwa.id);
+              setOpen();
+            }}
+            d={giwaData[index].data}
+          />
+        ))}
       </GiwaSvg>
       <GiwaName>
-        {giwa.map(giwa => {
-          return <li key={giwa.id}>
-            {giwa.svg}
-          </li>
+        {giwaList.map((giwa) => {
+          return (
+            <li key={giwa.id}>{giwaData[giwa.postStyle.shapeCode - 1].svg}</li>
+          );
         })}
       </GiwaName>
     </GiwaContainer>
@@ -35,19 +44,19 @@ const GiwaSvg = styled.svg`
   width: 100%;
   height: 100%;
   position: relative;
-  z-index: 1;  
+  z-index: 1;
   > path {
-    fill: transparent; 
+    fill: transparent;
     stroke-miterlimit: 10;
     cursor: pointer;
-    transition: fill, .4s ease-in-out;
+    transition: fill, 0.4s ease-in-out;
     &:hover {
       fill: #cccccc2d;
     }
   }
 `;
 const GiwaName = styled.ul`
-  width: 100%; 
+  width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
@@ -59,23 +68,62 @@ const GiwaName = styled.ul`
     z-index: -1;
     /* transform: rotate(35deg); */
     /* background-color: green; */
-    &:nth-of-type(1) { left: 17%; top: 8%; }
-    &:nth-of-type(2) { left: 26%; top: 13.6%; }
-    &:nth-of-type(3) { left: 36.2%; top: 19.6%; }
-    &:nth-of-type(4) { left: 46%; top: 25.5%; }
-    &:nth-of-type(5) { left: 11%; top: 17.5%; }
-    &:nth-of-type(6) { left: 20%; top: 24%; }
-    &:nth-of-type(7) { left: 30%; top: 30.5%; }
-    &:nth-of-type(8) { left: 39.5%; top: 37%; }
-    &:nth-of-type(9) { left: 3.7%; top: 24.8%; }
-    &:nth-of-type(10) { left: 13.5%; top: 32.5%; }
-    &:nth-of-type(11) { left: 24.5%; top: 40.5%; }
-    &:nth-of-type(12) { left: 36%; top: 48%; }
+    &:nth-of-type(1) {
+      left: 17%;
+      top: 8%;
+    }
+    &:nth-of-type(2) {
+      left: 26%;
+      top: 13.6%;
+    }
+    &:nth-of-type(3) {
+      left: 36.2%;
+      top: 19.6%;
+    }
+    &:nth-of-type(4) {
+      left: 46%;
+      top: 25.5%;
+    }
+    &:nth-of-type(5) {
+      left: 11%;
+      top: 17.5%;
+    }
+    &:nth-of-type(6) {
+      left: 20%;
+      top: 24%;
+    }
+    &:nth-of-type(7) {
+      left: 30%;
+      top: 30.5%;
+    }
+    &:nth-of-type(8) {
+      left: 39.5%;
+      top: 37%;
+    }
+    &:nth-of-type(9) {
+      left: 3.7%;
+      top: 24.8%;
+    }
+    &:nth-of-type(10) {
+      left: 13.5%;
+      top: 32.5%;
+    }
+    &:nth-of-type(11) {
+      left: 24.5%;
+      top: 40.5%;
+    }
+    &:nth-of-type(12) {
+      left: 36%;
+      top: 48%;
+    }
     svg {
       position: absolute;
       width: 100%;
       height: auto;
-      left: 0; top: 0; right: 0; bottom: 0;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
       margin: auto;
     }
   }

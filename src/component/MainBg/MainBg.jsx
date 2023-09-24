@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import gsap from "gsap";
 import { useBgColor } from "../../contexts/BackgroundColor";
 import pineTreeLeft from "../../assets/main/pine_tree_left.png";
 import pineTreeRight from "../../assets/main/pine_tree_right.png";
@@ -14,9 +13,7 @@ import moon from "../../assets/main/moon.png";
 const MainBg = ({ openMakeup, openGusetBook }) => {
   const { bgColor } = useBgColor();
   return (
-    <BgContainer className={
-      openMakeup || openGusetBook ? 'left' : null
-    }>
+    <BgContainer className={openMakeup || openGusetBook ? "left" : null}>
       {!bgColor && <img src={moon} alt="달" />}
       <CloudWrap>
         <img src={bgColor ? cloudLeft : cloudNightLeft} alt="왼쪽 구름" />
@@ -71,42 +68,42 @@ const CloudWrap = styled.div`
   min-width: 1920px;
   height: 100%;
   position: absolute;
-  left: 50%;  
+  left: 50%;
   top: 0;
-  transform: translate(-50%,0);
+  transform: translate(-50%, 0);
   transition: all ease-in-out 1s;
   img {
     position: absolute;
-    top: 0; 
+    top: 0;
     bottom: 0;
     margin: auto;
     &:nth-of-type(1) {
-      left: 1%; 
+      left: 1%;
       top: -55%;
     }
     &:nth-of-type(2) {
       top: -65%;
       left: -1%;
-      right: 0;       
+      right: 0;
     }
     &:nth-of-type(3) {
-       right: -60px;
-       top: -50%;
+      right: -60px;
+      top: -50%;
     }
   }
 `;
 
-const Tree = styled.div`
+export const Tree = styled.div`
   min-width: 1800px;
   width: 100%;
   height: 100%;
   position: absolute;
-  left: 50%;  
+  left: 50%;
   top: 0;
   z-index: 2;
-  transform: translate(-50%,0);
+  transform: translate(-50%, 0);
   pointer-events: none;
-  > img {    
+  > img {
     position: absolute;
     transition: all ease-in-out 1s;
     &:nth-of-type(1) {

@@ -1,30 +1,30 @@
 
 import { styled } from "styled-components";
 
-function ModalBasic ({msg, buttonText, onClickBtn=()=>{}, visibleFtn}) {
+function ModalBasic ({msg, buttonText, onClickBtn=()=>{}, visibleFtn, linkPath}) {
 
-    const onClick = ()=>{
+  const onClick = ()=>{
 
-        // 기능
-        onClickBtn();
+      // 기능
+      onClickBtn();
 
-        // modal 제거
-        visibleFtn(false);
-    }
+      // modal 제거
+      visibleFtn(false);
+  }
 
-    return(
-        (<ModalBg>
-            <ModalMain>
+  return(
+      (<ModalBg>
+          <ModalMain>
 
-                <ModalTop>{msg}</ModalTop>
-            
-                <ModalBottom onClick={onClick}>
-                    {buttonText}
-                </ModalBottom>
-            
-            </ModalMain>
-        </ModalBg>)
-    );
+              <ModalTop>{msg}</ModalTop>
+          
+              <ModalBottom onClick={onClick}>
+                  {buttonText}
+              </ModalBottom>
+          
+          </ModalMain>
+      </ModalBg>)
+  );
 }
 
 export default ModalBasic;

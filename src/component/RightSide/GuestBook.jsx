@@ -1,11 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import SelectTitle from "../SelectTitle/SelectTitle";
 import { ReactComponent as XIcon } from "../../assets/common/closeBtn.svg";
 import { ReactComponent as Board } from "../../assets/main/board_img_3.svg";
 import { ReactComponent as GiwaMeaning } from "../../assets/main/giwa_mean_1.svg";
+import { getGiwaDetailApi } from "../../apis/giwa";
+import { fontColor, textSort } from "../../data/giwaData";
+import { koreaDate } from "../../utils/koreaDate";
 
-const GuestBook = ({ openGusetBook, xBtnClickHandler }) => {
+const GuestBook = ({ openGusetBook, xBtnClickHandler, selectedGiwa }) => {
+  const [giwa, setGiwa] = useState({});
+  useEffect(() => {
+    if (!selectedGiwa) return;
+    getGiwaDetailApi(selectedGiwa).then((result) => {
+      if (result.status === 200) {
+        setGiwa(result.data);
+      }
+    });
+  }, [selectedGiwa]);
+  // const giwaFontColor = fontColor[giwa.postStyle.fontColorCode - 1];
+  // const giwaTextSort = textSort[giwa.postStyle.sortCode - 1];
+  const giwaCreatedDate = koreaDate(giwa.createdTime);
+  console.log(giwaCreatedDate);
   return (
     <Container className={openGusetBook ? "show" : null}>
       <XBox>
@@ -17,46 +33,76 @@ const GuestBook = ({ openGusetBook, xBtnClickHandler }) => {
         />
       </XBox>
       <Wrap>
-        <strong><span>홍길동</span>님 에게</strong>
+        <strong>
+          <span>홍길동</span>님에게
+        </strong>
         <Title>
           <GiwaImg>
             <GiwaMeaning />
           </GiwaImg>
           <GiwaText>
             <b>기와의 뜻</b>
-            <p>Aliquam vehicula pellentesque id mi quam ipsum. Arcu nisl faucibus mattis etiam.</p>
+            <p>
+              Aliquam vehicula pellentesque id mi quam ipsum. Arcu nisl faucibus
+              mattis etiam.
+            </p>
           </GiwaText>
         </Title>
         <GuestBookWrap>
-          <Text>
+          <Text
+          // $fontColor={giwaFontColor}
+          // $sort={giwaTextSort}
+          >
             <Board />
-            <p>들어봐 밤이, <br />
-              봄 밤이오래된 애인들과 어떻게이야기하는지꽃들이,<br />
-              등 아래 핀 벚꽃들이서늘한 봄 비에 지면서도<br />
-              얼마나 빛나는지 백석을 읽는 밤내일을 돌보지 않아도<br />
-              푸근하고 아린이런 봄날, 봄밤발치에 조으는<br />
-              짐승의 착한눈꺼풀과이불 아래 방바닥의 온기와 주전자서<br />
-              끓는 구수한 보리차 냄새가지들 마른 울음<br />
-              봄 밤이오래된 애인들과 어떻게이야기하는지꽃들이,<br />
-              등 아래 핀 벚꽃들이서늘한 봄 비에 지면서도<br />
-              얼마나 빛나는지 백석을 읽는 밤내일을 돌보지 않아도<br />
-              푸근하고 아린이런 봄날, 봄밤발치에 조으는<br />
-              짐승의 착한눈꺼풀과이불 아래 방바닥의 온기와 주전자서<br />
-              끓는 구수한 보리차 냄새가지들 마른 울음<br />
-              봄 밤이오래된 애인들과 어떻게이야기하는지꽃들이,<br />
-              등 아래 핀 벚꽃들이서늘한 봄 비에 지면서도<br />
-              얼마나 빛나는지 백석을 읽는 밤내일을 돌보지 않아도<br />
-              푸근하고 아린이런 봄날, 봄밤발치에 조으는<br />
-              짐승의 착한눈꺼풀과이불 아래 방바닥의 온기와 주전자서<br />
-              끓는 구수한 보리차 냄새가지들 마른 울음<br />
-              그치고 저리던 뿌리들도 축축히 잠드는이런 봄, 밤</p>
+            <p>
+              {giwa.message}
+              {/* 들어봐 밤이, <br />
+              봄 밤이오래된 애인들과 어떻게이야기하는지꽃들이,
+              <br />
+              등 아래 핀 벚꽃들이서늘한 봄 비에 지면서도
+              <br />
+              얼마나 빛나는지 백석을 읽는 밤내일을 돌보지 않아도
+              <br />
+              푸근하고 아린이런 봄날, 봄밤발치에 조으는
+              <br />
+              짐승의 착한눈꺼풀과이불 아래 방바닥의 온기와 주전자서
+              <br />
+              끓는 구수한 보리차 냄새가지들 마른 울음
+              <br />
+              봄 밤이오래된 애인들과 어떻게이야기하는지꽃들이,
+              <br />
+              등 아래 핀 벚꽃들이서늘한 봄 비에 지면서도
+              <br />
+              얼마나 빛나는지 백석을 읽는 밤내일을 돌보지 않아도
+              <br />
+              푸근하고 아린이런 봄날, 봄밤발치에 조으는
+              <br />
+              짐승의 착한눈꺼풀과이불 아래 방바닥의 온기와 주전자서
+              <br />
+              끓는 구수한 보리차 냄새가지들 마른 울음
+              <br />
+              봄 밤이오래된 애인들과 어떻게이야기하는지꽃들이,
+              <br />
+              등 아래 핀 벚꽃들이서늘한 봄 비에 지면서도
+              <br />
+              얼마나 빛나는지 백석을 읽는 밤내일을 돌보지 않아도
+              <br />
+              푸근하고 아린이런 봄날, 봄밤발치에 조으는
+              <br />
+              짐승의 착한눈꺼풀과이불 아래 방바닥의 온기와 주전자서
+              <br />
+              끓는 구수한 보리차 냄새가지들 마른 울음
+              <br />
+              그치고 저리던 뿌리들도 축축히 잠드는이런 봄, 밤 */}
+            </p>
           </Text>
           <div>
             <span>
-              <em>23</em>년<em>10</em>월<em>5</em>일
+              <em>{giwaCreatedDate.year}</em>년<em>{giwaCreatedDate.month}</em>
+              월<em>{giwaCreatedDate.day}</em>일
             </span>
             <b>
-              <span>심청이</span>가
+              <span>{giwa.nickName}</span>
             </b>
           </div>
         </GuestBookWrap>
@@ -68,19 +114,18 @@ const GuestBook = ({ openGusetBook, xBtnClickHandler }) => {
 export default GuestBook;
 
 const Container = styled.aside`
-  background-color: red;
   width: 680px;
-  height: 920px;
+  height: 100%;
   display: flex;
+  justify-content: center;
   flex-direction: column;
-  justify-content: space-between;
   background-color: #fff;
   box-shadow: 0px 0px 50px 0px rgba(210, 201, 168, 0.5);
-  border-radius: 50px 0px 0px 50px;
+  border-radius: 50px 0px 0px 50px; 
   position: fixed;
   right: -730px;
   top: 0;
-  bottom: 0; 
+  bottom: 0;
   margin: auto;
   opacity: 0;
   box-sizing: border-box;
@@ -95,8 +140,8 @@ const Container = styled.aside`
 
 const XBox = styled.button`
   position: absolute;
-  top: 50px; 
-  right: 48px;
+  top: 50px;
+  right: 50px;
 `;
 
 const Wrap = styled.div`
@@ -109,7 +154,7 @@ const Wrap = styled.div`
     line-height: 37px;
     font-weight: 600;
     span {
-      color: #E75852;
+      color: #e75852;
     }
   }
 `;
@@ -133,7 +178,10 @@ const GiwaImg = styled.div`
     width: 80%;
     position: absolute;
     margin: auto;
-    left: 0; right: 0; bottom: 0; top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
   }
 `;
 
@@ -142,7 +190,7 @@ const GiwaText = styled.div`
   b {
     display: block;
     margin: 0 0 10px;
-    color:#212121;
+    color: #212121;
     font-family: var(--font-hunmin-saeron);
     font-size: 26px;
     font-weight: 600;
@@ -168,7 +216,7 @@ const GuestBookWrap = styled.div`
       font-size: 26px;
       font-weight: 600;
       display: block;
-      > em { 
+      > em {
         margin: 0 0 0 10px;
       }
     }
@@ -190,7 +238,7 @@ const Text = styled.div`
   position: relative;
   svg {
     width: 100%;
-  } 
+  }
   p {
     width: 88%;
     height: 74%;
@@ -198,20 +246,22 @@ const Text = styled.div`
     top: 13%;
     padding: 0 2% 0 0;
     box-sizing: border-box;
-    left: 0; right: 0;
+    left: 0;
+    right: 0;
     margin: auto;
-    color: #000;
+    text-align: ${(props) => props.$sort};
+    color: ${(props) => props.$fontColor};
     font-size: 20px;
     font-weight: 400;
     line-height: 30px;
     font-family: var(--font-Inter);
     overflow-y: auto;
     &::-webkit-scrollbar {
-      width: 6px; 
+      width: 6px;
       background-color: #e6d6b757;
     }
     &::-webkit-scrollbar-thumb {
-      height: 30%; 
+      height: 30%;
       border-radius: 10px;
       background-color: #bb9266;
     }

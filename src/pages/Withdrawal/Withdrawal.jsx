@@ -10,9 +10,9 @@ const Withdrawal = () => {
       <NavBar />
       <Main>
         <MainDiv>
-          <Title title="회원탈퇴하나요?ㅠㅠ" />
-          <Sub>회원가입에 필요한 정보를 입력해주세요.</Sub>
-          <Button />
+          <Title title="회원 탈퇴 하실껀가요?ㅠㅠ" />
+          <Sub>회원탈퇴후 기와집에 등록된 모든 기와는 삭제됩니다.</Sub>
+          <Button buttonText="회원 탈퇴 하기" />
         </MainDiv>
       </Main>
     </>
@@ -30,22 +30,21 @@ const Main = styled.main`
 `;
 
 const MainDiv = styled.div`
-  width: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* padding-top: 100px; */
   box-sizing: border-box;
   button {
-    margin: 40px 0 20px;
+    width: 438px;
+    margin: 70px 0 20px;
   }
 `;
 
 const Sub = styled.h3`
-  margin-top: 14px;
+  margin-top: 30px;
   color: #9e9e9e;
-  font-size: 16px;
+  font-size: 24px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 20px;
 `;
