@@ -35,7 +35,7 @@ function Input({
 
   return (
     <Container>
-      <InputDiv location={location} isFocus={isFocus}>
+      <InputDiv $location={location} $isFocus={isFocus}>
         {/* switch문을 통해서 icon값들에 맞는 icon추가 */}
         {(() => {
           switch (icon) {
@@ -87,7 +87,8 @@ function Input({
 function InputText({
   placeholder,
   dataName,
-  updateData
+  updateData,
+  onEmailCheck
 }) {
 
   const location = useLocation().pathname;
@@ -105,13 +106,15 @@ function InputText({
   }, [dataName, input]);
 
   return (
-      
+
     // Overlap
-    <InputDiv location={location} isFocus={isFocus}>
-      
+    <InputDiv $location={location} $isFocus={isFocus}>
+
+      {location === "/join" && <span className="check" onClick={onEmailCheck}>중복확인</span>}
+
       {/* icon */}
       <UserIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />
-      
+
       {/* input */}
       <input
         type="text"
@@ -120,6 +123,7 @@ function InputText({
         onFocus={onFocusChange}
         onBlur={onBlurChange}
         onChange={setInput}
+        autoComplete="off"
         required
       />
 
@@ -151,13 +155,13 @@ function InputPwd({
   }, [dataName, input]);
 
   return (
-      
+
     // Overlap
-    <InputDiv location={location} isFocus={isFocus}>
-      
+    <InputDiv $location={location} $isFocus={isFocus}>
+
       {/* icon */}
       <PasswordIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />
-      
+
       {/* input */}
       <input
         type={passwordShowing ? "text" : "password"}
@@ -166,6 +170,7 @@ function InputPwd({
         onFocus={onFocusChange}
         onBlur={onBlurChange}
         onChange={setInput}
+        autoComplete="off"
         required
       />
 
@@ -196,10 +201,11 @@ const InputDiv = styled.div`
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  margin-top: ${(props) => (props.location === "/join" ? "20px" : null)};
-  margin-bottom: ${(props) => (props.location === "/login" ? "5px" : null)};
+  margin-top: ${(props) => (props.$location === "/join" ? "20px" : null)};
+  margin-bottom: ${(props) => (props.$location === "/login" ? "5px" : null)};
+  position: relative;
   ${(props) =>
-    props.isFocus
+    props.$isFocus
       ? `border: 1px solid #e75852;
     background-color: #fff;`
       : null}
@@ -233,6 +239,13 @@ const InputDiv = styled.div`
       }
     }
   }
+  .check {
+    width: fit-content;
+    display: block;
+    position: absolute; 
+    right: 0; 
+    background-color: red;
+  }
 `;
 
 const EyeIconBtn = styled.div`
@@ -244,4 +257,4 @@ const EyeIconBtn = styled.div`
 `;
 
 
-export {Input as default, InputText, InputPwd};
+export { Input as default, InputText, InputPwd };

@@ -5,7 +5,7 @@ import NavBar from "../../component/NavBar/NavBar";
 import GuestBook from "../../component/RightSide/GuestBook";
 import giwaFrame from "../../assets/common/giwa_frame_img.jpg";
 import { ReactComponent as VisitIcon } from "../../assets/common/visit_icon.svg";
-import { ReactComponent as Badge } from "../../assets/stroage/latest_badge.svg";
+import { ReactComponent as Badge } from "../../assets/storage/latest_badge.svg";
 import { ReactComponent as ToggleArrow } from "../../assets/common/toggle_arrow.svg";
 import giwaData from "../../data/giwaStorage";
 

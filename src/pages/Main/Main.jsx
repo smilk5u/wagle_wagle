@@ -37,28 +37,28 @@ const Main = () => {
   useEffect(() => {
     // 유저 데이터에 broadId가 없어서 임시데이터 넣어놓음 삭제 예정
     // const requestData = url ? url : userInfo.broadId;
-    // const requestData = url ? url : mockData;
-    // getGiwaHouseApi(requestData).then((result) => {
-    //   if (result.status === 200) {
-    //     setGiwaHouse(result.data);
-    //     return;
-    //   } else {
-    //     alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
-    //     return;
-    //   }
-    // });
+    const requestData = url ? url : mockData;
+    getGiwaHouseApi(requestData).then((result) => {
+      if (result.status === 200) {
+        setGiwaHouse(result.data);
+        return;
+      } else {
+        alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
+        return;
+      }
+    });
   }, []);
 
   useEffect(() => {
-    // if (!giwaHouse.id) return;
-    // getGiwaListApi({
-    //   broadId: giwaHouse.id,
-    //   reverse: true,
-    // }).then((result) => {
-    //   if (result.status === 200) {
-    //     setGiwaList(result.data);
-    //   }
-    // });
+    if (!giwaHouse.id) return;
+    getGiwaListApi({
+      broadId: giwaHouse.id,
+      reverse: true,
+    }).then((result) => {
+      if (result.status === 200) {
+        setGiwaList(result.data);
+      }
+    });
   }, [giwaHouse.id]);
 
   /** 😀 juju

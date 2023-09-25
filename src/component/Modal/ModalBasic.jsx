@@ -1,34 +1,29 @@
 
 import { styled } from "styled-components";
 
-function ModalBasic ({msg, buttonText, onClickBtn=()=>{}, visibleFtn, linkPath}) {
+function ModalBasic({ msg, buttonText, onClickBtn = () => { }, visibleFtn, linkPath }) {
 
-  const onClick = ()=>{
+  const onClick = () => {
+    // 기능
+    onClickBtn();
 
-      // 기능
-      onClickBtn();
-
-      // modal 제거
-      visibleFtn(false);
+    // modal 제거
+    visibleFtn(false);
   }
 
-  return(
-      (<ModalBg>
-          <ModalMain>
-
-              <ModalTop>{msg}</ModalTop>
-          
-              <ModalBottom onClick={onClick}>
-                  {buttonText}
-              </ModalBottom>
-          
-          </ModalMain>
-      </ModalBg>)
+  return (
+    (<ModalBg>
+      <ModalMain>
+        <ModalTop>{msg}</ModalTop>
+        <ModalBottom onClick={onClick}>
+          {buttonText}
+        </ModalBottom>
+      </ModalMain>
+    </ModalBg>)
   );
 }
 
 export default ModalBasic;
-
 
 const ModalBg = styled.div`
   position: fixed;
@@ -38,14 +33,14 @@ const ModalBg = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 200;
 `;
 
 const ModalMain = styled.div`
   width: 340px;
   height: 180px;
   background-color: #fff;
-  border-radius: 10px;
-  z-index: 200;
+  border-radius: 10px;  
 `;
 
 const ModalTop = styled.div`
