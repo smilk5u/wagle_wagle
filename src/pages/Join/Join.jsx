@@ -1,6 +1,5 @@
 import { useCallback, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Form from "../../component/Form/Form";
 import NavBar from "../../component/NavBar/NavBar";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
@@ -10,98 +9,11 @@ import ModalBasic from "../../component/Modal/ModalBasic";
 import { InputText, InputPwd } from "../../component/Input/Input";
 import { ButtonActDeact } from "../../component/Button/Button";
 import { validEmail, validPwd, IsTrue, IsFalse, CheckInfo } from "../../component/ValidTest/ValidTest";
-import axios from 'axios';
 
-// const Join = () => {
-//   const [{ userId, password, checkPassword }, setJoinInfo] = useState({
-//     userId: "",
-//     password: "",
-//     checkPassword: "",
-//   });
-
-//   const [isValid, setIsValid] = useState({
-//     isEmail: false,
-//     isPassword: false,
-//     isPasswordConfirm: false,
-//   });
-
-//   //// visibleModal
-
-//   // 변수
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-
-//   // 함수
-//   const visibleFtn = (value) => {
-//     setIsModalOpen(value);
-//   };
-
-//   const joinUserInfo = useCallback((form) => {
-//     setJoinInfo({
-//       userId: form.userId,
-//       password: form.password,
-//       checkPassword: form.checkPassword,
-//     });
-//   }, []);
-
-//   const validUserInfo = useCallback(
-//     (name, value) => {
-//       setIsValid({ ...isValid, [name]: value });
-//     },
-//     [isValid]
-//   );
-
-//   const onJoinSubmit = () => {
-//     if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm) {
-//       joinApi({
-//         email: userId,
-//         password: password,
-//       }).then((result) => {
-//         if (result.status === 200) {
-//           setIsModalOpen(true);
-//         }
-//         // TODO-GOGI: 에러처리부분 백엔드와 얘기해서 추가 로직 구현해야함
-//         if (result.status === 500) {
-//           console.log("error500");
-//         }
-//       });
-//     }
-//   }; 
-
-//   return (
-//     <>
-//       {/* Modal */}
-//       {(isModalOpen)
-//         ? <ModalBasic
-//           msg="회원가입이 완료되었습니다."
-//           buttonText="확인"
-//           linkPath="/login"
-//           visibleFtn={visibleFtn}
-//         />
-//         : null}
-
-//       <NavBar />
-//       <Main>
-//         <MainDiv>
-//           <Title title="회원가입" />
-//           <Sub>회원가입에 필요한 정보를 입력해주세요.</Sub>
-//           <Form
-//             joinUserInfo={joinUserInfo}
-//             onSubmit={onJoinSubmit}
-//             validUserInfo={validUserInfo}
-//           />
-//           <ToLogin>
-//             이미 와글와글 계정이 있으신가요? <Link to="/login">로그인하기</Link>
-//           </ToLogin>
-//         </MainDiv>
-//       </Main>
-//     </>
-//   );
-// };
-
-const JoinRefine = () => {
+const Join = () => {
   const navigate = useNavigate();
-
-  //// data
+  const [isModalOpen, setIsModalOpen] = useState(false); // 회원가입 완료 팝업창
+  const [emailCheckModal, setEmailCheckModal] = useState(false); // 이메일 중복확인 팝업창
 
   // 변수
   const [data, setData] = useState({
@@ -125,6 +37,7 @@ const JoinRefine = () => {
     isEmail: false,
     isPassword: false,
     isPasswordConfirm: false,
+    isEmeilCheck: false,
   });
 
   // 함수
@@ -133,66 +46,62 @@ const JoinRefine = () => {
   useEffect(() => {
     setIsValid({
       ...isValid,
-      isEmail: validEmail(data.userId),
       isPassword: validPwd(data.pwd),
-      isPasswordConfirm: (data.pwd === data.confirmPwd)
+      isPasswordConfirm: (data.pwd === data.confirmPwd),
+      // isEmeilCheck: false,
     });
   }, [data]);
 
+  useEffect(() => {
+    setIsValid({
+      ...isValid,
+      isEmail: validEmail(data.userId),
+      isEmeilCheck: false,
+    });
+  }, [data.userId]);
 
-
-  //// 회원가입
 
   // 회원가입 가능 판단
   const onJoinSubmit = (e) => {
     e.preventDefault();
-
     if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm) {
       console.log(data.userId)
       joinApi({
         email: data.userId,
         password: data.pwd,
-        username: "닉네임2",
       }).then((result) => {
         console.log(result.status)
         if (result.status === 200) {
+          // modal 열기
           setIsModalOpen(true);
+          // 로그인 화면으로 이동
+          // handleClick();
         }
         // TODO-GOGI: 에러처리부분 백엔드와 얘기해서 추가 로직 구현해야함
         if (result.status === 500) {
           console.log("error500");
         }
       });
-
-      // 로그인 화면으로 이동
-      // handleClick();
     }
   };
 
-  const getUser = async () => {
-    console.log(data.userId,data.pwd)
-    try {
-      const response = await axios.post('https://port-0-backend-server-eu1k2lll0e0u3n.sel4.cloudtype.app/api/v1/users/signup', {
-        email: data.userId,
-        password: data.pwd,
-      })
-      console.log(response);
-      setIsModalOpen(true);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  const checkJoin = async () => {
-    try {
-      const response = await axios.get('https://port-0-backend-server-eu1k2lll0e0u3n.sel4.cloudtype.app/api/v1/users/duplicate-check', {
-        params: {
-          email: 'juju@naver.com',
-        },
-      })
-      console.log(response);
-    } catch (error) {
-      console.error(error);
+  /* 이메일 중복확인 */
+  const onEmailCheck = (e) => {
+    e.preventDefault();
+    if (!e.target.classList.contains("available")) {
+      checkEmailApi(data.userId)
+        .then((result) => {
+          if (result.data.status === "SUCCESS") {
+            setEmailCheckModal(true);
+            setIsValid({
+              ...isValid,
+              isEmeilCheck: true,
+            });
+          }
+          if (result.data.status === "FAIL") {
+            setEmailCheckModal(true);
+          }
+        });
     }
   }
 
@@ -201,35 +110,15 @@ const JoinRefine = () => {
     navigate("/Login");
   }
 
-  //// visibleModal
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   // 함수
   const visibleFtn = (value) => {
     setIsModalOpen(value);
   };
 
-  /* 이메일 중복확인 */
-  const onEmailCheck = () => {
-    const params = { email: data.userId };
-    console.log(data.userId)
-
-    // checkEmailApi(data.userId).then((result) => {
-    //   console.log(result)
-    //   // if (result.status === 200) {
-    //   // }
-    //   // if (result.status === 500) {
-    //   //   console.log("500");
-    //   // }
-    // });
-  }
-
-
   //// 출력
   return (
     <>
       <NavBar />
-
       {/* Modal */}
       {(isModalOpen)
         ? <ModalBasic
@@ -240,15 +129,29 @@ const JoinRefine = () => {
         />
         : null}
 
+      {/* 이메일 중복확인 팝업창 start */}
+      {(emailCheckModal) ? (
+        (isValid.isEmeilCheck)
+          ? <ModalBasic
+            msg="사용가능한 이메일입니다."
+            buttonText="확인"
+            onClickBtn={() => setEmailCheckModal(false)}
+          // visibleFtn={visibleFtn}
+          />
+          : <ModalBasic
+            msg="이미 가입된 회원 입니다."
+            buttonText="확인"
+            onClickBtn={() => setEmailCheckModal(false)}
+          // visibleFtn={visibleFtn}
+          />
+      ) : null}
+      {/* 이메일 중복확인 팝업창 end */}
+
       <Main>
         <MainDiv>
-          <span onClick={getUser} style={{ color: '#fff', fontSize: '20px' }}>회원가입</span>
-          <span onClick={checkJoin} style={{ color: '#fff', fontSize: '20px' }}>중복확인</span>
-
           {/* Title */}
           <Title title="회원가입" />
           <Sub>회원가입에 필요한 정보를 입력해주세요.</Sub>
-
 
           <MainDivBottom>
 
@@ -258,6 +161,7 @@ const JoinRefine = () => {
               dataName="userId"
               updateData={updateData}
               onEmailCheck={onEmailCheck}
+              isValid={isValid}
             />
 
             {/* Email 판별  */}
@@ -269,7 +173,6 @@ const JoinRefine = () => {
               )
             ) : null
             }
-
 
             {/* 비밀번호 */}
             <InputPwd
@@ -328,11 +231,10 @@ const JoinRefine = () => {
   );
 };
 
-export default JoinRefine;
+export default Join;
 
 
 const Main = styled.main`
-  background-color: #222;
   width: 100%;
   height: 100vh;
   display: flex;

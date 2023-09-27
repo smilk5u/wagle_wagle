@@ -14,63 +14,63 @@ const SelectGiwa = () => {
   const giwaPatternItems = [
     {
       id: 1,
-      giwaName: "감사",
-      imgSrc: "./assets/giwaPattern/thanks.png",
+      giwaName: "올차다",
+      imgSrc: "../assets/giwaPattern/all_cha_da.png",
     },
     {
       id: 2,
-      giwaName: "까꿍",
-      imgSrc: "./assets/giwaPattern/peep_bo.png",
+      giwaName: "차롱",
+      imgSrc: "../assets/giwaPattern/charong.png",
     },
     {
       id: 3,
-      giwaName: "대박",
-      imgSrc: "./assets/giwaPattern/jackpot.png",
+      giwaName: "도란",
+      imgSrc: "../assets/giwaPattern/doran.png",
     },
     {
       id: 4,
-      giwaName: "도란",
-      imgSrc: "./assets/giwaPattern/doran.png",
+      giwaName: "합격",
+      imgSrc: "../assets/giwaPattern/pass.png",
     },
     {
       id: 5,
-      giwaName: "똥",
-      imgSrc: "./assets/giwaPattern/poop.png",
+      giwaName: "잇힝",
+      imgSrc: "../assets/giwaPattern/it_hing.png",
     },
     {
       id: 6,
-      giwaName: "사랑",
-      imgSrc: "./assets/giwaPattern/love.png",
+      giwaName: "대박",
+      imgSrc: "../assets/giwaPattern/jackpot.png",
     },
     {
       id: 7,
-      giwaName: "슈룹",
-      imgSrc: "./assets/giwaPattern/jackpot.png",
+      giwaName: "사랑",
+      imgSrc: "../assets/giwaPattern/love.png",
     },
     {
       id: 8,
-      giwaName: "올차다",
-      imgSrc: "./assets/giwaPattern/all_cha_da.png",
+      giwaName: "까꿍",
+      imgSrc: "../assets/giwaPattern/peep_bo.png",
     },
     {
       id: 9,
-      giwaName: "잇힝",
-      imgSrc: "./assets/giwaPattern/it_hing.png",
+      giwaName: "똥",
+      imgSrc: "../assets/giwaPattern/poop.png",
     },
     {
       id: 10,
       giwaName: "존경",
-      imgSrc: "./assets/giwaPattern/jackpot.png",
+      imgSrc: "../assets/giwaPattern/respect.png",
     },
     {
       id: 11,
-      giwaName: "차롱",
-      imgSrc: "./assets/giwaPattern/charong.png",
+      giwaName: "슈룹",
+      imgSrc: "../assets/giwaPattern/schurm.png",
     },
     {
       id: 12,
-      giwaName: "합격",
-      imgSrc: "./assets/giwaPattern/pass.png",
+      giwaName: "감사",
+      imgSrc: "../assets/giwaPattern/thanks.png",
     },
   ];
 
@@ -79,7 +79,7 @@ const SelectGiwa = () => {
   };
 
   const objectSelectedGiwa = giwaPatternItems.find((item) => {
-    return item.id === selectedGiwa.number
+    return item.id === selectedGiwa.number;
   });
 
   return (
@@ -102,11 +102,15 @@ const SelectGiwa = () => {
         <SelectTitle title={"기와무늬"} fontSize="18px" />
         <PatternBox>
           <div>
-            {giwaPatternItems.map(item => {
+            {giwaPatternItems.map((item) => {
               return (
-                <GiwaItemBox key={item.giwaName} onClick={() => {
-                  handleSelectGiwa(item.id);
-                }} $isClicked={item.id === selectedGiwa.number}>
+                <GiwaItemBox
+                  key={item.giwaName}
+                  onClick={() => {
+                    handleSelectGiwa(item.id);
+                  }}
+                  $isClicked={item.id === selectedGiwa.number}
+                >
                   {item.id === selectedGiwa.number ? (
                     <ClickedBox></ClickedBox>
                   ) : null}
@@ -129,7 +133,7 @@ const Container = styled.div`
   padding: 36px 13px 37px;
   display: flex;
   gap: 20px;
-  justify-content: space-between;  
+  justify-content: space-between;
 `;
 
 const LeftBox = styled.div`
@@ -215,7 +219,7 @@ const ClickedBox = styled.div`
   align-items: center;
   justify-content: center;
   position: absolute;
-  border: 2px solid #1748C1;
+  border: 2px solid #1748c1;
   background-color: rgba(23, 71, 193, 0.2);
   &:after {
     content: "";
@@ -224,9 +228,12 @@ const ClickedBox = styled.div`
     height: 40px;
     position: absolute;
     margin: auto;
-    left: 0; right: 0; top: 0; bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     border-radius: 40px;
     box-shadow: 2px 2px 10px rgba(3, 22, 75, 0.363);
-    background: #1748C1 url(${checkIcon}) 50% 50% no-repeat;
+    background: #1748c1 url(${checkIcon}) 50% 50% no-repeat;
   }
 `;

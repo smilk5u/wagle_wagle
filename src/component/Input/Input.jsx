@@ -6,89 +6,14 @@ import { ReactComponent as ClosedEyeIcon } from "../../assets/login/humbleicons-
 import { ReactComponent as OpendEyeIcon } from "../../assets/login/fluent-eye-12-filled.svg";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import ValidTest from "../ValidTest/ValidTest";
-
-function Input({
-  icon,
-  updateForm,
-  name,
-  type,
-  password,
-  validUserInfo,
-  handleIsValidHopae,
-  ...rest
-}) {
-  const location = useLocation().pathname;
-  const [input, setInput] = useInput("");
-  const [isFocus, setIsFocus] = useState(false);
-  const [passwordShowing, setPasswordShowing] = useState(false);
-  const onFocusChange = () => {
-    setIsFocus(true);
-  };
-  const onBlurChange = () => {
-    input === "" && setIsFocus(false);
-  };
-
-  useEffect(() => {
-    updateForm(name, input);
-  }, [name, input]);
-
-  return (
-    <Container>
-      <InputDiv $location={location} $isFocus={isFocus}>
-        {/* switch문을 통해서 icon값들에 맞는 icon추가 */}
-        {(() => {
-          switch (icon) {
-            case "User":
-              return <UserIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />;
-            case "Password":
-              return <PasswordIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />;
-            default:
-              break;
-          }
-        })()}
-        <input
-          {...rest}
-          type={
-            type !== "password" ? type : passwordShowing ? "text" : "password"
-          }
-          value={input}
-          onFocus={onFocusChange}
-          onBlur={onBlurChange}
-          onChange={setInput}
-          name={name}
-          required
-        />
-        {location === "/join" && icon === "Password" ? (
-          <EyeIconBtn
-            onClick={() =>
-              setPasswordShowing((passwordShowing) => !passwordShowing)
-            }
-          >
-            {passwordShowing ? <OpendEyeIcon /> : <ClosedEyeIcon />}
-          </EyeIconBtn>
-        ) : null}
-      </InputDiv>
-      {location !== "/login" && (
-        <ValidTest
-          name={name}
-          value={input}
-          location={location}
-          password={password}
-          validUserInfo={validUserInfo}
-          handleIsValidHopae={handleIsValidHopae}
-        />
-      )}
-    </Container>
-  );
-}
 
 // InputText
 function InputText({
   placeholder,
   dataName,
   updateData,
-  onEmailCheck
+  onEmailCheck,
+  isValid
 }) {
 
   const location = useLocation().pathname;
@@ -106,11 +31,17 @@ function InputText({
   }, [dataName, input]);
 
   return (
-
     // Overlap
     <InputDiv $location={location} $isFocus={isFocus}>
-
-      {location === "/join" && <span className="check" onClick={onEmailCheck}>중복확인</span>}
+      {/* 이메일 중복확인 버튼 start */}
+      {
+        (location === "/join" && isValid.isEmail) ? (
+          (!isValid.isEmeilCheck)
+            ? (<button className="check" onClick={(e) => onEmailCheck(e)}>중복확인</button>)
+            : (<button className="check available" onClick={(e) => onEmailCheck(e)}>사용가능</button>)
+        ) : null
+      }
+      {/* 이메일 중복확인 버튼 end */}
 
       {/* icon */}
       <UserIcon fill={isFocus ? "#E75852" : "#BDBDBD"} />
@@ -127,7 +58,7 @@ function InputText({
         required
       />
 
-    </InputDiv>
+    </InputDiv >
   );
 }
 
@@ -243,8 +174,23 @@ const InputDiv = styled.div`
     width: fit-content;
     display: block;
     position: absolute; 
-    right: 0; 
-    background-color: red;
+    right: 20px; 
+    padding: 8px 13px;
+    font-size: 12px;
+    color: #fff;
+    border-radius: 4px;
+    margin: auto;
+    font-weight: 700;
+    background-color: var(--btn-main-color);    
+    transition: all ease-in-out 0.3s;
+    &:hover {
+      background-color: #D24640;
+    }
+    &.available {
+      background-color: #FDEFEE;
+      color: var(--btn-main-color); 
+      cursor: initial;
+    }
   }
 `;
 
@@ -257,4 +203,4 @@ const EyeIconBtn = styled.div`
 `;
 
 
-export { Input as default, InputText, InputPwd };
+export { InputText, InputPwd };

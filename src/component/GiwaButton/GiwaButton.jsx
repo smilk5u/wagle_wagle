@@ -1,13 +1,14 @@
-import React, { useEffect, useState, useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import giwaData from "../../data/giwaPath";
 
-const GiwaButton = ({ setOpen, changeGiwa, giwaList }) => {
-  console.log(giwaList);
-  const shape = giwaData.map((data) => {
-    return data;
-  });
-  console.log("shape", shape);
+const GiwaButton = ({
+  setOpen,
+  changeGiwa,
+  giwaList,
+  url,
+  setIsVisitorClick,
+}) => {
   return (
     <GiwaContainer>
       <GiwaSvg viewBox="0 0 770 679" x="0px" y="0px">
@@ -15,8 +16,12 @@ const GiwaButton = ({ setOpen, changeGiwa, giwaList }) => {
           <path
             key={giwa.id}
             onClick={() => {
-              changeGiwa(giwa.id);
-              setOpen();
+              if (url) {
+                setIsVisitorClick(true);
+              } else {
+                changeGiwa(giwa.id);
+                setOpen();
+              }
             }}
             d={giwaData[index].data}
           />

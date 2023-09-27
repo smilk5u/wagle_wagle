@@ -6,20 +6,19 @@ function ModalBasic({ msg, buttonText, onClickBtn = () => { }, visibleFtn, linkP
   const onClick = () => {
     // 기능
     onClickBtn();
-
     // modal 제거
-    visibleFtn(false);
+    // visibleFtn(false);
   }
 
   return (
-    (<ModalBg>
+    <ModalBg>
       <ModalMain>
         <ModalTop>{msg}</ModalTop>
         <ModalBottom onClick={onClick}>
           {buttonText}
         </ModalBottom>
       </ModalMain>
-    </ModalBg>)
+    </ModalBg>
   );
 }
 
@@ -40,7 +39,7 @@ const ModalMain = styled.div`
   width: 340px;
   height: 180px;
   background-color: #fff;
-  border-radius: 10px;  
+  border-radius: 10px;
 `;
 
 const ModalTop = styled.div`
@@ -55,7 +54,7 @@ const ModalTop = styled.div`
   letter-spacing: 0.64px;
 `;
 
-const ModalBottom = styled.div`
+const ModalBottom = styled.button`
   width: 100%;
   height: 61px;
   display: flex;

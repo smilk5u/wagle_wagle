@@ -28,10 +28,10 @@ const Completed = ({ setCompletedGiwa }) => {
         <Wrap>
           <p>기와 등록이 성공적으로 완료 되었소!</p>
           <strong>당신의 기와집을 <br />만들러 가보겠나?</strong>
-          <img className="koreanCaracter" src={Haetae} alt="" />
-          <img className="partten" src={Pattern} alt="" />
+          <img className="haetae_img" src={Haetae} alt="해태" />
+          <img className="partten" src={Pattern} alt="패턴" />
         </Wrap>
-        <Button className="minju">
+        <Button>
           <button type="button" onMouseOver={existMouseOver} onMouseLeave={mouseOut} >이미 있습니다</button>
           <button type="button" onMouseOver={okayMouseOver} onMouseLeave={mouseOut}>좋습니다!</button>
         </Button>
@@ -69,7 +69,7 @@ const Contain = styled.div`
     position: absolute;
     left: 0; right: 0; margin: auto;
   }
-  .koreanCaracter {
+  .haetae_img {
     top: -121px; 
     left: 25px;
   }

@@ -21,7 +21,7 @@ const boleand = [
   { type: 'sharing', boolean: false },
 ]
 
-const BottomSide = ({ openMakeup, openGusetBook, openMakeupHouse, setCapturePopBol }) => {
+const BottomSide = ({ openMakeup, openGusetBook, openMakeupHouse, setCapturePopBol, setPopup }) => {
   const { bgColor } = useBgColor(); // BG Color context
   const [iconIsOpen, setIconIsOpen] = useState(true);
   const ContainRef = useRef();
@@ -102,7 +102,7 @@ const BottomSide = ({ openMakeup, openGusetBook, openMakeupHouse, setCapturePopB
             <button onClick={(e) => clickToggleOpen(e)}>
               <SharingIcon width={29} height={30} />
             </button>
-            {iconToggle[2].boolean && <Sharing />}
+            {iconToggle[2].boolean && <Sharing setPopup={setPopup} />}
           </li>
           <li>
             <button onClick={(e) => {

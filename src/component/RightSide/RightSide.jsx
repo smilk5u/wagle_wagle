@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { styled } from "styled-components";
 import SelectTitle from "../SelectTitle/SelectTitle";
 import SelectItem from "../SelectItem/SelectItem";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as XIcon } from "../../assets/common/closeBtn.svg";
 import { ReactComponent as ResetIcon } from "../../assets/common/reset_icon.svg";
@@ -54,12 +54,17 @@ const RightSide = ({
         },
         url: generateRandomString(20),
       }).then((result) => {
-        if (result.status === 200) {
-          navigate("/main");
+        // api 수정될지 모르겠지만 일단 이렇게 진행
+        if (result.data === "good") {
+          navigate("/main", { state: { from: "/makeGiwaHouse" } });
           return;
         }
       });
     }
+  };
+
+  const navigateTest = () => {
+    navigate("/main", { state: { from: "/makeGiwaHouse" } });
   };
 
   return (
@@ -146,6 +151,7 @@ const RightSide = ({
           </ResetBox>
         </ButtonWrap>
       </div>
+      <button onClick={navigateTest}>테스트용도</button>
     </Container>
   );
 };
@@ -246,7 +252,7 @@ const ResetBox = styled.button`
   border-radius: 50%;
   box-shadow: 0px 4px 16px rgba(13, 32, 57, 0.06);
   position: absolute;
-  top: 0; 
+  top: 0;
   margin: auto;
   bottom: 0;
   right: 0;
@@ -259,4 +265,3 @@ const ResetBox = styled.button`
     transition: all, 0.4s ease-in-out;
   }
 `;
-

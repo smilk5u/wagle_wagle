@@ -1,5 +1,4 @@
 import { useCallback, useState, useEffect } from "react";
-import {FormFindPwd} from "../../component/Form/Form";
 import NavBar from "../../component/NavBar/NavBar";
 import { styled } from "styled-components";
 import Title from "../../component/Title/Title";
@@ -8,81 +7,8 @@ import { InputText } from "../../component/Input/Input";
 import { validEmail, IsTrue, IsFalse } from "../../component/ValidTest/ValidTest";
 import { ButtonActDeact } from "../../component/Button/Button";
 
+
 const FindPwd = () => {
-
-  const [isValid, setIsValid] = useState({
-    isEmail: false,
-    isPassword: false,
-    isPasswordConfirm: false,
-    isHopae: false,
-  });
-
-  const validUserInfo = useCallback(
-    (name, value) => {
-      setIsValid({ ...isValid, [name]: value });
-    },
-    [isValid]
-  );
-
-  //// visibleModal
-
-  // 변수
-  const [visibleModal, setVisibleModal] = useState(false);
-
-  // 함수
-  const visibleFtn = (value) => {
-    setVisibleModal(value);
-  };
-
-
-  //// 등록된 이메일 확인
-
-  // 변수
-  const [registeredEmail, setRegisteredEmail] = useState(false);
-
-  // 함수
-  const registeredEmailFtn = () => {
-
-    // 등록된 이메일인지 확인.
-    // 백엔드 통신
-
-    // 변수 업데이트
-    setRegisteredEmail(true);
-
-    // modal 보이기
-    setVisibleModal(true);
-  };
-
-
-  return (
-    <>
-      {(visibleModal)
-        ? <ModalBasic
-          msg = {(registeredEmail)
-            ? "성공적으로 메일을 보냈습니다!"
-            : "등록되지 않은 이메일입니다."}
-          buttonText="확인"
-          visibleFtn={visibleFtn}
-        />
-        : null}
-
-      <NavBar />
-      <Main>
-        <MainDiv>
-          <Title title="비밀번호 찾기" />
-          <Sub>비밀번호를 분실하셨나요?</Sub>
-          <Sub>이메일로 보낸 링크를 타고 들어와서 비밀번호 변경이 가능합니다.</Sub>
-          <FormFindPwd
-            validUserInfo={validUserInfo}
-            onClickBtn={registeredEmailFtn}
-          />
-        </MainDiv>
-      </Main>
-    </>
-  );
-};
-
-const FindPwdRefine = () => {
 
   //// 기본 데이터
 
@@ -200,7 +126,7 @@ const FindPwdRefine = () => {
   );
 };
 
-export default FindPwdRefine;
+export default FindPwd;
 
 
 const Main = styled.main`

@@ -13,12 +13,17 @@ import haetaeImg from "../../assets/main/haetae_img.png";
 import taegeukgi from "../../assets/main/taegeukgi.png";
 import Capture from "../../component/Popup/Capture";
 import Speech from "../../component/Speech/Speech";
+import CopyLink from "../../component/Popup/CopyLink";
 import { useBgColor } from "../../contexts/BackgroundColor"; // Bg Color Context
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
 import { getGiwaHouseApi, getGiwaListApi } from "../../apis/giwa";
 import { useSelector } from "react-redux";
+import ModalBasic from "../../component/Modal/ModalBasic";
+import Modal from "../../component/Modal/Modal";
+import Warning from "../../component/Warning/Warning";
 
 const Main = () => {
+  const location = useLocation();
   const { url } = useParams();
   const userInfo = useSelector((state) => state.userReducer);
   const { bgColor, changeBgColor } = useBgColor(); // BG Color context
@@ -26,11 +31,15 @@ const Main = () => {
   const [openNav, setOpenNav] = useState(true); // 네비
   const [openMakeup, setOpenMakeup] = useState(false); // 기와집 꾸미기
   const [openGusetBook, setOpenGusetBook] = useState(false); // 방명록 모달창
-  const [capturePopBol, setCapturePopBol] = useState(false); // 캡쳐 팝업
+  const [copyLinkPop, setCopyLinkPop] = useState(false); // 링크복사 팝업창
+  const [capturePopBol, setCapturePopBol] = useState(false); // 캡쳐 팝업창
   const [completedGiwa, setCompletedGiwa] = useState(false); // 기와 등록 팝업창
   const [giwaHouse, setGiwaHouse] = useState({}); //기와집 상태관리
   const [selectedGiwa, setSelectedGiwa] = useState(null);
   const [giwaList, setGiwaList] = useState([]);
+  const [isVisitorClick, setIsVisitorClick] = useState(false);
+
+  const previousPath = location.state ? location.state.from : null;
 
   // 데이터가 없어서 임시 데이터 지정해놓음 삭제 예정
   const mockData = 2;
@@ -39,8 +48,8 @@ const Main = () => {
     // const requestData = url ? url : userInfo.broadId;
     const requestData = url ? url : mockData;
     getGiwaHouseApi(requestData).then((result) => {
-      if (result.status === 200) {
-        setGiwaHouse(result.data);
+      if (result.data.status === "SUCCESS") {
+        setGiwaHouse(result.data.data);
         return;
       } else {
         alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
@@ -54,57 +63,39 @@ const Main = () => {
     getGiwaListApi({
       broadId: giwaHouse.id,
       reverse: true,
-    }).then((result) => {
-      if (result.status === 200) {
-        setGiwaList(result.data);
-      }
-    });
-  }, [giwaHouse.id]);
-
-  /** 😀 juju
-    - background useState는 하위 컴포넌트에 전역적으로 사용하기 위해...?
-      Context 로 사용하였습니다 context 경로 --> src/contexts/BackgroundColor    
-
-    // 테스트용 - 수정예정 
-    // const [background, setBackground] = useState(true);
-    // const changeBackground = (e) => {
-    //   setBackground(e.target.value);
-    // };
-  */
+    })
+      .then((result) => {
+        if (result.data.status === "SUCCESS") {
+          setGiwaList(result.data.data);
+        } else {
+          throw new Error("서버에서 데이터를 가져오는 데 문제가 발생했습니다.");
+        }
+      })
+      .catch((error) => {
+        console.error("오류:", error);
+      });
+  }, [giwaHouse]);
 
   useEffect(() => {
-    // main페이지에서는 기와집을 불러오는 get요청을 해야함
-    // 해당 api 확인되면 추가 예정
-  }, []);
+    if (!isVisitorClick) return;
 
+    setTimeout(() => {
+      setIsVisitorClick(false);
+    }, 3000);
+  }, [isVisitorClick]);
+
+  /* 기와집 꾸미기 모달창 */
   const openMakeupHouse = () => {
     setOpenNav(false);
     setOpenMakeup(true);
-    /** 😀 juju
-      - setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다
-      
-      // setTimeout(() => {
-      //   setOpenMakeup(true);
-      // }, 300);
-    */
   };
 
   const closeMakeupHouse = () => {
     setOpenNav(true);
     setOpenMakeup(false);
-    /** 😀 juju
-      - setTimeout 사용시 속도가 안맞아서 일단 주석처리 해놓겠습니다
-
-      // setTimeout(() => {
-      //   setOpenNav(true);
-      // }, 300);
-    */
   };
 
-  /** 😀 juju
-   * 기와 클릭 시 방명록 오픈
-   * 기와집 꾸미기 이벤트와 비슷한데 합칠 수 있는 방법이 있을지....ㅠ
-   */
+  /* 방명록 모달창 */
   const openGusetBookModal = () => {
     setOpenNav(false);
     setOpenGusetBook(true);
@@ -113,9 +104,16 @@ const Main = () => {
     setOpenNav(true);
     setOpenGusetBook(false);
   };
-
   return (
     <>
+      {previousPath === "/makeGiwaHouse" ? (
+        <Modal>
+          {/* 수정해야함 임시 */}
+          <ModalContent>
+            <Link to="/main">널리 알리기</Link>
+          </ModalContent>
+        </Modal>
+      ) : null}
       {openModal ? (
         <GiwaModal
           onXBtnClick={() => setOpenModal(false)}
@@ -124,16 +122,26 @@ const Main = () => {
       ) : null}
       <NavBar isShowing={openNav} />
       <ExDiv $bgColor={bgColor}>
-        <StyledMain>
+        <StyledMain>          
           <HouseBox className={openMakeup || openGusetBook ? "left" : null}>
+            <Warning/>
+            {isVisitorClick ? (
+              <WarnMessage>다른 사람이 받은 기와는 볼 수 없다네.</WarnMessage>
+            ) : null}
             {/* 말풍선 start */}
-            <Speech setOpenModal={setOpenModal} />
+            <Speech
+              setOpenModal={setOpenModal}
+              url={url} //url이 있는 경우(방문자), url이 없는 경우(주인)
+              giwaLength={giwaList.length} //기와의 개수
+            />
             {/* 말풍선 end */}
             {/* 기와 버튼 start */}
             <GiwaButton
               setOpen={openGusetBookModal}
               changeGiwa={setSelectedGiwa}
               giwaList={giwaList.slice(0, 12)}
+              setIsVisitorClick={setIsVisitorClick}
+              url={url}
             />
             {/* 기와 버튼 end */}
             <img className="heatae" src={haetaeImg} alt="해태" />
@@ -143,7 +151,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          updateFunction={() => {}}
+          updateFunction={() => { }}
           btnText={"기와집 꾸미기 완료"}
         ></RightSide>
         {/* 방명록 start */}
@@ -151,6 +159,7 @@ const Main = () => {
           openGusetBook={openGusetBook}
           xBtnClickHandler={closeGusetBookModal}
           selectedGiwa={selectedGiwa}
+          username={userInfo.username}
         ></GuestBook>
         {/* 방명록 end */}
         <BottomSide
@@ -158,6 +167,7 @@ const Main = () => {
           openGusetBook={openGusetBook}
           openMakeupHouse={openMakeupHouse}
           setCapturePopBol={setCapturePopBol}
+          setPopup={setCopyLinkPop}
         />
         {/* 배경 start */}
         <MainBg openMakeup={openMakeup} openGusetBook={openGusetBook} />
@@ -172,11 +182,26 @@ const Main = () => {
       {/* 기와 등록 완료 팝업창 start */}
       {completedGiwa && <Completed setCompletedGiwa={setCompletedGiwa} />}
       {/* 기와 등록 완료 팝업창 end */}
+
+      {/* 링크 복사 팝업창 start */}
+      {copyLinkPop && <CopyLink setCopyLinkPop={setCopyLinkPop} />}
+      {/* 링크 복사 팝업창 end */}
     </>
   );
 };
 
 export default Main;
+
+const ModalContent = styled.div`
+  width: 388px;
+  height: 200px;
+  background-color: white;
+  position: relative;
+  > img {
+    position: absolute;
+    top: -50px;
+  }
+`;
 
 export const ExDiv = styled.div`
   width: 100vw;
@@ -184,7 +209,7 @@ export const ExDiv = styled.div`
   background: linear-gradient(
     158deg,
     ${({ $bgColor }) =>
-      $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
+    $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
   );
   position: relative;
   overflow: hidden;
@@ -226,6 +251,25 @@ const HouseBox = styled.div`
   &.left {
     left: -500px;
   }
+`;
+
+const WarnMessage = styled.div`
+  width: 378px;
+  height: 54px;
+  position: absolute;
+  left: calc(50% - 250px);
+  top: -70px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #ece0b9;
+  border-radius: 10px;
+  box-shadow: 4px 4px 10px rgba(244, 233, 203, 0.5);
+  backdrop-filter: blur(5px);
+  font-family: var(--font-hunmin);
+  color: #222;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 54px;
+  text-align: center;
 `;
 
 const HaetaeWrap = styled.div`

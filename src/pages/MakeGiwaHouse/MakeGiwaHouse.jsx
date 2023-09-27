@@ -36,10 +36,10 @@ const MakeGiwaHouse = () => {
           </CatImgDiv>
         </HouseBox>
       </StyledMain>
-      <RightSide openMakeup={true}></RightSide>
-      {/* <TreeCustom>
+      <RightSide openMakeup={true} btnText={"기와집 만들기 완료"}></RightSide>
+      <TreeCustom>
         <img src={pineTreeLeft} alt="왼쪽 소나무" />
-      </TreeCustom> */}
+      </TreeCustom>
     </ExDiv>
   );
 };
@@ -85,10 +85,10 @@ const CatImgDiv = styled.div`
   }
 `;
 
-// const TreeCustom = styled(Tree)`
-//   > img {
-//     &:nth-of-type(1) {
-//       left: -160px;
-//     }
-//   }
-// `;
+const TreeCustom = styled(Tree)`
+  > img {
+    &:nth-of-type(1) {
+      left: -160px;
+    }
+  }
+`;

@@ -1,8 +1,12 @@
 import { SELECT_GIWA, WRITE_GUEST_TEXT } from "../actions/giwaActions";
 
 const initialState = {
-  number: null,
-  text: "",
+  number: null, //shapeCode
+  text: "", //message
+  fontColor: 1, //fontColorCode
+  font: 1, //fontSize
+  sort: 1, //sortCode
+  nickname: "", //nickName
 };
 
 // user의 로그인 유지와 로그아웃을 위한 Reducer

@@ -11,6 +11,7 @@ import giwaData from "../../data/giwaStorage";
 
 /* 비교데이터 */
 let data = ['기와 목록 최신순', '기와 목록 과거순'];
+const root = document.querySelector("#root");
 
 const StorageGiwa = () => {
   const [giwaStorage, setGiwaStorage] = useState(giwaData); // 기와 보관함 데이터
@@ -21,11 +22,14 @@ const StorageGiwa = () => {
     option: '기와 목록 과거순'
   });
 
-
-  const openGusetBookModal = () => {
+  const openGusetBookModal = (e) => {
+    e.target.closest("li").classList.add('active');
     setOpenGusetBook(true);
   };
   const closeGusetBookModal = () => {
+    document.querySelectorAll('.giwa_wrap li').forEach(element => {
+      element.classList.remove("active");
+    })
     setOpenGusetBook(false);
   };
 
@@ -65,15 +69,15 @@ const StorageGiwa = () => {
               </ul>
             </Select>
           </Nav>
-          <GiwaWrap>
+          <GiwaWrap className="giwa_wrap">
             {
               giwaStorage.map(item => (
                 <GiwaLi key={item.id}>
-                  <button type="button" onClick={openGusetBookModal}>
+                  <button type="button" onClick={e => openGusetBookModal(e)}>
                     {/* 기와 이미지 */}
                     <img src={item.img} alt="" />
                     {/* 뱃지 */}
-                    {item.id < 13 && <em><Badge /></em>} 
+                    {item.id < 13 && <em><Badge /></em>}
                   </button>
                   <span>{item.date}</span>
                 </GiwaLi>
@@ -253,8 +257,9 @@ const GiwaLi = styled.li`
   width: 29.5918%; 
   margin: 0 0 5.6122%;
   position: relative; 
-  /* z-index: 103; // 테스트 후 지우기 */
+  transition: all ease-in-out 1s;
   &.active {
+    z-index: 103; 
     > span {
       color: #fff;
     }
@@ -267,7 +272,6 @@ const GiwaLi = styled.li`
     }
   }
   > span {
-    color: red;
     margin: 5% 0 0;
     float: right;
     color: #757575;
@@ -276,6 +280,7 @@ const GiwaLi = styled.li`
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 0.2px;
+    transition: all ease-in-out 1s;
   }  
   button {
     position: relative;
