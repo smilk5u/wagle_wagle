@@ -1,4 +1,8 @@
-import { SELECT_GIWA, WRITE_GUEST_TEXT } from "../actions/giwaActions";
+import {
+  SELECT_GIWA,
+  WRITE_GUEST_TEXT,
+  WRITE_NICKNAME,
+} from "../actions/giwaActions";
 
 const initialState = {
   number: null, //shapeCode
@@ -22,6 +26,12 @@ export const giwaReducer = (state = initialState, action) => {
         ...state,
         text: action.payload,
       };
+    case WRITE_NICKNAME:
+      return {
+        ...state,
+        nickname: action.payload,
+      };
+
     default:
       return state;
   }

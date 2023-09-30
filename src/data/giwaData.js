@@ -8,7 +8,7 @@ export const fontColor = [
   "black",
 ];
 
-// 글꼴 부분 (shapeCode) 추가 예정
+// 글꼴 부분 (fontSize) 추가 예정
 export const fontStyle = [];
 
 // text 정렬 부분 (sortCode)

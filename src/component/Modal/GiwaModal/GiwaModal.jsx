@@ -4,15 +4,36 @@ import { styled } from "styled-components";
 import Modal from "../Modal";
 import SelectGiwa from "./SelectGiwa";
 import { ButtonActDeact } from "../../Button/Button";
-import WriteGuestText from "./WriteGuestText";
+import WriteGuestText, { englishRegex } from "./WriteGuestText";
 import NameContain from "./NameMade";
 import { ReactComponent as CloseBtn } from "../../../assets/common/closeBtn.svg";
 import { ReactComponent as LeftArrow } from "../../../assets/common/ic_left_arrow.svg";
 import giwaComplated from "../../../assets/modal/giwa_complated.png";
+import { addGiwaApi } from "../../../apis/giwa";
 
-const GiwaModal = ({ onXBtnClick, setCompletedGiwa }) => {
+const GiwaModal = ({ onXBtnClick, setCompletedGiwa, giwaHouseId }) => {
   const selectedGiwa = useSelector((state) => state.giwaReducer);
   const [pageNum, setPageNum] = useState(1);
+
+  const handleSubmit = () => {
+    addGiwaApi({
+      broadId: giwaHouseId,
+      version: "v1",
+      message: selectedGiwa.text,
+      nickName: selectedGiwa.nickname,
+      postStyle: {
+        fontColorCode: selectedGiwa.fontColor,
+        sortCode: selectedGiwa.sort,
+        shapeCode: selectedGiwa.number,
+        fontSize: selectedGiwa.font,
+      },
+    }).then((result) => {
+      if (result.data.status === "SUCCESS") {
+        onXBtnClick();
+        setCompletedGiwa(true);
+      }
+    });
+  };
 
   return (
     <Modal>
@@ -59,13 +80,17 @@ const GiwaModal = ({ onXBtnClick, setCompletedGiwa }) => {
                 </GiwaBox>
               </GoBackBox>
               <ButtonActDeact
-                disabled={selectedGiwa.text === ""}
+                disabled={
+                  selectedGiwa.text === "" ||
+                  englishRegex.test(selectedGiwa.text)
+                }
                 onClick={() => {
                   setPageNum(3);
                 }}
                 style={{ width: "300px", height: "54px", marginTop: "0" }}
               >
-                {selectedGiwa.text === ""
+                {selectedGiwa.text === "" ||
+                englishRegex.test(selectedGiwa.text)
                   ? "방명록 작성하기"
                   : "기와 등록 하러가기"}
               </ButtonActDeact>
@@ -76,7 +101,7 @@ const GiwaModal = ({ onXBtnClick, setCompletedGiwa }) => {
             <TitleField>
               <span>셋.</span> 이름을 남겨주시오.
             </TitleField>
-            <NameContain />
+            <NameContain text={selectedGiwa.text} />
             <ExDiv>
               <GoBackBox>
                 <GoBackBtn onClick={() => setPageNum(2)}>
@@ -90,12 +115,11 @@ const GiwaModal = ({ onXBtnClick, setCompletedGiwa }) => {
                 </GiwaBox>
               </GoBackBox>
               <ButtonActDeact
-                disabled={!selectedGiwa.number}
-                onClick={() => {
-                  onXBtnClick();
-                  setCompletedGiwa(true);
-                }}
-                buttonText={"기와 등록하기"}
+                disabled={
+                  selectedGiwa.nickname === "" ||
+                  englishRegex.test(selectedGiwa.nickname)
+                }
+                onClick={handleSubmit}
                 style={{ width: "300px", height: "54px", marginBottom: "0" }}
               >
                 기와 등록 하기

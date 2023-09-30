@@ -21,3 +21,8 @@ export const getGiwaDetailApi = async (payload) => {
   const response = await client.get(`/api/v1/posts/detail/${payload}`);
   return response;
 };
+
+export const addGiwaApi = async (payload) => {
+  const response = await client.post(`/api/v1/posts`, payload);
+  return response;
+};

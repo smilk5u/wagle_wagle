@@ -44,6 +44,9 @@ const Main = () => {
   // 데이터가 없어서 임시 데이터 지정해놓음 삭제 예정
   const mockData = 2;
   useEffect(() => {
+    if (previousPath === "/makeGiwaHouse") {
+      setCopyLinkPop(true);
+    }
     // 유저 데이터에 broadId가 없어서 임시데이터 넣어놓음 삭제 예정
     // const requestData = url ? url : userInfo.broadId;
     const requestData = url ? url : mockData;
@@ -118,16 +121,14 @@ const Main = () => {
         <GiwaModal
           onXBtnClick={() => setOpenModal(false)}
           setCompletedGiwa={setCompletedGiwa}
+          giwaHouseId={giwaHouse.id}
         />
       ) : null}
       <NavBar isShowing={openNav} />
       <ExDiv $bgColor={bgColor}>
-        <StyledMain>          
+        <StyledMain>
           <HouseBox className={openMakeup || openGusetBook ? "left" : null}>
-            <Warning/>
-            {isVisitorClick ? (
-              <WarnMessage>다른 사람이 받은 기와는 볼 수 없다네.</WarnMessage>
-            ) : null}
+            <Warning testActive={isVisitorClick} />
             {/* 말풍선 start */}
             <Speech
               setOpenModal={setOpenModal}
@@ -151,7 +152,7 @@ const Main = () => {
         <RightSide
           openMakeup={openMakeup}
           xBtnClickHandler={closeMakeupHouse}
-          updateFunction={() => { }}
+          updateFunction={() => {}}
           btnText={"기와집 꾸미기 완료"}
         ></RightSide>
         {/* 방명록 start */}
@@ -209,7 +210,7 @@ export const ExDiv = styled.div`
   background: linear-gradient(
     158deg,
     ${({ $bgColor }) =>
-    $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
+      $bgColor ? "#FFFEF9 0%, #FFF8DC 100%" : " #868DCC 20%, #313557 95%"}
   );
   position: relative;
   overflow: hidden;

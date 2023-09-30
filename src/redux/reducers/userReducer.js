@@ -24,7 +24,10 @@ export const userReducer = (state = initialState, action) => {
     case MAKE_HOPAE:
       return {
         ...state,
-        name: action.payload,
+        email: action.payload.email,
+        memberType: action.payload.memberType,
+        broadId: action.payload.broadId,
+        username: action.payload.userName,
       };
     default:
       return state;

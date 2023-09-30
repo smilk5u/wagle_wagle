@@ -25,7 +25,7 @@ const RightSide = ({
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const username = useSelector((state) => state.userReducer.name);
+  const userInfo = useSelector((state) => state.userReducer);
   const isMakeGiwaHouse = location.pathname === "/makeGiwaHouse";
   const { giwaColor, background, friend } = useSelector(
     (state) => state.giwaHouseReducer
@@ -54,17 +54,13 @@ const RightSide = ({
         },
         url: generateRandomString(20),
       }).then((result) => {
-        // api 수정될지 모르겠지만 일단 이렇게 진행
-        if (result.data === "good") {
+        // broadId 가 안내려옴.. 내려와야 적용가능
+        if (result.data.status === "SUCCESS") {
           navigate("/main", { state: { from: "/makeGiwaHouse" } });
           return;
         }
       });
     }
-  };
-
-  const navigateTest = () => {
-    navigate("/main", { state: { from: "/makeGiwaHouse" } });
   };
 
   return (
@@ -82,7 +78,7 @@ const RightSide = ({
       <div>
         <HeaderBox>
           <TextField>
-            <span>{username}</span>님,
+            <span>{userInfo.username}</span>님,
             <br />
             기와집을 꾸며보시오.
           </TextField>
@@ -151,7 +147,6 @@ const RightSide = ({
           </ResetBox>
         </ButtonWrap>
       </div>
-      <button onClick={navigateTest}>테스트용도</button>
     </Container>
   );
 };
@@ -197,7 +192,21 @@ const HeaderBox = styled.div`
 `;
 
 const SelectWrap = styled.div`
-  margin: 40px 0 0;
+  overflow-x: hidden;
+  min-height: 150px;
+  /* max-height: 400px; */
+  height: calc(100vh - 323px);
+  margin: 15px 0 0;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 6px;
+    background-color: #dbdbdb5a;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 30%;
+    border-radius: 10px;
+    background-color: #dbd6d6;
+  }
 `;
 
 const TextField = styled.p`
@@ -220,7 +229,7 @@ const ItemLists = styled.div`
 
 const ButtonWrap = styled.div`
   position: relative;
-  margin: 40px 0 0;
+  margin: 20px 0 0;
 `;
 
 const Btn = styled.button`

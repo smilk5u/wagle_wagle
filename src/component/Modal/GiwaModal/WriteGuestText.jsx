@@ -4,6 +4,7 @@ import SelectTitle from "./../../SelectTitle/SelectTitle";
 import { ReactComponent as FontsArrow } from "./../../../assets/common/fonts_arrow.svg";
 import { ReactComponent as Hat } from "./../../../assets/main/kigHat.svg";
 import { useDispatch } from "react-redux";
+import { writeGuestText } from "../../../redux/actions/giwaActions";
 
 // 기본 데이터
 const font = ["노토 산스", "value2", "value3"];
@@ -24,15 +25,21 @@ let selectData = {
   color: "#6A8AF7",
 };
 
+export const profanity = [/씨발/g, /개새끼/g, /놈/g, /년/g, /닥쳐/g, /애미/g];
+
+export const englishRegex = /[a-zA-z]/;
+
 // font_color_code : fontColorCode
 // font_code : fontSize
 // shape_code : shapeCode
 // sort_code : sortCode
 
 const WriteGuestText = () => {
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false); // 셀렉트
   const [select, setSelect] = useState(selectData);
+  const [text, setText] = useState("");
+  const [checkText, setCheckText] = useState(false);
 
   /* 폰트 변경 */
   const handleOnChangeSelectValue = (e) => {
@@ -59,12 +66,49 @@ const WriteGuestText = () => {
     });
   };
 
+  const checkProfanity = (text) => {
+    let censoredText = text;
+    profanity.forEach((item) => {
+      censoredText = censoredText.replace(item, "아리랑");
+    });
+
+    setText(censoredText);
+    if (text !== censoredText) {
+      setCheckText(
+        <span className="profanity">
+          욕은 좋지 않다네, 욕은 임의로 아리랑으로 변경된다네.
+        </span>
+      );
+    }
+    return censoredText;
+  };
+
+  const handleTextBlur = () => {
+    const censoredText = checkProfanity(text);
+    checkTextArea();
+    dispatch(writeGuestText(censoredText));
+  };
+
+  const checkTextArea = () => {
+    if (englishRegex.test(text)) {
+      setCheckText(
+        <span className="english">외국어보다는 한글은 어떠시오?</span>
+      );
+      return;
+    }
+  };
   return (
     <Container>
       <GuestBook>
         <TextContain>
           <TextArea
             placeholder="진심을 다해 방명록을 남기면&#13;&#10;주인장이 즐거워 할걸세!"
+            value={text}
+            onChange={(e) => {
+              setCheckText(false);
+              setText(e.target.value);
+            }}
+            onBlur={handleTextBlur}
           />
           <p>
             {select.font}, {select.color}, {select.range}
@@ -116,7 +160,13 @@ const WriteGuestText = () => {
       </GuestBook>
       <TextNotification>
         <Hat width={25} height={23} />
-        {<span>한글을 굉장히 잘쓰시는 구려.</span>}
+        {checkText ? (
+          checkText
+        ) : text === "" ? (
+          <span>함 당당하게 써보구려!</span>
+        ) : (
+          <span>한글을 굉장히 잘 쓰시는구려.</span>
+        )}
       </TextNotification>
     </Container>
   );
@@ -155,6 +205,12 @@ const TextNotification = styled.div`
     font-size: 15px;
     font-style: normal;
     font-weight: 300;
+    &.english {
+      color: red;
+    }
+    &.profanity {
+      color: #1748c0;
+    }
   }
 `;
 const TextArea = styled.textarea`

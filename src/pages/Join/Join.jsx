@@ -8,7 +8,13 @@ import { joinApi, checkEmailApi } from "../../apis/user";
 import ModalBasic from "../../component/Modal/ModalBasic";
 import { InputText, InputPwd } from "../../component/Input/Input";
 import { ButtonActDeact } from "../../component/Button/Button";
-import { validEmail, validPwd, IsTrue, IsFalse, CheckInfo } from "../../component/ValidTest/ValidTest";
+import {
+  validEmail,
+  validPwd,
+  IsTrue,
+  IsFalse,
+  CheckInfo,
+} from "../../component/ValidTest/ValidTest";
 
 const Join = () => {
   const navigate = useNavigate();
@@ -47,7 +53,7 @@ const Join = () => {
     setIsValid({
       ...isValid,
       isPassword: validPwd(data.pwd),
-      isPasswordConfirm: (data.pwd === data.confirmPwd),
+      isPasswordConfirm: data.pwd === data.confirmPwd,
       // isEmeilCheck: false,
     });
   }, [data]);
@@ -60,17 +66,16 @@ const Join = () => {
     });
   }, [data.userId]);
 
-
   // 회원가입 가능 판단
   const onJoinSubmit = (e) => {
     e.preventDefault();
     if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm) {
-      console.log(data.userId)
+      console.log(data.userId);
       joinApi({
         email: data.userId,
         password: data.pwd,
       }).then((result) => {
-        console.log(result.status)
+        console.log(result.status);
         if (result.status === 200) {
           // modal 열기
           setIsModalOpen(true);
@@ -89,26 +94,25 @@ const Join = () => {
   const onEmailCheck = (e) => {
     e.preventDefault();
     if (!e.target.classList.contains("available")) {
-      checkEmailApi(data.userId)
-        .then((result) => {
-          if (result.data.status === "SUCCESS") {
-            setEmailCheckModal(true);
-            setIsValid({
-              ...isValid,
-              isEmeilCheck: true,
-            });
-          }
-          if (result.data.status === "FAIL") {
-            setEmailCheckModal(true);
-          }
-        });
+      checkEmailApi(data.userId).then((result) => {
+        if (result.data.status === "SUCCESS") {
+          setEmailCheckModal(true);
+          setIsValid({
+            ...isValid,
+            isEmeilCheck: true,
+          });
+        }
+        if (result.data.status === "FAIL") {
+          setEmailCheckModal(true);
+        }
+      });
     }
-  }
+  };
 
   // 회원가입 후 로그인 화면 이동
   const handleClick = () => {
-    navigate("/Login");
-  }
+    navigate("/login");
+  };
 
   // 함수
   const visibleFtn = (value) => {
@@ -120,30 +124,32 @@ const Join = () => {
     <>
       <NavBar />
       {/* Modal */}
-      {(isModalOpen)
-        ? <ModalBasic
+      {isModalOpen ? (
+        <ModalBasic
           msg="회원가입이 완료되었습니다."
           buttonText="확인"
           onClickBtn={handleClick}
           visibleFtn={visibleFtn}
         />
-        : null}
+      ) : null}
 
       {/* 이메일 중복확인 팝업창 start */}
-      {(emailCheckModal) ? (
-        (isValid.isEmeilCheck)
-          ? <ModalBasic
+      {emailCheckModal ? (
+        isValid.isEmeilCheck ? (
+          <ModalBasic
             msg="사용가능한 이메일입니다."
             buttonText="확인"
             onClickBtn={() => setEmailCheckModal(false)}
-          // visibleFtn={visibleFtn}
+            // visibleFtn={visibleFtn}
           />
-          : <ModalBasic
+        ) : (
+          <ModalBasic
             msg="이미 가입된 회원 입니다."
             buttonText="확인"
             onClickBtn={() => setEmailCheckModal(false)}
-          // visibleFtn={visibleFtn}
+            // visibleFtn={visibleFtn}
           />
+        )
       ) : null}
       {/* 이메일 중복확인 팝업창 end */}
 
@@ -154,7 +160,6 @@ const Join = () => {
           <Sub>회원가입에 필요한 정보를 입력해주세요.</Sub>
 
           <MainDivBottom>
-
             {/* Email */}
             <InputText
               placeholder="이메일을 적어주세요."
@@ -165,14 +170,13 @@ const Join = () => {
             />
 
             {/* Email 판별  */}
-            {(data.userId !== "") ? (
-              (isValid.isEmail) ? (
+            {data.userId !== "" ? (
+              isValid.isEmail ? (
                 <IsTrue>유효한 이메일입니다.</IsTrue>
               ) : (
                 <IsFalse>유효하지 않은 이메일입니다.</IsFalse>
               )
-            ) : null
-            }
+            ) : null}
 
             {/* 비밀번호 */}
             <InputPwd
@@ -182,8 +186,8 @@ const Join = () => {
             />
 
             {/* 비밀번호 판별 */}
-            {(data.pwd !== "") ? (
-              (isValid.isPassword) ? (
+            {data.pwd !== "" ? (
+              isValid.isPassword ? (
                 <IsTrue>유효한 비밀번호입니다.</IsTrue>
               ) : (
                 <IsFalse>유효하지 않은 비밀번호입니다.</IsFalse>
@@ -195,7 +199,6 @@ const Join = () => {
               </CheckInfo>
             )}
 
-
             {/* 비밀번호 확인 */}
             <InputPwd
               placeholder="비밀번호를 한 번 더 적어주세요."
@@ -204,27 +207,24 @@ const Join = () => {
             />
 
             {/* 비밀번호 확인 판별 */}
-            {(data.confirmPwd !== "") ? (
-              (isValid.isPasswordConfirm) ? (
+            {data.confirmPwd !== "" ? (
+              isValid.isPasswordConfirm ? (
                 <IsTrue>비밀번호가 일치합니다.</IsTrue>
               ) : (
                 <IsFalse>비밀번호가 일치하지 않습니다.</IsFalse>
               )
             ) : null}
 
-
             {/* 회원가입 버튼 */}
             <ButtonActDeact onClick={(e) => onJoinSubmit(e)}>
               회원가입
             </ButtonActDeact>
-
           </MainDivBottom>
 
           {/* 하단 설명 */}
           <ToLogin>
             이미 와글와글 계정이 있으신가요? <Link to="/login">로그인하기</Link>
           </ToLogin>
-
         </MainDiv>
       </Main>
     </>
@@ -232,7 +232,6 @@ const Join = () => {
 };
 
 export default Join;
-
 
 const Main = styled.main`
   width: 100%;

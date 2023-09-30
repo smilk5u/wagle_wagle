@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import speechBubble from "../../assets/main/speech_bubble.svg";
 import { ReactComponent as GiwaPlus } from "../../assets/main/giwa_plus.svg";
 
@@ -18,61 +18,84 @@ const Speech = ({ setOpenModal, url, giwaLength }) => {
 
   return (
     <Container>
-      {url ? (
-        // 방문자
-        <>
-          <p ref={speechRef}>
-            <span>기</span>
-            <span>와</span>
-            <span>를</span>
-            <span className="space">남</span>
-            <span>겨</span>
-            <span>주</span>
-            <span>시</span>
-            <span>오</span>
-            <span>!</span>
-          </p>
-          <button className="giwa_plus" onClick={() => setOpenModal(true)}>
-            <GiwaPlus />
-          </button>
-        </>
-      ) : giwaLength < 12 ? (
-        // 기와 12개 미만일때
+      <>
         <p ref={speechRef}>
-          <span>환</span>
-          <span>영</span>
-          <span>하</span>
+          <span>기</span>
+          <span>와</span>
+          <span>를</span>
+          <span className="space">남</span>
+          <span>겨</span>
+          <span>주</span>
+          <span>시</span>
           <span>오</span>
           <span>!</span>
         </p>
-      ) : (
-        // 기와 12개 이상일때
-        <>
-          <Link to="/StorageGiwa" ref={speechRef} className="storage" title="내 기와 보관함 바로가기">
-            <p>
-              <span>기</span>
-              <span>와</span>
-              <span>는</span>
-              <span className="space">내</span>
-              <span>가</span>
-              <span className="space">보</span>
-              <span>관</span>
-              <span>하</span>
-              <span>고</span>
-              <span className="space">있</span>
-              <span>소</span>
-            </p>
-          </Link>
-          <div className="giwa_number">
-            <span>{giwaLength}</span>
-          </div>
-        </>
-      )}
+        <button className="giwa_plus" onClick={() => setOpenModal(true)}>
+          <GiwaPlus />
+        </button>
+      </>
     </Container>
+    // <Container>
+    //   {url ? (
+    //     // 방문자
+    //     <>
+    //       <p ref={speechRef}>
+    //         <span>기</span>
+    //         <span>와</span>
+    //         <span>를</span>
+    //         <span className="space">남</span>
+    //         <span>겨</span>
+    //         <span>주</span>
+    //         <span>시</span>
+    //         <span>오</span>
+    //         <span>!</span>
+    //       </p>
+    //       <button className="giwa_plus" onClick={() => setOpenModal(true)}>
+    //         <GiwaPlus />
+    //       </button>
+    //     </>
+    //   ) : giwaLength < 12 ? (
+    //     // 기와 12개 미만일때
+    //     <p ref={speechRef}>
+    //       <span>환</span>
+    //       <span>영</span>
+    //       <span>하</span>
+    //       <span>오</span>
+    //       <span>!</span>
+    //     </p>
+    //   ) : (
+    //     // 기와 12개 이상일때
+    //     <>
+    //       <Link to="/StorageGiwa" ref={speechRef} className="storage" title="내 기와 보관함 바로가기">
+    //         <p>
+    //           <span>기</span>
+    //           <span>와</span>
+    //           <span>는</span>
+    //           <span className="space">내</span>
+    //           <span>가</span>
+    //           <span className="space">보</span>
+    //           <span>관</span>
+    //           <span>하</span>
+    //           <span>고</span>
+    //           <span className="space">있</span>
+    //           <span>소</span>
+    //         </p>
+    //       </Link>
+    //       <div className="giwa_number">
+    //         <span>{giwaLength}</span>
+    //       </div>
+    //     </>
+    //   )}
+    // </Container>
   );
 };
 
 export default Speech;
+
+const animation = keyframes`
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(5px); }
+`;
 
 const Container = styled.div`
   width: 242px;
@@ -88,9 +111,10 @@ const Container = styled.div`
   > button {     
     &.giwa_plus {
       position: absolute;
-      top: -35%;
       right: 15%;
-      margin: auto;
+      top: -35%;
+      margin: auto;      
+      animation: ${animation} 1s ease-in-out alternate infinite;
     }
   }
   > p {

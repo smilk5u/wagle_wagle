@@ -12,6 +12,9 @@ import { Tree } from "../../component/MainBg/MainBg";
 
 const MakeGiwaHouse = () => {
   const giwaHouseStyle = useSelector((state) => state.giwaHouseReducer);
+  const userInfo = useSelector((state) => state.userReducer);
+
+  console.log("giwaHouseStyle", giwaHouseStyle);
 
   const mainHousePath = () => {
     switch (giwaHouseStyle.giwaColor) {
@@ -88,7 +91,7 @@ const CatImgDiv = styled.div`
 const TreeCustom = styled(Tree)`
   > img {
     &:nth-of-type(1) {
-      left: -160px;
+      left: -250px;
     }
   }
 `;
