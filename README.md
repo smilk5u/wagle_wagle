@@ -23,28 +23,22 @@
 <br/>
 
 ## 개발 환경 세팅
-<img src="https://img.shields.io/badge/React-191A1B?style=for-the-badge&logo=react&logoColor=61DAFB"><img src="https://img.shields.io/badge/2.7.13-515151?style=for-the-badge">
-<img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=191A1B"><img src="https://img.shields.io/badge/1.5.0-515151?style=for-the-badge">
-
-<img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=fff"><img src="https://img.shields.io/badge/1.5.0-515151?style=for-the-badge">
-<img src="https://img.shields.io/badge/gsap-5A29E4?style=for-the-badge&logo=gsap&logoColor=fff"><img src="https://img.shields.io/badge/1.5.0-515151?style=for-the-badge">
+<img src="https://img.shields.io/badge/React-191A1B?style=for-the-badge&logo=react&logoColor=61DAFB"><img src="https://img.shields.io/badge/2.7.13-515151?style=for-the-badge"><img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=191A1B"><img src="https://img.shields.io/badge/1.5.0-515151?style=for-the-badge"><img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=fff"><img src="https://img.shields.io/badge/1.5.0-515151?style=for-the-badge">
 
 <br/>
 
-node.js 설치 & 실행 모듈 설치
+yarn 실행모듈 설치
 ```javascript  
-  nvm install v6.4.0
-  npm install
+  yarn global add create-react-app
 ```
-gulp 설치
+react 프로젝트 설치
 ```javascript
-  npm install gulp@3.9.1  
+  yarn create react-app
 ```
-gulp 실행
+프로젝트 실행
 ```javascript
-  gulp
+  yarn start
 ```
-
 
 ## ⭐ 성과
 - 한글날을 기준으로 일주일 간 서비스를 출시 - **유저 86명, 기와집(방명록 페이지) 83개, 기와(방명록) 159개**
