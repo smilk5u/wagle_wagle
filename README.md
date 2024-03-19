@@ -23,8 +23,10 @@
 <br/>
 
 ## 개발 환경 세팅
-<br/>
 <img src="https://img.shields.io/badge/React-191A1B?style=for-the-badge&logo=react&logoColor=61DAFB"><img src="https://img.shields.io/badge/2.7.13-515151?style=for-the-badge">
+<img src="https://img.shields.io/badge/Axios-191A1B?style=for-the-badge&logo=Axios&logoColor=5A29E4"><img src="https://img.shields.io/badge/2.7.13-515151?style=for-the-badge">
+
+<br/>
 
 node.js 설치 & 실행 모듈 설치
 ```javascript  
