@@ -26,8 +26,8 @@
 <img src="https://img.shields.io/badge/React-191A1B?style=for-the-badge&logo=react&logoColor=61DAFB"><img src="https://img.shields.io/badge/2.7.13-515151?style=for-the-badge">
 <img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=191A1B"><img src="https://img.shields.io/badge/1.5.0-515151?style=for-the-badge">
 
-<img src="https://img.shields.io/badge/redux-5A29E4?style=for-the-badge&logo=Axios&logoColor=191A1B"><img src="https://img.shields.io/badge/1.5.0-515151?style=for-the-badge">
-<img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=191A1B"><img src="https://img.shields.io/badge/1.5.0-515151?style=for-the-badge">
+<img src="https://img.shields.io/badge/redux-fff?style=for-the-badge&logo=redux&logoColor=764ABC"><img src="https://img.shields.io/badge/1.5.0-515151?style=for-the-badge">
+<img src="https://img.shields.io/badge/gsap-5A29E4?style=for-the-badge&logo=gsap&logoColor=191A1B"><img src="https://img.shields.io/badge/1.5.0-515151?style=for-the-badge">
 
 <br/>
 
