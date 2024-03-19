@@ -25,7 +25,9 @@
 ## 개발 환경 세팅
 ![Static Badge](https://img.shields.io/badge/node.js-v6.4.0-blue) ![Static Badge](https://img.shields.io/badge/gulp-v3.9.1-red) ![Static Badge](https://img.shields.io/badge/npm-v3.10.3-pink) <br/>
 <br/>
-<img src="https://img.shields.io/badge/Framework-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"><img src="https://img.shields.io/badge/2.7.13-515151?style=for-the-badge">
+<img src="https://img.shields.io/badge/reerer-%23121011?style=for-the-badge">
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+<img src="https://img.shields.io/badge/2.7.13-515151?style=for-the-badge">
 
 node.js 설치 & 실행 모듈 설치
 ```javascript  
