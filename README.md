@@ -43,12 +43,12 @@ react 프로젝트 설치
 <br/>
 
 ## 프로젝트 결과물
-|Main|Gallery|
+|온보딩|메인|
 |---|---|
 |![온보딩](https://github.com/smilk5u/wagle_wagle/assets/55374275/74ef7cc6-e5be-4ffd-972d-f9bb5f9dfcb0)|![메인](https://github.com/smilk5u/wagle_wagle/assets/55374275/20d5e32d-7afd-4182-a35a-ff4cdb98ad87)|
 |디아크카운티 특화|갤러리|
 
-|Benefits|Household|
+|방명록|로그인|
 |---|---|
 |![방명록 작성](https://github.com/smilk5u/wagle_wagle/assets/55374275/bc6d7cf9-04df-4d5f-857e-e89b63f9fdc2)|![로그인](https://github.com/smilk5u/wagle_wagle/assets/55374275/0e976410-2700-4356-81a8-3df1a828d55d)|
 |분양안내|상품소개|
